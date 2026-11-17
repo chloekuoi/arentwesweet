@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IM+Fell+DW+Pica:ital@0;1&family=Work+Sans:wght@400;500;600;700&family=La+Belle+Aurore&display=swap"><script src="./sweet-candy.js"></script><script src="./box.js"></script><style>a{color:#783E19}a:hover{color:#C8443F}input::placeholder,textarea::placeholder{color:#A9876F}
+@keyframes sw-all{0%{transform:rotate(0)}7%{transform:rotate(-4deg)}14%{transform:rotate(3.5deg)}21%{transform:rotate(-3deg)}28%{transform:rotate(2deg)}36%,100%{transform:rotate(0)}}
+@keyframes sw-bowL{0%,20%{transform:none;opacity:1}50%{transform:translate(-40px,-50px) rotate(-70deg);opacity:.8}68%,100%{transform:translate(-64px,-76px) rotate(-110deg);opacity:0}}
+@keyframes sw-bowR{0%,22%{transform:none;opacity:1}52%{transform:translate(42px,-54px) rotate(74deg);opacity:.8}70%,100%{transform:translate(66px,-80px) rotate(116deg);opacity:0}}
+@keyframes sw-endL{0%,30%{transform:none;opacity:1}50%{transform:scale(1.15,1.35);opacity:1}82%,100%{transform:translate(-60px,30px) scale(1.2,.4);opacity:0}}
+@keyframes sw-endR{0%,30%{transform:none;opacity:1}50%{transform:scale(1.15,1.35);opacity:1}82%,100%{transform:translate(60px,30px) scale(1.2,.4);opacity:0}}
+@keyframes sw-body{0%,45%{transform:none;opacity:1}88%,100%{transform:translateY(38px) scale(1.3,.2);opacity:0}}
+@keyframes sw-label{0%,40%{transform:none}72%{transform:translateY(-104px) rotate(220deg) scale(1.5)}100%{transform:translateY(-118px) rotate(360deg) scale(1.6)}}
+@keyframes sw-sh{0%,50%{opacity:1}100%{opacity:.35}}
+@keyframes sw-conf{0%{transform:translate(0,0) rotate(0) scale(.2);opacity:0}12%{opacity:1}100%{transform:translate(var(--dx),var(--dy)) rotate(var(--r)) scale(1);opacity:1}}
+@keyframes sw-land{0%{opacity:0;translate:var(--x,0) 40px;scale:.5}100%{opacity:1;translate:0 0;scale:1}}
+@keyframes sw-rock{0%,100%{transform:rotate(-4deg) translateY(0)}50%{transform:rotate(4deg) translateY(-10px)}}
+@keyframes sw-dots{0%,20%{opacity:.2}50%{opacity:1}100%{opacity:.2}}
+@keyframes sw-rise{0%{transform:translateY(60px);opacity:0}100%{transform:none;opacity:1}}</style></helmet>
+<div style="position:{{ rootPos }};inset:0;background:#2B1E16;overflow:hidden">
+<div style="position:absolute;left:50%;top:50%;width:{{ W }}px;height:{{ H }}px;transform:translate(-50%,-50%) scale({{ scale }});overflow:hidden;background:radial-gradient(circle,#F5CDD3 0 7px,rgba(245,205,211,0) 7.8px) 0 0/48px 48px,radial-gradient(circle,#F5CDD3 0 7px,rgba(245,205,211,0) 7.8px) 24px 24px/48px 48px,#FCF7EF;font-family:'Work Sans',sans-serif;color:#783E19;-webkit-font-smoothing:antialiased">
+
+<sc-if value="{{ isS1 }}" hint-placeholder-val="{{ true }}">
+<div style="position:absolute;left:{{ g1.left }}px;top:{{ g1.top }}px;width:1440px;height:900px;transform:scale({{ g1.k }});transform-origin:0 0;pointer-events:none"><div style="position:absolute;left:361.4px;top:-58.3px;width:390px;height:470px;transform:scale(1.8391);transform-origin:0 0;pointer-events:none">{{ trayBack }}</div>
+<div style="position:absolute;left:400px;top:247px;width:640px">{{ candy }}</div><div style="position:absolute;left:361.4px;top:-58.3px;width:390px;height:470px;transform:scale(1.8391);transform-origin:0 0;pointer-events:none">{{ trayFront }}</div></div>
+<div style="position:absolute;left:50%;top:{{ g1.cardTop }}px;width:600px;margin-left:-300px;box-sizing:border-box;background:#FBF0DA;border:2px solid #783E19;border-radius:6px;padding:28px 32px;display:flex;flex-direction:column;gap:12px;box-shadow:6px 6px 0 rgba(31,42,68,.22)">
+<div style="font-family:'La Belle Aurore',cursive;font-size:22px;line-height:1">Sweet</div>
+<div style="font-family:'IM Fell DW Pica',serif;font-size:44px;line-height:1.05">Wrap a little something</div>
+<div style="font:400 16px/1.5 'Work Sans',sans-serif">Choose a fabric and a ribbon, tuck a note or a gift inside, and send it as a link.</div>
+<div data-btn="1" tabIndex="0" onClick="{{ goS2 }}" style="margin-top:6px;height:56px;display:flex;align-items:center;justify-content:center;background:#F3E08A;color:#783E19;border:2px solid #783E19;box-sizing:border-box;border-radius:999px;box-shadow:inset 0 0 0 3px #F3E08A,inset 0 0 0 4.5px #C9A44A,3px 4px 0 #783E19;font-family:'IM Fell DW Pica',serif;font-style:italic;font-size:22px;line-height:1;cursor:pointer;user-select:none;outline:none;transition:transform .12s,box-shadow .12s,background .12s" style-hover="background:#F7E8A4;box-shadow:inset 0 0 0 3px #F7E8A4,inset 0 0 0 4.5px #C9A44A,4px 6px 0 #783E19;transform:translate(-1px,-2px)" style-active="transform:translate(2px,3px);box-shadow:inset 0 0 0 3px #F3E08A,inset 0 0 0 4.5px #C9A44A,1px 1px 0 #783E19" style-focus="box-shadow:inset 0 0 0 3px #F3E08A,inset 0 0 0 4.5px #C9A44A,3px 4px 0 #783E19,0 0 0 5px #FBF0DA,0 0 0 8px #A7C3E8,0 0 0 9.5px #783E19">Start wrapping</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ senderStage }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;left:{{ gs.left }}px;top:{{ gs.top }}px;width:860px;height:900px;transform:scale({{ gs.k }});transform-origin:0 0"><div style="position:absolute;left:71.4px;top:1.7px;width:390px;height:470px;transform:scale(1.8391);transform-origin:0 0;pointer-events:none">{{ trayBack }}</div>
+<div style="position:absolute;left:110px;top:307px;width:640px">{{ candy }}</div><div style="position:absolute;left:71.4px;top:1.7px;width:390px;height:470px;transform:scale(1.8391);transform-origin:0 0;pointer-events:none">{{ trayFront }}</div></div>
+</sc-if>
+
+<sc-if value="{{ cardStage }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;left:{{ gs.left }}px;top:{{ gs.top }}px;width:860px;height:900px;transform:scale({{ gs.k }});transform-origin:0 0"><div style="position:absolute;left:{{ sc.left }}px;top:{{ sc.top }}px;width:520px;height:{{ sc.h }}px">
+<div style="position:absolute;inset:0">{{ stageCard }}</div>
+<div style="position:absolute;inset:0;box-sizing:border-box;padding:{{ sc.pad }};text-align:{{ sc.align }};display:flex;flex-direction:column;gap:10px;overflow:hidden">
+<div style="font:700 14px/1 'Work Sans',sans-serif;letter-spacing:.2em;text-transform:uppercase">to {{ toName }}</div>
+<sc-if value="{{ isS3 }}" hint-placeholder-val="{{ false }}"><textarea value="{{ note }}" onChange="{{ onNote }}" onFocus="{{ cardOn }}" onBlur="{{ cardOff }}" placeholder="Write something sweet…" aria-label="Message" style="flex:1;min-height:0;resize:none;margin:-6px;padding:6px;background:transparent;border:0;border-radius:6px;outline:1.5px dashed transparent;outline-offset:2px;font-family:'IM Fell DW Pica',serif;font-size:{{ sc.fs }}px;line-height:1.3;color:#783E19;text-align:{{ sc.align }};cursor:text;transition:outline-color .15s,background .15s" style-hover="outline-color:rgba(120,62,25,.45);background:rgba(255,253,246,.35)" style-focus="outline:2px solid #A7C3E8;background:rgba(255,253,246,.45)"></textarea></sc-if><sc-if value="{{ notS3 }}" hint-placeholder-val="{{ true }}"><div style="flex:1;min-height:0;overflow:hidden;font-family:'IM Fell DW Pica',serif;font-size:{{ sc.fs }}px;line-height:1.3;text-wrap:pretty;overflow-wrap:anywhere">{{ note }}</div></sc-if>
+<div style="align-self:{{ sc.fromAlign }};font-family:'La Belle Aurore',cursive;font-size:{{ sc.from }}px;line-height:1.2">from {{ fromName }}</div>
+</div>
+</div>
+<sc-if value="{{ cardHint }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;left:{{ sc.left }}px;top:{{ sc.hintTop }}px;width:520px;display:flex;justify-content:center;pointer-events:none"><div style="display:flex;align-items:center;gap:8px;background:#FBF0DA;border:1.5px solid #783E19;border-radius:999px;padding:9px 16px;font:600 14px/1 'Work Sans',sans-serif"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" stroke="#783E19" stroke-width="1.6" stroke-linejoin="round"><path d="M3,13 L3.6,10.2 L11,2.8 L13.2,5 L5.8,12.4Z M9.6,4.2 L11.8,6.4"></path></svg>{{ cardHintText }}</div></div></sc-if>
+<sc-if value="{{ stageSeal }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;left:600px;top:{{ sc.sealTop }}px;display:flex;flex-direction:column;align-items:center;gap:10px;pointer-events:none"><div style="width:128px;height:128px;border-radius:50%;background:#A7C3E8;border:3px solid #783E19;box-sizing:border-box;box-shadow:inset 0 0 0 8px #A7C3E8,inset 0 0 0 10.5px #FBF0DA,inset 0 0 0 13px #783E19,0 7px 7px rgba(90,42,16,.3);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;transform:rotate(-8deg)"><svg width="44" height="27" viewBox="0 0 26 16"><g transform="translate(13,8) rotate(-30)" fill="none" stroke="#783E19" stroke-width="2"><rect x="-11" y="-4" width="12" height="8" rx="4"></rect><rect x="-1" y="-4" width="12" height="8" rx="4"></rect></g></svg><span style="font:700 11px/1 'Work Sans',sans-serif;letter-spacing:.18em">OPEN ME</span></div><div style="font:600 16px/1 'Work Sans',sans-serif;background:#FBF0DA;border:2px solid #783E19;border-radius:999px;padding:7px 14px;white-space:nowrap">{{ sealHost }}</div></div></sc-if>
+<sc-if value="{{ stageIou }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;left:470px;top:190px;width:290px;transform:rotate(7deg);pointer-events:none;filter:drop-shadow(0 5px 5px rgba(90,42,16,.28))"><div style="filter:drop-shadow(1.5px 0 0 #783E19) drop-shadow(-1.5px 0 0 #783E19) drop-shadow(0 1.5px 0 #783E19) drop-shadow(0 -1.5px 0 #783E19)"><div style="min-height:124px;background:#F3E08A;box-sizing:border-box;padding:22px 20px 22px 40px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;text-align:center;-webkit-mask:radial-gradient(circle 6px at 50% 100%,transparent 5.6px,#000 6px) bottom/15px 51% repeat-x,radial-gradient(circle 6px at 50% 0,transparent 5.6px,#000 6px) top/15px 51% repeat-x;mask:radial-gradient(circle 6px at 50% 100%,transparent 5.6px,#000 6px) bottom/15px 51% repeat-x,radial-gradient(circle 6px at 50% 0,transparent 5.6px,#000 6px) top/15px 51% repeat-x"><span style="font:700 11px/1 'Work Sans',sans-serif;letter-spacing:.2em">IOU · GOOD FOR ONE</span><span style="font-family:'IM Fell DW Pica',serif;font-style:italic;font-size:28px;line-height:1.15;text-wrap:balance;overflow-wrap:anywhere">{{ iou }}</span></div></div><svg width="30" height="66" viewBox="0 0 18 40" style="position:absolute;left:8px;top:-28px;overflow:visible"><path d="M5,30 V7 a4,4 0 0 1 8,0 V33 a6,6 0 0 1 -12,0 V12" fill="none" stroke="#783E19" stroke-width="4.2" stroke-linecap="round"></path><path d="M5,30 V7 a4,4 0 0 1 8,0 V33 a6,6 0 0 1 -12,0 V12" fill="none" stroke="#C9A44A" stroke-width="2" stroke-linecap="round"></path></svg></div></sc-if>
+</div></sc-if>
+
+<sc-if value="{{ hasPanel }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;top:0;right:0;bottom:0;width:{{ pn.w }}px;box-sizing:border-box;background:#FBF0DA;border-left:2px solid #783E19;padding:{{ pn.pad }};display:flex;flex-direction:column;gap:{{ pn.gap }}px">
+<div style="display:flex;align-items:flex-start"><sc-for list="{{ steps }}" as="s" hint-placeholder-count="4"><div style="flex:{{ s.flex }};display:flex;align-items:flex-start"><sc-if value="{{ s.notFirst }}" hint-placeholder-val="{{ true }}"><div style="flex:1;margin:15px 8px 0;border-top:1.5px dashed #783E19;opacity:.6"></div></sc-if><div data-btn="{{ s.btn }}" tabIndex="{{ s.tab }}" onClick="{{ s.go }}" title="{{ s.title }}" style="flex:none;display:flex;flex-direction:column;align-items:center;gap:6px;width:52px;cursor:{{ s.cur }};outline:none;border-radius:6px;transition:transform .12s" style-hover="transform:translateY(-2px)" style-focus="box-shadow:0 0 0 3px #A7C3E8"><svg width="{{ s.cw }}" height="{{ s.ch }}" viewBox="0 0 46 24" style="overflow:visible"><path d="M12,12 L2,4 Q0,12 2,20Z M34,12 L44,4 Q46,12 44,20Z" fill="{{ s.fill }}" stroke="#783E19" stroke-width="1.6" stroke-linejoin="round"></path><rect x="10" y="3" width="26" height="18" rx="9" fill="{{ s.fill }}" stroke="#783E19" stroke-width="1.6"></rect><path d="M17,4 V20 M29,4 V20" stroke="#783E19" stroke-opacity=".35" stroke-width="1"></path></svg><span style="font:{{ s.labelFont }};letter-spacing:.12em;text-transform:uppercase">{{ s.label }}</span></div></div></sc-for></div>
+<div style="font-family:'IM Fell DW Pica',serif;font-size:{{ pn.title }}px;line-height:1.05">{{ panelTitle }}</div>
+
+<sc-if value="{{ isS2 }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;border-top:1.5px solid rgba(120,62,25,.3)">
+<sc-for list="{{ wrapGroups }}" as="g" hint-placeholder-count="3"><div style="display:flex;flex-direction:column;gap:12px;padding:{{ g.gpad }};border-bottom:1.5px solid rgba(120,62,25,.3)">
+<div style="display:flex;justify-content:space-between;align-items:baseline"><span style="font:600 10.5px/1 'Work Sans',sans-serif;letter-spacing:.16em">{{ g.label }}</span><span style="font-family:'IM Fell DW Pica',serif;font-style:italic;font-size:19px;line-height:1">{{ g.value }}</span></div>
+<div style="display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:14px">
+<sc-for list="{{ g.items }}" as="r" hint-placeholder-count="5"><div data-btn="1" tabIndex="0" onClick="{{ r.pick }}" onMouseEnter="{{ r.on }}" onMouseLeave="{{ r.off }}" onFocus="{{ r.on }}" onBlur="{{ r.off }}" aria-label="{{ r.name }}" style="position:relative;height:{{ g.swH }}px;cursor:pointer;outline:none;border-radius:8px;transition:transform .12s" style-hover="transform:translateY(-3px)" style-focus="box-shadow:0 0 0 4px #FBF0DA,0 0 0 6px #783E19"><sc-if value="{{ r.sel }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;inset:-7px;border-radius:11px;border:4px solid #A7C3E8;box-shadow:0 0 0 1.5px #783E19"></div></sc-if><div style="position:absolute;inset:0;border:2px solid #783E19;border-radius:6px;overflow:hidden;background:#FFF9EC;padding:{{ g.pad }};box-sizing:border-box">{{ r.el }}</div><sc-if value="{{ r.tag }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;left:50%;bottom:calc(100% + 12px);transform:translateX(-50%);white-space:nowrap;background:#783E19;color:#FBF0DA;font:600 10px/1 'Work Sans',sans-serif;letter-spacing:.1em;text-transform:uppercase;padding:6px 9px;border-radius:999px;pointer-events:none;z-index:4">{{ r.name }}</div></sc-if></div></sc-for>
+</div>
+<sc-if value="{{ g.showNote }}" hint-placeholder-val="{{ true }}"><div style="font:400 13px/1.35 'Work Sans',sans-serif;color:#6B4A36">{{ g.note }}</div></sc-if>
+</div></sc-for>
+</div>
+</sc-if>
+
+<sc-if value="{{ isS3 }}" hint-placeholder-val="{{ false }}">
+<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:8px 6px 0"><sc-for list="{{ cards }}" as="c" hint-placeholder-count="4"><div data-btn="1" tabIndex="0" onClick="{{ c.pick }}" style="display:flex;flex-direction:column;align-items:center;gap:9px;cursor:pointer;outline:none;border-radius:10px;transition:transform .12s" style-hover="transform:translateY(-3px)" style-focus="box-shadow:0 0 0 4px #FBF0DA,0 0 0 6px #783E19"><div style="position:relative;width:100%;height:{{ c.h }}px"><sc-if value="{{ c.sel }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;inset:-7px;border-radius:11px;border:4px solid #A7C3E8;box-shadow:0 0 0 1.5px #783E19"></div></sc-if><div style="position:absolute;inset:0;border:2px solid #783E19;border-radius:6px;background:#FFF9EC;overflow:hidden">{{ c.el }}</div></div><div style="font:600 9.5px/1.2 'Work Sans',sans-serif;letter-spacing:.1em">{{ c.name }}</div></div></sc-for></div>
+<div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:16px">
+<label style="display:flex;flex-direction:column;gap:8px;position:relative"><span style="font:600 10.5px/1 'Work Sans',sans-serif;letter-spacing:.16em">TO</span><input value="{{ toName }}" onChange="{{ onTo }}" style="width:100%;min-width:0;height:48px;padding:0 50px 0 14px;background:#FFF9EC;border:2px solid #783E19;border-radius:4px;box-sizing:border-box;font:500 15px/1 'Work Sans',sans-serif;color:#783E19;outline:none;transition:box-shadow .12s,background .12s" style-hover="background:#FFFDF6" style-focus="background:#FFFDF6;box-shadow:0 0 0 3px #A7C3E8"><span style="position:absolute;right:14px;bottom:17px;font:500 11px/1 'Work Sans',sans-serif;color:#6B4A36;pointer-events:none">{{ toCount }}</span></label>
+<label style="display:flex;flex-direction:column;gap:8px"><span style="font:600 10.5px/1 'Work Sans',sans-serif;letter-spacing:.16em">FROM</span><input value="{{ fromName }}" onChange="{{ onFrom }}" style="width:100%;min-width:0;height:48px;padding:0 14px;background:#FFF9EC;border:2px solid #783E19;border-radius:4px;box-sizing:border-box;font:500 15px/1 'Work Sans',sans-serif;color:#783E19;outline:none;transition:box-shadow .12s,background .12s" style-hover="background:#FFFDF6" style-focus="background:#FFFDF6;box-shadow:0 0 0 3px #A7C3E8"></label>
+</div>
+<label style="display:flex;flex-direction:column;gap:8px"><span style="display:flex;justify-content:space-between;font:600 10.5px/1 'Work Sans',sans-serif;letter-spacing:.16em"><span>MESSAGE</span><span style="font-weight:500;letter-spacing:0;color:#6B4A36">{{ noteCount }}</span></span><textarea value="{{ note }}" onChange="{{ onNote }}" style="height:{{ pn.ta }}px;resize:none;box-sizing:border-box;padding:12px 14px;background:#FFF9EC;border:2px solid #783E19;border-radius:4px;outline:none;font:500 15px/1.45 'Work Sans',sans-serif;color:#783E19;transition:box-shadow .12s,background .12s" style-hover="background:#FFFDF6" style-focus="background:#FFFDF6;box-shadow:0 0 0 3px #A7C3E8"></textarea></label>
+</sc-if>
+
+<sc-if value="{{ isS4 }}" hint-placeholder-val="{{ false }}">
+<div style="display:flex;flex-direction:column;border-top:1.5px solid rgba(120,62,25,.3)"><sc-for list="{{ types }}" as="t" hint-placeholder-count="3"><div data-btn="1" tabIndex="0" onClick="{{ t.pick }}" style="display:flex;align-items:center;gap:14px;height:52px;padding:0 10px;margin:0 -10px;border-bottom:1.5px solid rgba(120,62,25,.3);cursor:pointer;outline:none;border-radius:4px;transition:background .12s" style-hover="background:rgba(243,224,138,.35)" style-focus="box-shadow:inset 0 0 0 2px #A7C3E8"><svg width="42" height="22" viewBox="0 0 46 24" style="flex:none;overflow:visible"><path d="M12,12 L2,4 Q0,12 2,20Z M34,12 L44,4 Q46,12 44,20Z" fill="{{ t.fill }}" stroke="#783E19" stroke-width="1.8" stroke-linejoin="round"></path><rect x="10" y="3" width="26" height="18" rx="9" fill="{{ t.fill }}" stroke="#783E19" stroke-width="1.8"></rect></svg><span style="font-family:'IM Fell DW Pica',serif;font-style:{{ t.ital }};font-size:22px;line-height:1;flex:1">{{ t.label }}</span><span style="font:400 13px/1 'Work Sans',sans-serif">{{ t.hint }}</span></div></sc-for></div>
+<sc-if value="{{ isLink }}" hint-placeholder-val="{{ false }}"><label style="display:flex;flex-direction:column;gap:8px"><span style="font:600 10.5px/1 'Work Sans',sans-serif;letter-spacing:.16em">URL</span>
+<sc-if value="{{ urlOk }}" hint-placeholder-val="{{ true }}"><input value="{{ url }}" onChange="{{ onUrl }}" placeholder="https://" style="height:48px;padding:0 14px;background:#FFF9EC;border:2px solid #783E19;border-radius:4px;box-sizing:border-box;font:500 14px/1 'Work Sans',sans-serif;color:#783E19;outline:none;transition:box-shadow .12s,background .12s" style-hover="background:#FFFDF6" style-focus="background:#FFFDF6;box-shadow:0 0 0 3px #A7C3E8"></sc-if>
+<sc-if value="{{ urlErr }}" hint-placeholder-val="{{ false }}"><input value="{{ url }}" onChange="{{ onUrl }}" placeholder="https://" style="height:48px;padding:0 14px;background:#FFF9EC;border:2px solid #C8443F;border-radius:4px;box-sizing:border-box;font:500 14px/1 'Work Sans',sans-serif;color:#783E19;outline:none;box-shadow:0 0 0 2px rgba(200,68,63,.25)" style-focus="box-shadow:0 0 0 3px rgba(200,68,63,.4)"><span style="display:flex;align-items:center;gap:8px;font:600 13px/1.3 'Work Sans',sans-serif"><span style="flex:none;width:18px;height:18px;border-radius:50%;background:#C8443F;color:#FBF0DA;display:flex;align-items:center;justify-content:center;font:700 12px/1 'Work Sans',sans-serif">!</span>That's not a full link yet. Start it with https://</span></sc-if>
+</label></sc-if>
+<sc-if value="{{ isIou }}" hint-placeholder-val="{{ false }}"><label style="display:flex;flex-direction:column;gap:8px"><span style="display:flex;justify-content:space-between;font:600 10.5px/1 'Work Sans',sans-serif;letter-spacing:.16em"><span>IOU</span><span style="font-weight:500;letter-spacing:0;color:#6B4A36">{{ iouCount }}</span></span><input value="{{ iou }}" onChange="{{ onIou }}" placeholder="One coffee date" style="height:48px;padding:0 14px;background:#FFF9EC;border:2px solid #783E19;border-radius:4px;box-sizing:border-box;font:500 15px/1 'Work Sans',sans-serif;color:#783E19;outline:none;transition:box-shadow .12s,background .12s" style-hover="background:#FFFDF6" style-focus="background:#FFFDF6;box-shadow:0 0 0 3px #A7C3E8"></label></sc-if>
+</sc-if>
+
+<sc-if value="{{ isS5 }}" hint-placeholder-val="{{ false }}">
+<div style="font:400 16px/1.5 'Work Sans',sans-serif;text-wrap:pretty">Wrapped in {{ fabName }} with a {{ ribName }} ribbon. Copy the link and send it to {{ toName }} wherever you chat.</div>
+<div ref="{{ linkRef }}" style="padding:18px;background:{{ linkBg }};border:2px dashed #783E19;border-radius:4px;font:600 17px/1 'Work Sans',sans-serif;text-align:center;user-select:all">sweet.app/g/k3Fq9xT2mB</div>
+<sc-if value="{{ copyFail }}" hint-placeholder-val="{{ false }}"><div role="status" style="display:flex;align-items:center;gap:8px;margin-top:-6px;font:600 13px/1.35 'Work Sans',sans-serif"><span style="flex:none;width:18px;height:18px;border-radius:50%;background:#C8443F;color:#FBF0DA;display:flex;align-items:center;justify-content:center;font:700 12px/1 'Work Sans',sans-serif">!</span>Your browser blocked copying. The link is selected, so press {{ copyKey }} to copy it.</div></sc-if>
+<div style="display:flex;flex-direction:column">
+<div data-btn="1" tabIndex="0" onClick="{{ copy }}" style="height:56px;display:flex;align-items:center;justify-content:center;background:#F3E08A;color:#783E19;border:2px solid #783E19;box-sizing:border-box;border-radius:999px;box-shadow:inset 0 0 0 3px #F3E08A,inset 0 0 0 4.5px #C9A44A,3px 4px 0 #783E19;font-family:'IM Fell DW Pica',serif;font-style:italic;font-size:22px;line-height:1;cursor:pointer;user-select:none;outline:none;transition:transform .12s,box-shadow .12s,background .12s" style-hover="background:#F7E8A4;box-shadow:inset 0 0 0 3px #F7E8A4,inset 0 0 0 4.5px #C9A44A,4px 6px 0 #783E19;transform:translate(-1px,-2px)" style-active="transform:translate(2px,3px);box-shadow:inset 0 0 0 3px #F3E08A,inset 0 0 0 4.5px #C9A44A,1px 1px 0 #783E19" style-focus="box-shadow:inset 0 0 0 3px #F3E08A,inset 0 0 0 4.5px #C9A44A,3px 4px 0 #783E19,0 0 0 5px #FBF0DA,0 0 0 8px #A7C3E8,0 0 0 9.5px #783E19">{{ copyLabel }}</div>
+
+</div>
+<div style="display:flex;align-items:center;gap:8px;font:500 13px/1.3 'Work Sans',sans-serif"><svg width="12" height="14" viewBox="0 0 12 14"><rect x="1" y="6" width="10" height="7.5" rx="1.5" fill="#783E19"></rect><path d="M3.3,6 V4.2 a2.7,2.7 0 0 1 5.4,0 V6" fill="none" stroke="#783E19" stroke-width="1.6"></path></svg>Only people with this link can open it</div>
+</sc-if>
+
+<sc-if value="{{ wrapErr }}" hint-placeholder-val="{{ false }}"><div role="alert" style="display:flex;gap:12px;align-items:flex-start;padding:14px 16px;background:#FFF9EC;border:2px solid #C8443F;border-radius:4px;box-shadow:0 0 0 2px rgba(200,68,63,.18)"><span style="flex:none;width:20px;height:20px;border-radius:50%;background:#C8443F;color:#FBF0DA;display:flex;align-items:center;justify-content:center;font:700 13px/1 'Work Sans',sans-serif">!</span><div style="display:flex;flex-direction:column;gap:4px"><span style="font:600 14px/1.3 'Work Sans',sans-serif">We couldn't wrap it just now</span><span style="font:400 13px/1.4 'Work Sans',sans-serif;color:#6B4A36">Probably a connection hiccup. Everything you've made is still here, so just try again.</span></div></div></sc-if>
+<div style="flex:1"></div>
+
+<sc-if value="{{ isS2 }}" hint-placeholder-val="{{ false }}"><div data-btn="1" tabIndex="0" onClick="{{ goS3 }}" style="height:56px;display:flex;align-items:center;justify-content:center;background:#F3E08A;color:#783E19;border:2px solid #783E19;box-sizing:border-box;border-radius:999px;box-shadow:inset 0 0 0 3px #F3E08A,inset 0 0 0 4.5px #C9A44A,3px 4px 0 #783E19;font-family:'IM Fell DW Pica',serif;font-style:italic;font-size:22px;line-height:1;cursor:pointer;user-select:none;outline:none;transition:transform .12s,box-shadow .12s,background .12s" style-hover="background:#F7E8A4;box-shadow:inset 0 0 0 3px #F7E8A4,inset 0 0 0 4.5px #C9A44A,4px 6px 0 #783E19;transform:translate(-1px,-2px)" style-active="transform:translate(2px,3px);box-shadow:inset 0 0 0 3px #F3E08A,inset 0 0 0 4.5px #C9A44A,1px 1px 0 #783E19" style-focus="box-shadow:inset 0 0 0 3px #F3E08A,inset 0 0 0 4.5px #C9A44A,3px 4px 0 #783E19,0 0 0 5px #FBF0DA,0 0 0 8px #A7C3E8,0 0 0 9.5px #783E19">Next</div></sc-if>
+
+<sc-if value="{{ twoBtn }}" hint-placeholder-val="{{ false }}"><div style="display:grid;grid-template-columns:1fr 1.7fr;gap:14px">
+<div data-btn="1" tabIndex="0" onClick="{{ back }}" style="height:56px;display:flex;align-items:center;justify-content:center;background:#FFF9EC;color:#783E19;border:2px solid #783E19;box-sizing:border-box;border-radius:999px;box-shadow:inset 0 0 0 3px #FFF9EC,inset 0 0 0 4.2px rgba(120,62,25,.35);font-family:'IM Fell DW Pica',serif;font-style:italic;font-size:21px;line-height:1;cursor:pointer;user-select:none;outline:none;transition:background .12s,box-shadow .12s" style-hover="background:#FBF0DA;box-shadow:inset 0 0 0 3px #FBF0DA,inset 0 0 0 4.2px #783E19" style-active="transform:translate(1px,1px)" style-focus="box-shadow:inset 0 0 0 3px #FFF9EC,inset 0 0 0 4.2px rgba(120,62,25,.35),0 0 0 5px #FBF0DA,0 0 0 8px #A7C3E8,0 0 0 9.5px #783E19">Back</div>
+<div data-btn="1" tabIndex="0" onClick="{{ next }}" style="height:56px;display:flex;align-items:center;justify-content:center;background:#F3E08A;color:#783E19;border:2px solid #783E19;box-sizing:border-box;border-radius:999px;box-shadow:inset 0 0 0 3px #F3E08A,inset 0 0 0 4.5px #C9A44A,3px 4px 0 #783E19;font-family:'IM Fell DW Pica',serif;font-style:italic;font-size:22px;line-height:1;cursor:pointer;user-select:none;outline:none;transition:transform .12s,box-shadow .12s,background .12s" style-hover="background:#F7E8A4;box-shadow:inset 0 0 0 3px #F7E8A4,inset 0 0 0 4.5px #C9A44A,4px 6px 0 #783E19;transform:translate(-1px,-2px)" style-active="transform:translate(2px,3px);box-shadow:inset 0 0 0 3px #F3E08A,inset 0 0 0 4.5px #C9A44A,1px 1px 0 #783E19" style-focus="box-shadow:inset 0 0 0 3px #F3E08A,inset 0 0 0 4.5px #C9A44A,3px 4px 0 #783E19,0 0 0 5px #FBF0DA,0 0 0 8px #A7C3E8,0 0 0 9.5px #783E19">{{ nextLabel }}</div>
+</div></sc-if>
+
+<div style="display:flex;justify-content:center;gap:16px;margin-top:-4px;font:500 11px/1 'Work Sans',sans-serif;color:#6B4A36"><sc-if value="{{ hasEnter }}" hint-placeholder-val="{{ true }}"><span>{{ enterHint }}</span></sc-if><sc-if value="{{ showEsc }}" hint-placeholder-val="{{ false }}"><span>Esc to go back</span></sc-if></div>
+
+<sc-if value="{{ isS5 }}" hint-placeholder-val="{{ false }}"><div style="display:flex;justify-content:space-between;align-items:center"><div data-btn="1" tabIndex="0" onClick="{{ back }}" style="font:600 14px/1 'Work Sans',sans-serif;text-decoration:underline;text-underline-offset:3px;cursor:pointer;outline:none;border-radius:3px;padding:4px 2px" style-hover="color:#C8443F;text-decoration-thickness:2px" style-focus="box-shadow:0 0 0 3px #A7C3E8">← Edit</div><div data-btn="1" tabIndex="0" onClick="{{ goR1 }}" style="font:600 14px/1 'Work Sans',sans-serif;text-decoration:underline;text-underline-offset:3px;cursor:pointer;outline:none;border-radius:3px;padding:4px 2px" style-hover="color:#C8443F;text-decoration-thickness:2px" style-focus="box-shadow:0 0 0 3px #A7C3E8">Preview as {{ toName }} sees it →</div></div></sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ isRecvStage }}" hint-placeholder-val="{{ false }}">
+<sc-if value="{{ showTop }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;top:{{ rv.pill }}px;left:0;right:0;display:flex;justify-content:center;z-index:3"><div style="font-family:'IM Fell DW Pica',serif;font-size:28px;line-height:1;background:#FBF0DA;border:1.5px solid #783E19;padding:13px 24px;border-radius:999px">{{ fromName }} sent you a sweet</div></div></sc-if>
+<div style="position:absolute;left:{{ rv.left }}px;top:{{ rv.top }}px;width:1440px;height:900px;transform:scale({{ rv.k }});transform-origin:0 0"><div style="position:absolute;left:316.6px;top:-30.4px;width:390px;height:470px;transform:scale(2.069);transform-origin:0 0;pointer-events:none">{{ trayBack }}</div>
+<div data-btn="{{ candyBtn }}" tabIndex="{{ candyTab }}" onClick="{{ tap }}" title="Click to unwrap" style="position:absolute;left:360px;top:313px;width:720px;cursor:{{ candyCur }};outline:none;border-radius:40px;transition:transform .25s cubic-bezier(.3,1.6,.5,1)" style-hover="{{ candyHover }}" style-focus="box-shadow:0 0 0 4px #A7C3E8">{{ candy }}</div>
+<div style="position:absolute;left:316.6px;top:-30.4px;width:390px;height:470px;transform:scale(2.069);transform-origin:0 0;pointer-events:none">{{ trayFront }}</div>
+<div style="position:absolute;left:0;top:0;width:1440px;height:900px;pointer-events:none">{{ confetti }}</div></div>
+<sc-if value="{{ showTap }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;top:{{ rv.tap }}px;left:0;right:0;display:flex;justify-content:center"><div data-btn="1" tabIndex="0" onClick="{{ tap }}" style="font:700 13px/1 'Work Sans',sans-serif;letter-spacing:.2em;background:#FBF0DA;border:1.5px solid #783E19;padding:13px 20px;border-radius:999px;cursor:pointer;outline:none;transition:background .12s,transform .12s" style-hover="background:#F3E08A;transform:translateY(-2px)" style-focus="box-shadow:0 0 0 3px #A7C3E8">CLICK TO UNWRAP</div></div></sc-if>
+</sc-if>
+
+<sc-if value="{{ isR4 }}" hint-placeholder-val="{{ false }}">
+<sc-for list="{{ pieces }}" as="p" hint-placeholder-count="5"><div style="position:absolute;left:{{ p.left }}px;top:{{ p.top }}px;width:{{ p.w }}px;height:{{ p.h }}px;transform:rotate({{ p.rot }}deg);animation:sw-land .75s {{ p.delay }}s cubic-bezier(.2,1.35,.4,1) both"><div style="width:100%;height:100%;filter:drop-shadow(4px 6px 0 rgba(31,42,68,.16));transition:transform .25s cubic-bezier(.3,1.6,.5,1)" style-hover="transform:translateY(-8px) rotate(-4deg)">{{ p.el }}</div></div></sc-for>
+<div style="position:absolute;left:{{ r4.left }}px;top:{{ r4.top }}px;width:{{ r4.w }}px;height:{{ r4.h }}px;animation:sw-rise .6s cubic-bezier(.2,.9,.3,1) both">
+<div style="position:absolute;inset:0;transform:rotate(-1.2deg);filter:drop-shadow(8px 8px 0 rgba(31,42,68,.28))">
+<div style="position:absolute;inset:0">{{ r4Card }}</div>
+<div style="position:absolute;inset:0;box-sizing:border-box;padding:{{ r4.pad }};text-align:{{ r4.align }};display:flex;flex-direction:column;gap:14px">
+<div style="font:700 15px/1 'Work Sans',sans-serif;letter-spacing:.2em;text-transform:uppercase">to {{ toName }}</div>
+<div style="flex:1;font-family:'IM Fell DW Pica',serif;font-size:{{ r4.fs }}px;line-height:1.3;text-wrap:pretty;overflow-wrap:anywhere">{{ note }}</div>
+<sc-if value="{{ linkIn }}" hint-placeholder-val="{{ false }}"><div style="display:flex;flex-direction:column;align-items:center;gap:8px"><a href="{{ url }}" target="_blank" rel="noopener" data-btn="1" style="width:340px;height:56px;display:flex;align-items:center;justify-content:center;background:#F3E08A;color:#783E19;text-decoration:none;border:2px solid #783E19;box-sizing:border-box;border-radius:999px;box-shadow:inset 0 0 0 3px #F3E08A,inset 0 0 0 4.5px #C9A44A,3px 4px 0 #783E19;font-family:'IM Fell DW Pica',serif;font-style:italic;font-size:22px;line-height:1;outline:none;transition:transform .12s,box-shadow .12s,background .12s" style-hover="color:#783E19;background:#F7E8A4;box-shadow:inset 0 0 0 3px #F7E8A4,inset 0 0 0 4.5px #C9A44A,4px 6px 0 #783E19;transform:translate(-1px,-2px)" style-active="transform:translate(2px,3px);box-shadow:inset 0 0 0 3px #F3E08A,inset 0 0 0 4.5px #C9A44A,1px 1px 0 #783E19" style-focus="box-shadow:inset 0 0 0 3px #F3E08A,inset 0 0 0 4.5px #C9A44A,3px 4px 0 #783E19,0 0 0 5px #FBF0DA,0 0 0 8px #A7C3E8,0 0 0 9.5px #783E19">Open your gift →</a><div style="font:500 13px/1 'Work Sans',sans-serif">{{ urlHost }}</div></div></sc-if>
+<div style="align-self:{{ r4.fromAlign }};font-family:'La Belle Aurore',cursive;font-size:{{ r4.from }}px;line-height:1.2">from {{ fromName }}</div>
+</div>
+</div>
+<sc-if value="{{ isLink }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;right:-40px;top:-44px;width:120px;height:120px;border-radius:50%;background:#A7C3E8;border:3px solid #783E19;box-sizing:border-box;box-shadow:inset 0 0 0 8px #A7C3E8,inset 0 0 0 10.5px #FBF0DA,inset 0 0 0 13px #783E19,0 6px 6px rgba(90,42,16,.3);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;transform:rotate(-8deg);pointer-events:none"><svg width="42" height="26" viewBox="0 0 26 16"><g transform="translate(13,8) rotate(-30)" fill="none" stroke="#783E19" stroke-width="2"><rect x="-11" y="-4" width="12" height="8" rx="4"></rect><rect x="-1" y="-4" width="12" height="8" rx="4"></rect></g></svg><span style="font:700 10.5px/1 'Work Sans',sans-serif;letter-spacing:.18em">OPEN ME</span></div></sc-if>
+</div>
+<sc-if value="{{ isIou }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;left:{{ r4.iouLeft }}px;top:{{ r4.iouTop }}px;width:340px;transform:rotate(5deg);filter:drop-shadow(0 6px 6px rgba(90,42,16,.28));animation:sw-rise .6s .15s cubic-bezier(.2,.9,.3,1) both"><div style="filter:drop-shadow(1.5px 0 0 #783E19) drop-shadow(-1.5px 0 0 #783E19) drop-shadow(0 1.5px 0 #783E19) drop-shadow(0 -1.5px 0 #783E19)"><div style="min-height:170px;background:#F3E08A;box-sizing:border-box;padding:26px 24px 26px 44px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:11px;text-align:center;-webkit-mask:radial-gradient(circle 7px at 50% 100%,transparent 6.6px,#000 7px) bottom/18px 51% repeat-x,radial-gradient(circle 7px at 50% 0,transparent 6.6px,#000 7px) top/18px 51% repeat-x;mask:radial-gradient(circle 7px at 50% 100%,transparent 6.6px,#000 7px) bottom/18px 51% repeat-x,radial-gradient(circle 7px at 50% 0,transparent 6.6px,#000 7px) top/18px 51% repeat-x"><span style="font:700 12px/1 'Work Sans',sans-serif;letter-spacing:.2em">IOU · GOOD FOR ONE</span><span style="font-family:'IM Fell DW Pica',serif;font-style:italic;font-size:34px;line-height:1.15;text-wrap:balance;overflow-wrap:anywhere">{{ iou }}</span><span style="font:500 14px/1 'Work Sans',sans-serif">Redeem with {{ fromName }}, any time</span></div></div><svg width="34" height="76" viewBox="0 0 18 40" style="position:absolute;left:10px;top:-32px;overflow:visible"><path d="M5,30 V7 a4,4 0 0 1 8,0 V33 a6,6 0 0 1 -12,0 V12" fill="none" stroke="#783E19" stroke-width="4.2" stroke-linecap="round"></path><path d="M5,30 V7 a4,4 0 0 1 8,0 V33 a6,6 0 0 1 -12,0 V12" fill="none" stroke="#C9A44A" stroke-width="2" stroke-linecap="round"></path></svg></div></sc-if>
+<div style="position:absolute;left:560px;top:{{ r4.btnTop }}px;width:320px;display:flex;flex-direction:column;gap:12px">
+<sc-if value="{{ linkOut }}" hint-placeholder-val="{{ false }}"><a href="{{ url }}" target="_blank" rel="noopener" data-btn="1" style="height:56px;display:flex;align-items:center;justify-content:center;background:#F3E08A;color:#783E19;text-decoration:none;border:2px solid #783E19;box-sizing:border-box;border-radius:999px;box-shadow:inset 0 0 0 3px #F3E08A,inset 0 0 0 4.5px #C9A44A,3px 4px 0 #783E19;font-family:'IM Fell DW Pica',serif;font-style:italic;font-size:22px;line-height:1;outline:none;transition:transform .12s,box-shadow .12s,background .12s" style-hover="color:#783E19;background:#F7E8A4;box-shadow:inset 0 0 0 3px #F7E8A4,inset 0 0 0 4.5px #C9A44A,4px 6px 0 #783E19;transform:translate(-1px,-2px)" style-focus="box-shadow:inset 0 0 0 3px #F3E08A,inset 0 0 0 4.5px #C9A44A,3px 4px 0 #783E19,0 0 0 5px #FBF0DA,0 0 0 8px #A7C3E8,0 0 0 9.5px #783E19">Open your gift →</a></sc-if>
+<sc-if value="{{ sendPrimary }}" hint-placeholder-val="{{ true }}"><div data-btn="1" tabIndex="0" onClick="{{ sendBack }}" style="height:56px;display:flex;align-items:center;justify-content:center;background:#F3E08A;color:#783E19;border:2px solid #783E19;box-sizing:border-box;border-radius:999px;box-shadow:inset 0 0 0 3px #F3E08A,inset 0 0 0 4.5px #C9A44A,3px 4px 0 #783E19;font-family:'IM Fell DW Pica',serif;font-style:italic;font-size:22px;line-height:1;cursor:pointer;user-select:none;outline:none;transition:transform .12s,box-shadow .12s,background .12s" style-hover="background:#F7E8A4;box-shadow:inset 0 0 0 3px #F7E8A4,inset 0 0 0 4.5px #C9A44A,4px 6px 0 #783E19;transform:translate(-1px,-2px)" style-active="transform:translate(2px,3px);box-shadow:inset 0 0 0 3px #F3E08A,inset 0 0 0 4.5px #C9A44A,1px 1px 0 #783E19" style-focus="box-shadow:inset 0 0 0 3px #F3E08A,inset 0 0 0 4.5px #C9A44A,3px 4px 0 #783E19,0 0 0 5px #FBF0DA,0 0 0 8px #A7C3E8,0 0 0 9.5px #783E19">Send a sweet back</div></sc-if>
+<sc-if value="{{ sendSecondary }}" hint-placeholder-val="{{ false }}"><div data-btn="1" tabIndex="0" onClick="{{ sendBack }}" style="height:56px;display:flex;align-items:center;justify-content:center;background:#FFF9EC;color:#783E19;border:2px solid #783E19;box-sizing:border-box;border-radius:999px;box-shadow:inset 0 0 0 3px #FFF9EC,inset 0 0 0 4.2px rgba(120,62,25,.35);font-family:'IM Fell DW Pica',serif;font-style:italic;font-size:21px;line-height:1;cursor:pointer;user-select:none;outline:none;transition:background .12s,box-shadow .12s" style-hover="background:#FBF0DA;box-shadow:inset 0 0 0 3px #FBF0DA,inset 0 0 0 4.2px #783E19" style-active="transform:translate(1px,1px)" style-focus="box-shadow:inset 0 0 0 3px #FFF9EC,inset 0 0 0 4.2px rgba(120,62,25,.35),0 0 0 5px #FBF0DA,0 0 0 8px #A7C3E8,0 0 0 9.5px #783E19">Send a sweet back</div></sc-if>
+</div>
+</sc-if>
+
+<sc-if value="{{ isR0 }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;left:0;right:0;top:{{ r0Top }}px;display:flex;flex-direction:column;align-items:center;gap:34px">
+<div style="width:{{ r0W }}px;animation:sw-rock 1.6s ease-in-out infinite;transform-origin:50% 80%">{{ candy }}</div>
+<div style="display:flex;align-items:baseline;gap:2px;font-family:'IM Fell DW Pica',serif;font-style:italic;font-size:30px;line-height:1">Fetching your sweet<span style="animation:sw-dots 1.2s infinite">.</span><span style="animation:sw-dots 1.2s .2s infinite">.</span><span style="animation:sw-dots 1.2s .4s infinite">.</span></div>
+</div>
+</sc-if>
+<sc-if value="{{ isR0err }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;left:{{ gs.left }}px;top:{{ gs.top }}px;width:860px;height:900px;transform:scale({{ gs.k }});transform-origin:0 0">
+<div style="position:absolute;left:71.4px;top:1.7px;width:390px;height:470px;transform:scale(1.8391);transform-origin:0 0;pointer-events:none">{{ trayBack }}</div>
+<div style="position:absolute;left:110px;top:307px;width:640px;transform:rotate(-6deg);opacity:.9">{{ candy }}</div><div style="position:absolute;left:71.4px;top:1.7px;width:390px;height:470px;transform:scale(1.8391);transform-origin:0 0;pointer-events:none">{{ trayFront }}</div>
+</div>
+<div role="alert" style="position:absolute;left:{{ r5.left }}px;top:{{ r5.top }}px;width:{{ r5.w }}px;box-sizing:border-box;background:#FBF0DA;border:2px solid #783E19;border-radius:6px;padding:36px 36px 32px;display:flex;flex-direction:column;gap:16px;box-shadow:6px 6px 0 rgba(31,42,68,.22)">
+<div style="font-family:'IM Fell DW Pica',serif;font-size:44px;line-height:1.05">We couldn't reach your sweet</div>
+<div style="font:400 16px/1.5 'Work Sans',sans-serif;text-wrap:pretty">Something went wrong on the way. Check your connection and try again. The sweet hasn't gone anywhere.</div>
+<div data-btn="1" tabIndex="0" onClick="{{ loadR1 }}" style="margin-top:6px;height:56px;display:flex;align-items:center;justify-content:center;background:#F3E08A;color:#783E19;border:2px solid #783E19;box-sizing:border-box;border-radius:999px;box-shadow:inset 0 0 0 3px #F3E08A,inset 0 0 0 4.5px #C9A44A,3px 4px 0 #783E19;font-family:'IM Fell DW Pica',serif;font-style:italic;font-size:22px;line-height:1;cursor:pointer;user-select:none;outline:none;transition:transform .12s,box-shadow .12s,background .12s" style-hover="background:#F7E8A4;box-shadow:inset 0 0 0 3px #F7E8A4,inset 0 0 0 4.5px #C9A44A,4px 6px 0 #783E19;transform:translate(-1px,-2px)" style-active="transform:translate(2px,3px);box-shadow:inset 0 0 0 3px #F3E08A,inset 0 0 0 4.5px #C9A44A,1px 1px 0 #783E19" style-focus="box-shadow:inset 0 0 0 3px #F3E08A,inset 0 0 0 4.5px #C9A44A,3px 4px 0 #783E19,0 0 0 5px #FBF0DA,0 0 0 8px #A7C3E8,0 0 0 9.5px #783E19">Try again</div>
+</div>
+</sc-if>
+<sc-if value="{{ isR5 }}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;left:{{ gs.left }}px;top:{{ gs.top }}px;width:860px;height:900px;transform:scale({{ gs.k }});transform-origin:0 0"><div style="position:absolute;left:71.4px;top:1.7px;width:390px;height:470px;transform:scale(1.8391);transform-origin:0 0;pointer-events:none">{{ trayBack }}</div>
+<div style="position:absolute;left:110px;top:307px;width:640px">{{ candy }}</div><div style="position:absolute;left:71.4px;top:1.7px;width:390px;height:470px;transform:scale(1.8391);transform-origin:0 0;pointer-events:none">{{ trayFront }}</div></div>
+<div style="position:absolute;left:{{ r5.left }}px;top:{{ r5.top }}px;width:{{ r5.w }}px;box-sizing:border-box;background:#FBF0DA;border:2px solid #783E19;border-radius:6px;padding:36px 36px 32px;display:flex;flex-direction:column;gap:16px;box-shadow:6px 6px 0 rgba(31,42,68,.22)">
+<div style="font-family:'IM Fell DW Pica',serif;font-size:44px;line-height:1.05">This sweet melted</div>
+<div style="font:400 16px/1.5 'Work Sans',sans-serif;text-wrap:pretty">This link doesn't lead to a sweet anymore. It may have been mistyped, or the sender took it back.</div>
+<div data-btn="1" tabIndex="0" onClick="{{ makeNew }}" style="margin-top:6px;height:56px;display:flex;align-items:center;justify-content:center;background:#F3E08A;color:#783E19;border:2px solid #783E19;box-sizing:border-box;border-radius:999px;box-shadow:inset 0 0 0 3px #F3E08A,inset 0 0 0 4.5px #C9A44A,3px 4px 0 #783E19;font-family:'IM Fell DW Pica',serif;font-style:italic;font-size:22px;line-height:1;cursor:pointer;user-select:none;outline:none;transition:transform .12s,box-shadow .12s,background .12s" style-hover="background:#F7E8A4;box-shadow:inset 0 0 0 3px #F7E8A4,inset 0 0 0 4.5px #C9A44A,4px 6px 0 #783E19;transform:translate(-1px,-2px)" style-active="transform:translate(2px,3px);box-shadow:inset 0 0 0 3px #F3E08A,inset 0 0 0 4.5px #C9A44A,1px 1px 0 #783E19" style-focus="box-shadow:inset 0 0 0 3px #F3E08A,inset 0 0 0 4.5px #C9A44A,3px 4px 0 #783E19,0 0 0 5px #FBF0DA,0 0 0 8px #A7C3E8,0 0 0 9.5px #783E19">Make a new sweet</div>
+</div>
+</sc-if>
+
+<sc-if value="{{ preview }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;left:0;right:0;top:0;height:56px;z-index:8;box-sizing:border-box;padding:0 20px 0 28px;background:#783E19;color:#FBF0DA;display:flex;align-items:center;gap:16px">
+<svg width="22" height="14" viewBox="0 0 22 14" fill="none" stroke="#FBF0DA" stroke-width="1.6"><path d="M1,7 Q11,-3 21,7 Q11,17 1,7Z"></path><circle cx="11" cy="7" r="2.6" fill="#FBF0DA"></circle></svg>
+<span style="font:700 11px/1 'Work Sans',sans-serif;letter-spacing:.18em">PREVIEW</span>
+<span style="flex:1;min-width:0;font:400 14px/1.3 'Work Sans',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">This is what {{ toName }} will see. Nothing has been sent.</span>
+<div data-btn="1" tabIndex="0" onClick="{{ replay }}" style="font:600 14px/1 'Work Sans',sans-serif;text-decoration:underline;text-underline-offset:3px;cursor:pointer;outline:none;padding:6px 4px;border-radius:3px" style-hover="color:#F3E08A" style-focus="box-shadow:0 0 0 2px #A7C3E8">Replay</div>
+<div data-btn="1" tabIndex="0" onClick="{{ exitPreview }}" style="height:38px;display:flex;align-items:center;gap:8px;padding:0 18px;background:#F3E08A;color:#783E19;border:1.5px solid #FBF0DA;border-radius:999px;box-sizing:border-box;font-family:'IM Fell DW Pica',serif;font-style:italic;font-size:18px;line-height:1;cursor:pointer;outline:none;transition:background .12s,transform .12s" style-hover="background:#F7E8A4;transform:translateY(-1px)" style-focus="box-shadow:0 0 0 3px #A7C3E8">← Back to your sweet</div>
+</div></sc-if>
+<sc-if value="{{ showMute }}" hint-placeholder-val="{{ false }}"><div data-btn="1" tabIndex="0" onClick="{{ toggleMute }}" title="{{ muteTitle }}" style="position:absolute;top:{{ muteTop }}px;right:28px;width:52px;height:52px;border-radius:50%;background:#FBF0DA;border:1.5px solid #783E19;box-sizing:border-box;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:6;outline:none;transition:background .12s" style-hover="background:#F3E08A" style-focus="box-shadow:0 0 0 3px #A7C3E8">
+<sc-if value="{{ soundOn }}" hint-placeholder-val="{{ true }}"><svg width="22" height="22" viewBox="0 0 20 20" fill="none" stroke="#783E19" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3,8 H6 L10.5,4 V16 L6,12 H3Z" fill="#783E19"></path><path d="M13.5,7.5 Q15.5,10 13.5,12.5 M15.8,5.5 Q19.2,10 15.8,14.5"></path></svg></sc-if>
+<sc-if value="{{ muted }}" hint-placeholder-val="{{ false }}"><svg width="22" height="22" viewBox="0 0 20 20" fill="none" stroke="#783E19" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3,8 H6 L10.5,4 V16 L6,12 H3Z" fill="#783E19"></path><path d="M13.5,7.5 L18,12.5 M18,7.5 L13.5,12.5"></path></svg></sc-if>
+</div></sc-if>
+
+</div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;simulate&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;normal&quot;,&quot;slow&quot;,&quot;fail&quot;],&quot;default&quot;:&quot;normal&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;motion&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;laptop&quot;,&quot;phone&quot;],&quot;default&quot;:&quot;laptop&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;screen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;s1&quot;,&quot;s2&quot;,&quot;s3&quot;,&quot;s4&quot;,&quot;s5&quot;,&quot;r1&quot;,&quot;r0&quot;,&quot;r0err&quot;,&quot;r4&quot;,&quot;r5&quot;],&quot;default&quot;:&quot;s1&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;recipient&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Mia&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;sender&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;Theo&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;paper&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;cherry_print&quot;,&quot;pink_stripe&quot;,&quot;ticking&quot;,&quot;madras&quot;,&quot;candy_cane&quot;],&quot;default&quot;:&quot;cherry_print&quot;,&quot;tsType&quot;:&quot;string&quot;},&quot;ribbon&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;blue_stitch&quot;,&quot;blush&quot;,&quot;sage&quot;,&quot;navy_velvet&quot;,&quot;bakers_twine&quot;],&quot;default&quot;:&quot;blue_stitch&quot;,&quot;tsType&quot;:&quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { scale: 1 };
+  _c = {};
+  componentDidMount() {
+    if (!window.SweetCandy || !window.SweetBox) this._t = setInterval(() => { if (window.SweetCandy && window.SweetBox) { clearInterval(this._t); this.forceUpdate(); } }, 60);
+    if (this.props.vw) return;
+    try { if (localStorage.getItem('sweet.muted') === '1') this.setState({ muted: true }); } catch (e) {}
+    Object.assign(document.body.style, { margin: '0', background: '#2B1E16', overflow: 'hidden' });
+    this._fit = () => this.setState({ vw: window.innerWidth, vh: window.innerHeight });
+    this._fit();
+    window.addEventListener('resize', this._fit);
+    this._md = e => { if (e.target.closest && e.target.closest('[data-btn="1"]')) e.preventDefault(); };
+    this._kd = e => {
+      const t = e.target, tag = (t.tagName || '').toLowerCase();
+      if ((e.key === 'Enter' || e.key === ' ') && t.dataset && t.dataset.btn === '1' && tag !== 'a') { e.preventDefault(); t.click(); return; }
+      if (e.key === 'Escape' && (tag === 'textarea' || tag === 'input')) { t.blur(); return; }
+      if ((e.key === 'm' || e.key === 'M') && tag !== 'textarea' && tag !== 'input' && !e.metaKey && !e.ctrlKey && this._mute) { this._mute(); return; }
+      if (e.key === 'Escape') { if (this._back) { e.preventDefault(); this._back(); } return; }
+      if (e.key === 'Enter' && tag !== 'textarea' && this._next) { e.preventDefault(); this._next(); }
+    };
+    document.addEventListener('mousedown', this._md);
+    document.addEventListener('keydown', this._kd);
+  }
+  componentWillUnmount() {
+    clearInterval(this._t); clearTimeout(this._u); clearTimeout(this._k); clearTimeout(this._w);
+    if (this._fit) window.removeEventListener('resize', this._fit);
+    document.removeEventListener('mousedown', this._md);
+    document.removeEventListener('keydown', this._kd);
+  }
+  svg(key, fn) {
+    if (!this._c[key]) this._c[key] = React.createElement('div', { style: { width: '100%', height: '100%' }, dangerouslySetInnerHTML: { __html: fn() } });
+    return this._c[key];
+  }
+  renderVals() {
+    const C = window.SweetCandy, B = window.SweetBox, pr = this.props, st = this.state;
+    const scr = st.screen || pr.screen || 's1';
+    const vw = +pr.vw || st.vw || 1440, vh = +pr.vh || st.vh || 900;
+    const fit = vw < 1024 || vh < 720 ? Math.min(vw / 1024, vh / 720) : Math.max(1, Math.min(vw / 1920, vh / 1200));
+    const W = Math.round(vw / fit), H = Math.round(vh / fit);
+    const lap = (pr.motion ?? 'laptop') === 'laptop', MO = lap ? { dur: 1.9, cdur: 1.35, delay: 1.05, n: 110, spread: 640, min: 150, stars: 22, hold: 2350 } : { dur: 1.5, cdur: 1, delay: .8, n: 72, spread: 440, min: 90, stars: 14, hold: 1750 };
+    const P = +pr.ratio ? Math.max(440, Math.round(W * +pr.ratio)) : W >= 1360 ? 580 : W >= 1200 ? 500 : 440, tight = H < 860;
+    const pn = Object.assign({ w: P, sw: tight ? 52 : 62, card: tight ? 56 : 68, ta: tight ? 92 : 120 }, P >= 560 ? { pad: '52px 56px 44px', gap: 18, title: 40 } : P >= 480 ? { pad: '44px 44px 36px', gap: 16, title: 36 } : { pad: '36px 36px 30px', gap: 14, title: 32 });
+    if (tight) { pn.gap -= 4; pn.pad = pn.pad.replace(/^\d+px/, m => (parseInt(m) - 12) + 'px'); }
+    const SW = W - P, gk = Math.min(1.2, SW / 860, H / 900);
+    const gs = { k: gk, left: Math.round((SW - 860 * gk) / 2), top: Math.round((H - 900 * gk) / 2) };
+    const rk = Math.min(1.2, W / 1440, H / 900), rvTop = Math.round((H - 900 * rk) / 2);
+    const pvO = st.preview ? 56 : 0, rv = { k: rk, left: Math.round((W - 1440 * rk) / 2), top: rvTop + pvO / 2, pill: Math.max(28, Math.round(rvTop + 96 * rk)) + pvO, tap: Math.round(rvTop + 740 * rk) + pvO / 2 };
+    const k1 = Math.min(1.15, W / 1440, (H - 300) / 600), g1Top = Math.max(0, Math.round((H - 632 * k1 - 276) / 2) - 14);
+    const g1 = { k: k1, left: Math.round((W - 1440 * k1) / 2), top: g1Top, cardTop: Math.min(Math.round(g1Top + 572 * k1), H - 300) };
+    const r5w = P >= 500 ? 480 : 420, r5 = { w: r5w, left: SW + Math.max(0, Math.round((P - r5w) / 2)) - 30, top: Math.round((H - 400) / 2) };
+    const fabric = st.fabric || pr.paper || 'cherry_print', ribbon = st.ribbon || pr.ribbon || 'blue_stitch', sticker = st.sticker || pr.sticker || 'butter_oval', card = st.card || pr.card || 'card_2';
+    const extra = st.extra || 'none';
+    const to = st.to ?? pr.recipient ?? 'Mia', from = st.from ?? pr.sender ?? 'Theo';
+    const note = st.note ?? 'Saturday, 10am. Bring your appetite. I found the bakery with the cardamom buns.';
+    const url = st.url ?? '', iou = st.iou ?? 'Coffee date, my treat';
+    const okUrl = /^https?:\/\/[^\s\/.]+\.[^\s]{2,}$/i.test(url.trim());
+    let urlHost = url; try { urlHost = new URL(url).hostname.replace(/^www\./, ''); } catch (e) {}
+    const go = s => () => this.setState({ screen: s, err: false, preview: false, wrapErr: false, copyFail: false });
+    const pv = st.preview ? 56 : 0, exitPreview = () => { clearTimeout(this._u); this.setState({ screen: 's5', preview: false }); };
+    const sim = pr.simulate ?? 'normal', slow = sim === 'slow', failing = sim === 'fail';
+    const wrapping = st.wrapping ?? pr.wrapState === 'wrapping', wrapErr = st.wrapErr ?? pr.wrapState === 'error';
+    const wrap = () => { if (extra === 'link' && !okUrl) { this.setState({ err: true }); return; } if (wrapping) return; this.setState({ wrapping: true, wrapErr: false }); clearTimeout(this._w); this._w = setTimeout(() => failing && !this._failedOnce ? (this._failedOnce = true, this.setState({ wrapping: false, wrapErr: true })) : this.setState({ wrapping: false, wrapErr: false, screen: 's5', preview: false }), slow ? 2600 : 900); };
+    const loadR1 = () => { clearTimeout(this._u); this.setState({ screen: 'r0' }); this._u = setTimeout(() => this.setState({ screen: failing && !this._loadFailed ? (this._loadFailed = true, 'r0err') : 'r1' }), slow ? 2600 : 1000); };
+    const tap = () => { if (scr !== 'r1') return; this.setState({ screen: 'unwrap', n: (st.n || 0) + 1 }); clearTimeout(this._u); this._u = setTimeout(() => this.setState({ screen: 'r4' }), MO.hold); };
+    const nav = { s1: [null, go('s2')], s2: [go('s1'), go('s3')], s3: [go('s2'), go('s4')], s4: [go('s3'), wrap], s5: [go('s4'), null], r1: [st.preview ? exitPreview : null, tap], r4: [st.preview ? exitPreview : null, null], r0err: [st.preview ? exitPreview : null, loadR1] }[scr] || [null, null];
+    this._back = nav[0]; this._next = nav[1];
+    const isS2 = scr === 's2', isS3 = scr === 's3', isS4 = scr === 's4', isS5 = scr === 's5', isR4 = scr === 'r4', recv = ['r1', 'unwrap'].includes(scr);
+    const tName = to.trim() || 'you';
+    const pose = scr === 'unwrap' ? 'anim' : scr === 'r5' ? 'melt' : '';
+    const needCandy = ['s1', 's2', 's5', 'r1', 'unwrap', 'r5', 'r0', 'r0err'].includes(scr);
+    const candy = C && needCandy ? this.svg(['c', fabric, ribbon, sticker, tName, pose, pose === 'anim' ? st.n + '' + lap : 0].join('|'), () => C.candy({ fab: fabric, rib: ribbon, sticker, name: tName, pose, dur: MO.dur })) : null;
+    const tray = B && (needCandy);
+    const heart = card === 'card_1';
+    const stepN = { s2: 1, s3: 2, s4: 3, s5: 4 }[scr];
+    const stepGo = [go('s2'), go('s3'), go('s4'), wrap];
+    const FAB = C ? C.FABRICS : [], RIB = C ? C.RIBBONS : [], STK = C ? C.STICKERS : [], CARDS = C ? C.CARDS : [];
+    const fSel = FAB.find(f => f.key === fabric) || {}, rSel = RIB.find(r => r.key === ribbon) || {}, sSel = STK.find(s => s.key === sticker) || {};
+    const lim = { to: 40, from: 40, note: 280, iou: 80, url: 400 };
+    const set = k => e => this.setState({ [k]: e.target.value.slice(0, lim[k]), ...(k === 'url' ? { err: false } : {}) });
+    const len = note.length;
+    const sH = heart ? 420 : 350, sPad = C ? C.cardPad(card, 520, sH).map(v => Math.round(v) + 'px').join(' ') : '40px';
+    const sc = { left: isS4 ? 150 : 170, top: (isS4 ? (extra === 'iou' ? 300 : 240) : 275) - (heart ? 40 : 0), h: sH, pad: sPad, align: heart ? 'center' : 'left', fromAlign: heart ? 'center' : 'flex-end', fs: Math.round((len <= 90 ? 27 : len <= 170 ? 22 : 18) * (heart ? .78 : 1)), from: heart ? 24 : 30, sealTop: 540, hintTop: (isS4 ? (extra === 'iou' ? 300 : 240) : 275) - (heart ? 40 : 0) + sH + 22 };
+    const linkIn = isR4 && extra === 'link' && !heart, linkOut = isR4 && extra === 'link' && heart;
+    let r4 = {}, r4Card = null;
+    if (C && isR4) {
+      const w = heart ? 560 : 640;
+      let h;
+      if (heart) h = 540; else { const p = C.cardPad(card, w, 420), cpl = Math.max(12, Math.floor((w - p[1] - p[3]) / 15)), lines = Math.max(2, Math.ceil(len / cpl)); h = Math.max(360, Math.round(p[0] + p[2] + 30 + lines * 44 + 60 + (linkIn ? 96 : 0))); }
+      const btnH = 56 + (linkOut ? 68 : 0), total = h + 44 + btnH, top = Math.max(40 + pv, Math.round((H - total + pv) / 2));
+      const left = extra === 'iou' ? Math.round((W - w - 300) / 2) : Math.round((W - w) / 2);
+      r4 = { w, h, top, left, pad: C.cardPad(card, w, h).map(v => Math.round(v) + 'px').join(' '), align: heart ? 'center' : 'left', fromAlign: heart ? 'center' : 'flex-end', fs: heart ? 26 : (len <= 120 ? 34 : 28), from: heart ? 28 : 36, btnTop: top + h + 44, iouLeft: left + w - 60, iouTop: top + 80 };
+      r4Card = this.svg('r4' + card + w + h, () => C.noteCard({ style: card, w, h }));
+    }
+    const gp = H < 760 ? '14px 0 16px' : '16px 0 20px';
+    let pieces = [];
+    if (C && isR4) {
+      const k = Math.min(1.1, Math.max(.72, W / 1440)), o = { fab: fabric, rib: ribbon, sticker, name: tName };
+      const part = key => this.svg('pc' + key + fabric + ribbon + sticker + tName, () => C.hand(C.candyRaw(Object.assign({ only: key }, o))));
+      const Lg = r4.left, Rs = extra === 'iou' ? r4.iouLeft + 350 : r4.left + r4.w + (extra === 'link' ? 50 : 0), Rg = W - Rs;
+      const fit = (g, bw, bh) => { const w = Math.min(bw * k, g - 28); return w < 96 ? null : { w: Math.round(w), h: Math.round(bh * w / bw) }; };
+      const place = (key, el, side, bw, bh, ty, rot, d) => { const g = side ? Rg : Lg, f = fit(g, bw, bh); if (!f) return; const x0 = side ? Rs : 0; pieces.push({ el, w: f.w, h: f.h, left: Math.round(x0 + (g - f.w) / 2), top: Math.round(ty), rot, delay: (.15 + d).toFixed(2) }); };
+      place('bowL', part('bowL'), 0, 260, 150, pv + .07 * H, -24, 0);
+      place('endR', part('endR'), 1, 240, 160, pv + 100, 16, .08);
+      place('endL', part('endL'), 0, 250, 165, .66 * H, -8, .14);
+      place('bowR', part('bowR'), 1, 250, 145, .7 * H, 28, .2);
+      place('stk', this.svg('pcs' + sticker + tName, () => C.stickerSwatch(sticker, tName)), Rg >= Lg ? 1 : 0, 200, 146, .4 * H + pv / 2, Rg >= Lg ? 9 : -9, .3);
+    }
+    const tile = (list, sel, el, key, pad) => list.map(x => ({ name: x.name, sel: x.key === sel, tag: st.hov === el + x.key, on: () => this.setState({ hov: el + x.key }), off: () => this.setState(s => s.hov === el + x.key ? { hov: null } : null), lift: x.key === sel ? 'none' : 'none', el: this.svg(el + x.key + (el === 's' ? tName : ''), () => el === 'f' ? C.fabricSwatch(x.key) : el === 'r' ? C.ribbonSwatch(x.key) : C.stickerSwatch(x.key, tName)), pick: () => this.setState({ [key]: x.key }) }));
+    return {
+      scale: fit, W, H, pn, gs, rv, g1, r5, rootPos: pr.vw ? 'absolute' : 'fixed',
+      isS1: scr === 's1', isS2, isS3, isS4, isS5, isR4, isR5: scr === 'r5',
+      senderStage: isS2 || isS5, cardStage: isS3 || isS4, hasPanel: !!stepN, isRecvStage: recv,
+      stageCard: C && (isS3 || isS4) ? this.svg('sc' + card + sH, () => C.noteCard({ style: card, w: 520, h: sH, shadow: true })) : null, sc,
+      stageSeal: isS4 && extra === 'link', stageIou: isS4 && extra === 'iou', sealHost: okUrl ? urlHost : 'your link',
+      candy, trayBack: tray ? this.svg('tb', () => B.box('stripe', 'back', { wall: '#FBF0DA', rim: '#FFF9EC' })) : null, trayFront: tray ? this.svg('tf', () => B.box('stripe', 'front', { wall: '#FBF0DA', rim: '#FFF9EC' })) : null,
+      confetti: C && scr === 'unwrap' ? this.svg('ca' + st.n + lap, () => C.confetti({ w: 1440, h: 900, cx: 720, cy: 500, n: MO.n, seed: 5, min: MO.min, spread: MO.spread, stars: MO.stars, anim: true, delay: MO.delay, dur: MO.cdur })) : null,
+      steps: ['Wrap', 'Note', 'Extra', 'Send'].map((l, i) => { const k = i + 1, on = k === stepN, done = k < stepN; return { label: l, notFirst: i > 0, flex: i ? '1 1 0' : 'none', cw: on ? 46 : 34, ch: on ? 24 : 18, fill: on ? '#F3E08A' : done ? '#EBA3AE' : '#FBF0DA', labelFont: on ? "700 9.5px/1 'Work Sans',sans-serif" : "500 9px/1 'Work Sans',sans-serif", btn: done ? '1' : '0', tab: done ? 0 : -1, cur: done ? 'pointer' : 'default', title: done ? 'Back to ' + l : '', go: done ? stepGo[i] : undefined }; }),
+      panelTitle: { s2: 'Wrap your sweet', s3: 'Write your note', s4: 'Add a little extra', s5: 'Your sweet is ready' }[scr],
+      wrapGroups: C ? [
+        { label: 'PAPER', value: fSel.name, note: fSel.note, swH: pn.sw, gpad: gp, showNote: H >= 760, pad: '0', items: tile(FAB, fabric, 'f', 'fabric') },
+        { label: 'RIBBON', value: rSel.name, note: rSel.note + ' ribbon', swH: pn.sw, gpad: gp, showNote: H >= 760, pad: '8px', items: tile(RIB, ribbon, 'r', 'ribbon') },
+        { label: 'STICKER', value: sSel.name, note: 'Sealed with ' + tName + '\u2019s name', swH: pn.sw, gpad: gp, showNote: H >= 760, pad: '4px', items: tile(STK, sticker, 's', 'sticker') }
+      ] : [],
+      wrapNote: fSel.note + ' · ' + rSel.note + ' ribbon',
+      cards: CARDS.map(c => ({ name: c.name, h: pn.card, sel: c.key === card, el: this.svg('mini' + c.key, () => '<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center">' + C.noteCard({ style: c.key, w: 74, h: 50, sw: 1.4 }) + '</div>'), pick: () => this.setState({ card: c.key }) })),
+      types: [['none', 'Nothing', 'Just the note'], ['link', 'Link', 'A playlist, a booking'], ['iou', 'IOU', 'A promise to keep']].map(([k, l, hint]) => ({ label: l, hint, fill: k === extra ? '#F3E08A' : '#FFF9EC', ital: k === extra ? 'italic' : 'normal', pick: () => this.setState({ extra: k, err: false }) })),
+      isLink: extra === 'link', isIou: extra === 'iou',
+      urlErr: !!st.err, urlOk: !st.err,
+      toName: to, fromName: from, note, url, iou, urlHost,
+      toCount: to.length + '/40', noteCount: note.length + '/280', iouCount: iou.length + '/80',
+      fabName: fSel.name, ribName: rSel.name,
+      onTo: set('to'), onFrom: set('from'), onNote: set('note'), onUrl: set('url'), onIou: set('iou'),
+      twoBtn: isS3 || isS4, nextLabel: isS4 ? (wrapping ? 'Wrapping…' : wrapErr ? 'Try again' : 'Wrap it up') : 'Next', next: nav[1], back: nav[0],
+      showEsc: !!nav[0], hasEnter: !!nav[1], enterHint: 'Enter to continue', notS2: !isS2,
+      goS2: go('s2'), goS3: go('s3'), goR1: () => { this._loadFailed = false; this.setState({ preview: true }); loadR1(); }, preview: !!st.preview && (recv || isR4 || scr === 'r0' || scr === 'r0err'), loadR1,
+      isR0: scr === 'r0', isR0err: scr === 'r0err', r0W: Math.round(Math.min(460, W * .32)), r0Top: Math.round(H * .3 + pv / 2),
+      wrapErr: isS4 && wrapErr, linkRef: this._lr || (this._lr = React.createRef()), copyFail: isS5 && !!(st.copyFail ?? pr.copyFail), linkBg: (st.copyFail ?? pr.copyFail) ? '#F3E08A' : '#FFF9EC', copyKey: /Mac/.test(navigator.platform) ? '⌘C' : 'Ctrl+C', replay: () => { clearTimeout(this._u); this.setState({ screen: 'r1' }); }, exitPreview, muteTop: 28 + pv,
+      notS3: !isS3, cardOn: () => this.setState({ cardFocus: true }), cardOff: () => this.setState({ cardFocus: false }), cardHint: isS3, cardHintText: st.cardFocus ? 'Writing on the card · Esc to stop' : 'Click the card to write on it', makeNew: () => this.setState({ screen: 's1', err: false, extra: 'none', url: '' }),
+      copy: () => { const fail = () => { const el = this._lr && this._lr.current; if (el) { const r = document.createRange(); r.selectNodeContents(el); const sel = window.getSelection(); sel.removeAllRanges(); sel.addRange(r); } this.setState({ copyFail: true, copied: false }); }; if (failing || !navigator.clipboard) { fail(); return; } navigator.clipboard.writeText('https://sweet.app/g/k3Fq9xT2mB').then(() => { this.setState({ copied: true, copyFail: false }); clearTimeout(this._k); this._k = setTimeout(() => this.setState({ copied: false }), 1600); }, fail); },
+      copyLabel: st.copied ? 'Copied ✓' : 'Copy link',
+      showTop: recv, showTap: scr === 'r1', showMute: recv || isR4 || scr === 'r0',
+      candyBtn: scr === 'r1' ? '1' : '0', candyTab: scr === 'r1' ? 0 : -1, candyCur: scr === 'r1' ? 'pointer' : 'default',
+      candyHover: scr === 'r1' ? 'transform:translateY(-8px) rotate(-1.5deg)' : 'transform:none',
+      tap, soundOn: !st.muted, muted: !!st.muted, muteTitle: st.muted ? 'Sound off · remembered on this device (M)' : 'Sound on (M)', toggleMute: this._mute = () => this.setState(s => { const m = !s.muted; try { localStorage.setItem('sweet.muted', m ? '1' : '0'); } catch (e) {} return { muted: m }; }),
+      linkIn, linkOut, r4, r4Card, pieces,
+      sendBack: st.preview ? exitPreview : () => this.setState({ screen: 's1', err: false, extra: 'none', url: '' }), sendPrimary: extra !== 'link', sendSecondary: extra === 'link'
+    };
+  }
+}
+</script>
+</body>
+</html>
