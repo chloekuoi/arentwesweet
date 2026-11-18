@@ -1,10 +1,14 @@
 # Handoff: Sweet — wrap a digital candy, send it as a link
 
+> **Build from the root files only:** SweetPhone.dc.html, SweetLaptop.dc.html, Sweet App Flow.dc.html, Sweet Laptop Flow.dc.html, Sweet Style Sheet.dc.html, sweet-candy.js, box.js, doily.js.
+> **Ignore `explorations/`.** It holds rejected and superseded options kept as a record. Every final choice is already in the root prototypes and in this README.
+> The build prompt is in `design_handoff_sweet/CLAUDE_CODE_PROMPT.md`. If the app is already built, use `design_handoff_sweet/CHANGES_PROMPT.md` for the latest updates: the S1 welcome card and the R1 arrival.
+
 ## Overview
 Sweet lets a **sender** wrap a virtual vintage candy (paper, ribbon, name sticker), tuck a note and an optional extra (link or IOU) inside, and send it as a link. The **receiver** opens the link, clicks or taps the candy to unwrap it (bows fly, confetti), and reads the note. There's no sign-in and no app install, just a web app on phone and laptop.
 
 ## About the design files
-Everything in `reference/` is an **HTML design reference**: a working prototype that shows the intended look and behaviour. It is **not production code**. Recreate it in a real stack. If there's no existing codebase, use **Next.js (App Router) + React + TypeScript + CSS Modules or Tailwind**. That gives server-rendered link previews (OG images) and simple API routes.
+Everything listed below is an **HTML design reference**: a working prototype that shows the intended look and behaviour. It is **not production code**. Recreate it in a real stack. If there's no existing codebase, use **Next.js (App Router) + React + TypeScript + CSS Modules or Tailwind**. That gives server-rendered link previews (OG images) and simple API routes.
 
 Open any `.dc.html` file directly in a browser; `support.js` is the prototype runtime and should not be ported. The HTML templates use `{{ holes }}` and `<sc-if>`/`<sc-for>`, and each file's logic is in the `class Component` at the bottom.
 
@@ -91,7 +95,7 @@ Polka background CSS:
 Copy is final; it's in the prototypes. Sender **S1–S5**, receiver **R0–R5**.
 
 **Sender**
-- **S1 Welcome:** the candy in the tray, and a cream card with "Sweet" (script), "Wrap a little something" and **Start wrapping**.
+- **S1 Welcome:** the candy in the tray, and a centred cream "shop label" card (2px outer border, radius 10, 8px gap, then a 1.5px inner rule, radius 5) with "Sweet" in script between two short rules, "Wrap a little something", the body line and a full-width **Start wrapping**. See explorations/Welcome Card Options, 1b.
 - **S2 Wrap it:**
   - Phone: tabs Paper / Ribbon / Sticker in a bottom sheet.
   - Laptop: all three groups in the right panel, divided by hairlines. 62px tiles with no labels; the name appears in a tag on hover or focus. Each group has its selected name at the right and a one-line note below.
@@ -205,3 +209,7 @@ type Sweet = {
 2. Long-name and long-note edge cases, and the SE keyboard: partly prototyped in Sweet App Flow ("edge cases"), but not signed off. Use sensible truncation (ellipsis on pills, sticker name auto-fit).
 3. Accessibility pass: out of scope for now. Still use `:focus-visible`, button semantics and alt text where it's cheap.
 4. Product details not designed: domain name, link expiry, abuse/report, analytics.
+
+
+## Update · Arrival (R1)
+The "sent you a sweet" pill is now a plaque: a cream pill (2px border, 7px inset) with a 1.5px dashed inner ring, "Hooray, {recipient}!" in cherry script above "{sender} sent you a sweet". A sunburst of butter (#F7E8A4) and cream rays (5° each) sits behind the sweet on arrival and unwrap, centred on the sweet and fading out with a radial mask. The unwrap button is now a cherry-red (#C8443F) pill with cream text and a butter inner ring, reading "Unwrap your sweet". It uses the same hover, pressed and focus behaviour as the primary button. See explorations/Arrival Celebration Options, 2c.
