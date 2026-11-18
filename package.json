@@ -15,7 +15,7 @@
   "dependencies": {
     "@resvg/resvg-js": "^2.6.2",
     "better-sqlite3": "^12.4.1",
-    "next": "^15.5.4",
+    "next": "^15.5.29",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "server-only": "^0.0.1"
@@ -27,5 +27,8 @@
     "@types/react-dom": "^19.3.0",
     "tsx": "^4.20.6",
     "typescript": "^5.9.3"
+  },
+  "overrides": {
+    "postcss": "^8.5.33"
   }
 }
