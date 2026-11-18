@@ -1,7 +1,7 @@
 'use client';
 import { useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import { CandyInTray, FabricSwatch, NoteCard, RibbonSwatch, Sticker } from '@/components/art';
-import { ErrorDot, Field, IouCoupon, LockIcon, MiniCandy, PrimaryButton, SecondaryButton, StepBar, TextLink, WaxSeal, cx, ui } from '@/components/ui';
+import { ErrorDot, Field, IouCoupon, LabelWordmark, LockIcon, MiniCandy, PrimaryButton, SecondaryButton, StepBar, TextLink, WaxSeal, cx, ui } from '@/components/ui';
 import { CARDS, FABRICS, RIBBONS, STICKERS, cardPad } from '@/lib/art';
 import { PHONE_MOTION, type PhoneGeo } from '@/lib/layout';
 import { hostOf, isFullUrl, stickerName } from '@/lib/sweet';
@@ -67,11 +67,13 @@ export function PhoneSender({ L, sender, onPreview }: { L: PhoneGeo; sender: Sen
           <div style={stage(L.g1.y, L.g1.k)}>
             <CandyInTray trayLeft={0} trayTop={139} trayScale={1} candyLeft={21} candyTop={305} candyWidth={348} candy={candyOpts} />
           </div>
-          <div style={card}>
-            <div style={{ fontFamily: "'La Belle Aurore',cursive", fontSize: 20, lineHeight: 1 }}>Sweet</div>
-            <h1 style={{ ...title(34, 1.05), textWrap: 'balance' } as CSSProperties}>Wrap a little something</h1>
-            <div style={{ font: "400 15px/1.5 'Work Sans',sans-serif", textWrap: 'pretty' } as CSSProperties}>Choose a fabric and a ribbon, tuck a note or a gift inside, and send it as a link.</div>
-            <PrimaryButton variant="phone" onClick={() => go('s2')} style={{ marginTop: 6 }}>Start wrapping</PrimaryButton>
+          <div style={{ position: 'absolute', left: 16, right: 16, bottom: 30, background: '#FBF0DA', border: '2px solid #783E19', borderRadius: 10, padding: 6, boxShadow: '6px 6px 0 rgba(31,42,68,.22)' }}>
+            <div style={{ border: '1.5px solid #783E19', borderRadius: 5, padding: '18px 18px 20px', display: 'flex', flexDirection: 'column', gap: 12, textAlign: 'center' }}>
+              <LabelWordmark variant="phone" />
+              <h1 style={{ ...title(34, 1.05), textWrap: 'balance' } as CSSProperties}>Wrap a little something</h1>
+              <div style={{ font: "400 15px/1.5 'Work Sans',sans-serif", textWrap: 'pretty' } as CSSProperties}>Choose a fabric and a ribbon, tuck a note or a gift inside, and send it as a link.</div>
+              <PrimaryButton variant="phone" onClick={() => go('s2')} style={{ marginTop: 6 }}>Start wrapping</PrimaryButton>
+            </div>
           </div>
         </div>
       )}

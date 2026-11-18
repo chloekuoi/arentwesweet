@@ -87,11 +87,6 @@ a.primary:hover, a.primary:active { color: var(--ink); }
 .step:focus-visible { box-shadow: 0 0 0 3px #A7C3E8; }
 
 /* Pills and round buttons */
-.tapPill { font: 700 13px/1 var(--f-ui); letter-spacing: .2em; background: var(--cream); border: 1.5px solid var(--ink); padding: 13px 20px; border-radius: 999px; cursor: pointer; outline: none; transition: background .12s, transform .12s; }
-.tapPill:hover { background: var(--butter); transform: translateY(-2px); }
-.tapPill:focus-visible { box-shadow: 0 0 0 3px #A7C3E8; }
-.pTapPill { font: 700 12px/1 var(--f-ui); letter-spacing: .2em; background: var(--cream); border: 1.5px solid var(--ink); padding: 11px 16px; border-radius: 999px; cursor: pointer; outline: none; }
-.pTapPill:active { background: var(--butter); transform: translateY(1px); }
 .mute { position: absolute; right: 28px; width: 52px; height: 52px; border-radius: 50%; background: var(--cream); border: 1.5px solid var(--ink); box-sizing: border-box; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 6; outline: none; transition: background .12s; }
 .mute:hover { background: var(--butter); }
 .mute:focus-visible { box-shadow: 0 0 0 3px #A7C3E8; }
@@ -125,3 +120,10 @@ a.primary:hover, a.primary:active { color: var(--ink); }
 /* R4 wrapper pieces lift on hover (laptop) */
 .piece { width: 100%; height: 100%; filter: drop-shadow(4px 6px 0 rgba(31,42,68,.16)); transition: transform .25s cubic-bezier(.3,1.6,.5,1); }
 .piece:hover { transform: translateY(-8px) rotate(-4deg); }
+
+/* R1 cherry unwrap button */
+.unwrap { height: 66px; display: flex; align-items: center; justify-content: center; padding: 0 52px; background: #C8443F; color: #FFF9EC; border: 2px solid #783E19; box-sizing: border-box; border-radius: 999px; box-shadow: inset 0 0 0 3px #C8443F, inset 0 0 0 4.5px #F3E08A, 3px 4px 0 #783E19; font-family: var(--f-title); font-style: italic; font-size: 26px; line-height: 1; white-space: nowrap; cursor: pointer; outline: none; user-select: none; transition: transform .12s, box-shadow .12s, background .12s; }
+.unwrap.phone { height: 54px; padding: 0 34px; font-size: 22px; }
+.laptop.unwrap:hover { background: #D2564F; box-shadow: inset 0 0 0 3px #D2564F, inset 0 0 0 4.5px #F3E08A, 4px 6px 0 #783E19; transform: translate(-1px,-2px); }
+.unwrap:active, .laptop.unwrap:hover:active { transform: translate(2px,3px); box-shadow: inset 0 0 0 3px #C8443F, inset 0 0 0 4.5px #F3E08A, 1px 1px 0 #783E19; }
+.unwrap:focus-visible { box-shadow: inset 0 0 0 3px #C8443F, inset 0 0 0 4.5px #F3E08A, 3px 4px 0 #783E19, 0 0 0 5px #FBF0DA, 0 0 0 8px #A7C3E8, 0 0 0 9.5px #783E19; }

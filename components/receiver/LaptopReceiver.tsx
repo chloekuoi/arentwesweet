@@ -1,7 +1,7 @@
 'use client';
 import type { CSSProperties, ReactNode } from 'react';
 import { Candy, CandyInTray, CandyPiece, Confetti, NoteCard, Sticker, Tray } from '@/components/art';
-import { EyeIcon, IouCoupon, MuteButton, PrimaryButton, PrimaryLink, SecondaryButton, WaxSeal, cx, ui } from '@/components/ui';
+import { ArrivalPlaque, Sunburst, UnwrapButton, EyeIcon, IouCoupon, MuteButton, PrimaryButton, PrimaryLink, SecondaryButton, WaxSeal, cx, ui } from '@/components/ui';
 import { cardPad } from '@/lib/art';
 import { LAPTOP_MOTION, type LaptopGeo } from '@/lib/layout';
 import { hostOf, stickerName } from '@/lib/sweet';
@@ -69,9 +69,10 @@ export function LaptopReceiver({ g, rc, preview, onSendBack, onMakeNew }: {
     body = (
       <>
         <div style={{ position: 'absolute', top: rv.pill, left: 0, right: 0, display: 'flex', justifyContent: 'center', zIndex: 3 }}>
-          <div style={{ maxWidth: 900, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontFamily: "'IM Fell DW Pica',serif", fontSize: 28, lineHeight: 1, background: '#FBF0DA', border: '1.5px solid #783E19', padding: '13px 24px', borderRadius: 999 }}>{from} sent you a sweet</div>
+          <ArrivalPlaque variant="laptop" to={stickerName(sweet.to)} from={from} />
         </div>
         <div style={{ position: 'absolute', left: rv.left, top: rv.top, width: 1440, height: 900, transform: `scale(${rv.k})`, transformOrigin: '0 0' }}>
+          <Sunburst left={20} top={-220} size={1400} />
           <div style={tray}><Tray part="back" /></div>
           <button type="button" data-btn={isR1 ? '1' : '0'} tabIndex={isR1 ? 0 : -1} onClick={rc.unwrap} title={isR1 ? 'Click to unwrap' : undefined} aria-label="Unwrap the sweet"
             className={cx(ui.reset, ui.candyBtn, !isR1 && ui.candyIdle)} style={{ left: 360, top: 313, width: 720 }}>
@@ -86,7 +87,7 @@ export function LaptopReceiver({ g, rc, preview, onSendBack, onMakeNew }: {
         </div>
         {isR1 && (
           <div style={{ position: 'absolute', top: rv.tap, left: 0, right: 0, display: 'flex', justifyContent: 'center' }}>
-            <button type="button" data-btn="1" onClick={rc.unwrap} className={cx(ui.reset, ui.tapPill)}>CLICK TO UNWRAP</button>
+            <UnwrapButton variant="laptop" onClick={rc.unwrap} />
           </div>
         )}
       </>

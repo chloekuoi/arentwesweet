@@ -1,7 +1,7 @@
 'use client';
 import { useEffect, useState, type CSSProperties, type ReactNode } from 'react';
 import { Candy, CandyInTray, CandyPiece, Confetti, NoteCard, Sticker } from '@/components/art';
-import { EyeIcon, IouCoupon, MuteButton, PrimaryButton, PrimaryLink, SecondaryButton, WaxSeal, cx, ui } from '@/components/ui';
+import { ArrivalPlaque, Sunburst, UnwrapButton, EyeIcon, IouCoupon, MuteButton, PrimaryButton, PrimaryLink, SecondaryButton, WaxSeal, cx, ui } from '@/components/ui';
 import { cardPad } from '@/lib/art';
 import { PHONE_MOTION, type PhoneGeo } from '@/lib/layout';
 import { hostOf, stickerName } from '@/lib/sweet';
@@ -59,6 +59,7 @@ export function PhoneReceiver({ L, rc, preview, onSendBack, onMakeNew }: {
       <div style={{ position: 'absolute', inset: 0 }}>
         {!isR4 && (
           <div style={{ position: 'absolute', left: 0, top: recvY, width: 390, height: 844 }}>
+            {(screen === 'r1' || screen === 'unwrap') && <Sunburst left={-185} top={90} size={760} />}
             <CandyInTray trayLeft={0} trayTop={219} trayScale={1} candyLeft={21} candyTop={385} candyWidth={348}
               candy={{ ...base, pose, dur: PHONE_MOTION.dur, replay: pose === 'anim' ? replay : 0 }} candyStyle={{ cursor: screen === 'r1' ? 'pointer' : 'default' }} />
             {screen === 'r1' && <button type="button" aria-label="Unwrap the sweet" tabIndex={-1} onClick={rc.unwrap} className={ui.reset} style={{ position: 'absolute', left: 21, top: 385, width: 348, height: 194, cursor: 'pointer' }} />}
@@ -71,12 +72,12 @@ export function PhoneReceiver({ L, rc, preview, onSendBack, onMakeNew }: {
         )}
         {(screen === 'r1' || screen === 'unwrap') && sweet && (
           <div style={{ position: 'absolute', top: 104 + pv, left: 0, right: 0, display: 'flex', justifyContent: 'center', zIndex: 3 }}>
-            <div style={{ maxWidth: 330, boxSizing: 'border-box', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontFamily: "'IM Fell DW Pica',serif", fontSize: 21, lineHeight: 1.1, background: '#FBF0DA', border: '1.5px solid #783E19', padding: '9px 18px', borderRadius: 999 }}>{from} sent you a sweet</div>
+            <ArrivalPlaque variant="phone" to={stickerName(sweet.to)} from={from} />
           </div>
         )}
         {screen === 'r1' && (
           <div style={{ position: 'absolute', top: 600 + Math.round(dy * 0.5), left: 0, right: 0, display: 'flex', justifyContent: 'center' }}>
-            <button type="button" onClick={rc.unwrap} className={cx(ui.reset, ui.pTapPill)}>TAP TO UNWRAP</button>
+            <UnwrapButton variant="phone" onClick={rc.unwrap} />
           </div>
         )}
         {isR4 && sweet && <PhoneReveal L={L} rc={rc} pv={pv} muteTop={muteTop} onSendBack={onSendBack} />}

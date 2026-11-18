@@ -1,7 +1,7 @@
 'use client';
 import { useRef, useState, type CSSProperties } from 'react';
 import { CandyInTray, FabricSwatch, NoteCard, RibbonSwatch, Sticker } from '@/components/art';
-import { ErrorDot, Field, IouCoupon, LockIcon, MiniCandy, PencilIcon, PrimaryButton, SecondaryButton, StepBar, TextLink, WaxSeal, cx, ui } from '@/components/ui';
+import { ErrorDot, Field, IouCoupon, LabelWordmark, LockIcon, MiniCandy, PencilIcon, PrimaryButton, SecondaryButton, StepBar, TextLink, WaxSeal, cx, ui } from '@/components/ui';
 import { CARDS, FABRICS, RIBBONS, STICKERS, cardPad } from '@/lib/art';
 import { LAPTOP_MOTION, type LaptopGeo } from '@/lib/layout';
 import { hostOf, isFullUrl, stickerName } from '@/lib/sweet';
@@ -54,11 +54,13 @@ export function LaptopSender({ g, sender, onPreview }: { g: LaptopGeo; sender: S
           <div style={{ position: 'absolute', left: g1.left, top: g1.top, width: 1440, height: 900, transform: `scale(${g1.k})`, transformOrigin: '0 0', pointerEvents: 'none' }}>
             <CandyInTray trayLeft={361.4} trayTop={-58.3} trayScale={1.8391} candyLeft={400} candyTop={247} candyWidth={640} candy={candyOpts} />
           </div>
-          <div style={{ position: 'absolute', left: '50%', top: g1.cardTop, width: 600, marginLeft: -300, boxSizing: 'border-box', background: '#FBF0DA', border: '2px solid #783E19', borderRadius: 6, padding: '28px 32px', display: 'flex', flexDirection: 'column', gap: 12, boxShadow: '6px 6px 0 rgba(31,42,68,.22)' }}>
-            <div style={{ fontFamily: "'La Belle Aurore',cursive", fontSize: 22, lineHeight: 1 }}>Sweet</div>
-            <h1 style={{ margin: 0, fontWeight: 400, fontFamily: "'IM Fell DW Pica',serif", fontSize: 44, lineHeight: 1.05 }}>Wrap a little something</h1>
-            <div style={{ font: "400 16px/1.5 'Work Sans',sans-serif" }}>Choose a fabric and a ribbon, tuck a note or a gift inside, and send it as a link.</div>
-            <PrimaryButton variant="laptop" onClick={() => go('s2')} style={{ marginTop: 6 }}>Start wrapping</PrimaryButton>
+          <div style={{ position: 'absolute', left: '50%', top: g1.cardTop, width: 600, marginLeft: -300, boxSizing: 'border-box', background: '#FBF0DA', border: '2px solid #783E19', borderRadius: 10, padding: 8, boxShadow: '6px 6px 0 rgba(31,42,68,.22)' }}>
+            <div style={{ border: '1.5px solid #783E19', borderRadius: 5, padding: '24px 40px 28px', display: 'flex', flexDirection: 'column', gap: 12, textAlign: 'center' }}>
+              <LabelWordmark variant="laptop" />
+              <h1 style={{ margin: 0, fontWeight: 400, fontFamily: "'IM Fell DW Pica',serif", fontSize: 44, lineHeight: 1.05 }}>Wrap a little something</h1>
+              <div style={{ font: "400 16px/1.5 'Work Sans',sans-serif", textWrap: 'pretty', maxWidth: 420, alignSelf: 'center' } as CSSProperties}>Choose a fabric and a ribbon, tuck a note or a gift inside, and send it as a link.</div>
+              <PrimaryButton variant="laptop" onClick={() => go('s2')} style={{ marginTop: 6 }}>Start wrapping</PrimaryButton>
+            </div>
           </div>
         </>
       )}

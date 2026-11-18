@@ -163,5 +163,40 @@ export function Field({ label, count, children, gap = 8, countSize = 11 }: { lab
   );
 }
 
+/** S1 "shop label": "Sweet" in script between two short rules. */
+export function LabelWordmark({ variant }: { variant: Variant }) {
+  const laptop = variant === 'laptop', rule = <div style={{ width: laptop ? 40 : 30, height: 1.5, background: '#783E19' }} />;
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 14 }}>
+      {rule}<div style={{ fontFamily: "'La Belle Aurore',cursive", fontSize: laptop ? 24 : 21, lineHeight: 1 }}>Sweet</div>{rule}
+    </div>
+  );
+}
+
+/** R1 butter-and-cream sunburst behind the sweet, fading out with a radial mask. */
+export function Sunburst({ left, top, size }: { left: number; top: number; size: number }) {
+  const mask = 'radial-gradient(circle,#000 0 30%,rgba(0,0,0,0) 62%)';
+  return <div aria-hidden style={{ position: 'absolute', left, top, width: size, height: size, borderRadius: '50%', background: 'repeating-conic-gradient(from 0deg,#F7E8A4 0 5deg,#FCF7EF 5deg 10deg)', WebkitMask: mask, mask, pointerEvents: 'none' }} />;
+}
+
+/** R1 plaque: "Hooray, {recipient}!" over "{sender} sent you a sweet". */
+export function ArrivalPlaque({ to, from, variant }: { to: string; from: string; variant: Variant }) {
+  const laptop = variant === 'laptop';
+  const line: CSSProperties = { maxWidth: '100%', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' };
+  return (
+    <div style={{ background: '#FBF0DA', border: '2px solid #783E19', borderRadius: 999, padding: laptop ? 7 : 5, boxShadow: laptop ? '5px 5px 0 rgba(31,42,68,.2)' : '4px 4px 0 rgba(31,42,68,.2)', maxWidth: laptop ? 900 : 350, boxSizing: 'border-box', minWidth: 0 }}>
+      <div style={{ border: '1.5px dashed #783E19', borderRadius: 999, padding: laptop ? '16px 56px 20px' : '9px 22px 11px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: laptop ? 6 : 4, minWidth: 0 }}>
+        <div style={{ ...line, fontFamily: "'La Belle Aurore',cursive", fontSize: laptop ? 28 : 19, lineHeight: 1.1, color: '#C8443F' }}>Hooray, {to}!</div>
+        <h1 style={{ ...line, margin: 0, fontWeight: 400, fontFamily: "'IM Fell DW Pica',serif", fontSize: laptop ? 40 : 23, lineHeight: 1.05 }}>{from} sent you a sweet</h1>
+      </div>
+    </div>
+  );
+}
+
+/** R1 cherry "Unwrap your sweet" button. */
+export function UnwrapButton({ onClick, variant }: { onClick: () => void; variant: Variant }) {
+  return <button type="button" data-btn="1" onClick={onClick} className={cx(s.reset, s.unwrap, s[variant])}>Unwrap your sweet</button>;
+}
+
 export { s as ui, cx };
 export type { Ref };
