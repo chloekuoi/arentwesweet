@@ -1,0 +1,129 @@
+/* Shared controls. Laptop variants get hover; phone variants only get the press state.
+   Focus rings appear for keyboard users only (:focus-visible). */
+.reset { appearance: none; margin: 0; padding: 0; border: 0; background: none; font: inherit; color: inherit; text-align: inherit; }
+
+.primary, .secondary {
+  height: 56px; display: flex; align-items: center; justify-content: center; width: 100%;
+  color: var(--ink); border: 2px solid var(--ink); box-sizing: border-box; border-radius: 999px;
+  font-family: var(--f-title); font-style: italic; font-size: 22px; line-height: 1; cursor: pointer; user-select: none;
+  outline: none; text-decoration: none; transition: transform .12s, box-shadow .12s, background .12s; padding: 0;
+}
+.primary { background: var(--butter); box-shadow: inset 0 0 0 3px #F3E08A, inset 0 0 0 4.5px #C9A44A, 3px 4px 0 #783E19; }
+.primary:active { transform: translate(2px,3px); box-shadow: inset 0 0 0 3px #F3E08A, inset 0 0 0 4.5px #C9A44A, 1px 1px 0 #783E19; }
+.primary:focus-visible { box-shadow: inset 0 0 0 3px #F3E08A, inset 0 0 0 4.5px #C9A44A, 3px 4px 0 #783E19, 0 0 0 5px #FBF0DA, 0 0 0 8px #A7C3E8, 0 0 0 9.5px #783E19; }
+.laptop.primary:hover { color: var(--ink); background: var(--butter-hover); box-shadow: inset 0 0 0 3px #F7E8A4, inset 0 0 0 4.5px #C9A44A, 4px 6px 0 #783E19; transform: translate(-1px,-2px); }
+.laptop.primary:hover:active { transform: translate(2px,3px); box-shadow: inset 0 0 0 3px #F3E08A, inset 0 0 0 4.5px #C9A44A, 1px 1px 0 #783E19; }
+.primary.busy { cursor: progress; }
+a.primary:hover, a.primary:active { color: var(--ink); }
+
+.secondary { background: var(--cream-light); font-size: 21px; box-shadow: inset 0 0 0 3px #FFF9EC, inset 0 0 0 4.2px rgba(120,62,25,.35); transition: background .12s, box-shadow .12s; }
+.secondary:active { transform: translate(1px,1px); }
+.secondary:focus-visible { box-shadow: inset 0 0 0 3px #FFF9EC, inset 0 0 0 4.2px rgba(120,62,25,.35), 0 0 0 5px #FBF0DA, 0 0 0 8px #A7C3E8, 0 0 0 9.5px #783E19; }
+.laptop.secondary:hover { background: var(--cream); box-shadow: inset 0 0 0 3px #FBF0DA, inset 0 0 0 4.2px #783E19; }
+
+.phone.primary, .phone.secondary { height: 54px; font-size: 21px; }
+.phone.secondary { font-size: 20px; }
+
+.textLink { font: 600 14px/1 var(--f-ui); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; outline: none; border-radius: 3px; padding: 4px 2px; color: var(--ink); }
+.textLink:hover { color: var(--cherry); text-decoration-thickness: 2px; }
+.textLink:focus-visible { box-shadow: 0 0 0 3px #A7C3E8; }
+.phoneLink { font: 600 13px/1 var(--f-ui); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; padding: 6px 8px; border-radius: 4px; }
+.phoneLink:active { background: rgba(243,224,138,.55); }
+.phoneLink:focus-visible { box-shadow: 0 0 0 3px #A7C3E8; outline: none; }
+
+/* Laptop swatch tile (62px, name tag on hover/focus) */
+.tile { position: relative; cursor: pointer; outline: none; border-radius: 8px; transition: transform .12s; }
+.tile:hover { transform: translateY(-3px); }
+.tile:focus-visible { box-shadow: 0 0 0 4px #FBF0DA, 0 0 0 6px #783E19; }
+.tile .tag { display: none; }
+.tile:hover .tag, .tile:focus-visible .tag { display: block; }
+.tag { position: absolute; left: 50%; bottom: calc(100% + 12px); transform: translateX(-50%); white-space: nowrap; background: var(--ink); color: var(--cream); font: 600 10px/1 var(--f-ui); letter-spacing: .1em; text-transform: uppercase; padding: 6px 9px; border-radius: 999px; pointer-events: none; z-index: 4; }
+.tileBox { position: absolute; inset: 0; border: 2px solid var(--ink); border-radius: 6px; overflow: hidden; background: var(--cream-light); box-sizing: border-box; }
+.ring { position: absolute; inset: -7px; border-radius: 11px; border: 4px solid #A7C3E8; box-shadow: 0 0 0 1.5px #783E19; pointer-events: none; }
+
+/* Laptop card tile */
+.cardTile { display: flex; flex-direction: column; align-items: center; gap: 9px; cursor: pointer; outline: none; border-radius: 10px; transition: transform .12s; }
+.cardTile:hover { transform: translateY(-3px); }
+.cardTile:focus-visible { box-shadow: 0 0 0 4px #FBF0DA, 0 0 0 6px #783E19; }
+
+/* Phone tiles: press feedback only */
+.pTile { display: flex; flex-direction: column; align-items: center; gap: 8px; cursor: pointer; min-width: 0; transition: transform .1s; outline: none; border-radius: 8px; }
+.pTile:active { transform: scale(.93); }
+.pTile:focus-visible { box-shadow: 0 0 0 3px #A7C3E8; }
+
+/* Inputs */
+.input { width: 100%; min-width: 0; height: 48px; padding: 0 14px; background: var(--cream-light); border: 2px solid var(--ink); border-radius: 4px; box-sizing: border-box; font: 500 15px/1 var(--f-ui); color: var(--ink); outline: none; transition: box-shadow .12s, background .12s; }
+.input:hover { background: var(--cream-hover); }
+.input:focus { background: var(--cream-hover); box-shadow: 0 0 0 3px #A7C3E8; }
+.textarea { resize: none; box-sizing: border-box; padding: 12px 14px; background: var(--cream-light); border: 2px solid var(--ink); border-radius: 4px; outline: none; font: 500 15px/1.45 var(--f-ui); color: var(--ink); transition: box-shadow .12s, background .12s; }
+.textarea:hover { background: var(--cream-hover); }
+.textarea:focus { background: var(--cream-hover); box-shadow: 0 0 0 3px #A7C3E8; }
+.inputErr, .inputErr:hover { border-color: var(--cherry); box-shadow: 0 0 0 2px rgba(200,68,63,.25); background: var(--cream-light); }
+.inputErr:focus { box-shadow: 0 0 0 3px rgba(200,68,63,.4); }
+
+/* Phone field: the box is the wrapper, the input is borderless inside */
+.pField { height: 46px; display: flex; align-items: center; gap: 8px; padding: 0 12px; background: var(--cream-light); border: 2px solid var(--ink); border-radius: 4px; box-sizing: border-box; }
+.pField:focus-within { box-shadow: 0 0 0 3px #A7C3E8; }
+.pFieldErr { border-color: var(--cherry); box-shadow: 0 0 0 2px rgba(200,68,63,.25); }
+.pInput { flex: 1; min-width: 0; border: 0; outline: none; background: transparent; font: 500 15px/1 var(--f-ui); color: var(--ink); padding: 0; }
+.pTextarea { resize: none; box-sizing: border-box; padding: 10px 12px; background: var(--cream-light); border: 2px solid var(--ink); border-radius: 4px; outline: none; font: 500 14px/1.45 var(--f-ui); color: var(--ink); }
+.pTextarea:focus { box-shadow: 0 0 0 3px #A7C3E8; }
+
+/* S4 extra rows */
+.typeRow { display: flex; align-items: center; gap: 14px; height: 52px; padding: 0 10px; margin: 0 -10px; border-bottom: 1.5px solid var(--hairline); cursor: pointer; outline: none; border-radius: 4px; transition: background .12s; width: calc(100% + 20px); box-sizing: border-box; }
+.typeRow:hover { background: rgba(243,224,138,.35); }
+.typeRow:focus-visible { box-shadow: inset 0 0 0 2px #A7C3E8; }
+.pTypeRow { cursor: pointer; display: flex; align-items: center; gap: 12px; height: 40px; border-bottom: 1.5px solid var(--hairline); margin: 0 -8px; padding: 0 8px; border-radius: 4px; width: calc(100% + 16px); box-sizing: border-box; outline: none; }
+.pTypeRow:active { background: rgba(243,224,138,.45); }
+.pTypeRow:focus-visible { box-shadow: inset 0 0 0 2px #A7C3E8; }
+.pTab { position: relative; cursor: pointer; display: flex; flex-direction: column; gap: 5px; padding: 4px 2px 10px; min-width: 0; border-radius: 4px; outline: none; }
+.pTab:active { background: rgba(243,224,138,.45); }
+.pTab:focus-visible { box-shadow: inset 0 0 0 2px #A7C3E8; }
+
+/* Step bar candy */
+.step { flex: none; display: flex; flex-direction: column; align-items: center; gap: 6px; width: 52px; outline: none; border-radius: 6px; transition: transform .12s; }
+.stepDone { cursor: pointer; }
+.stepDone:hover { transform: translateY(-2px); }
+.step:focus-visible { box-shadow: 0 0 0 3px #A7C3E8; }
+
+/* Pills and round buttons */
+.mute { position: absolute; right: 28px; width: 52px; height: 52px; border-radius: 50%; background: var(--cream); border: 1.5px solid var(--ink); box-sizing: border-box; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 6; outline: none; transition: background .12s; }
+.mute:hover { background: var(--butter); }
+.mute:focus-visible { box-shadow: 0 0 0 3px #A7C3E8; }
+.pMute { position: absolute; right: 16px; width: 44px; height: 44px; border-radius: 50%; background: var(--cream); border: 1.5px solid var(--ink); box-sizing: border-box; display: flex; align-items: center; justify-content: center; cursor: pointer; z-index: 4; outline: none; }
+.pMute:active { background: var(--butter); transform: scale(.94); }
+.pMute:focus-visible { box-shadow: 0 0 0 3px #A7C3E8; }
+
+/* Laptop candy on R1 */
+.candyBtn { position: absolute; cursor: pointer; outline: none; border-radius: 40px; transition: transform .25s cubic-bezier(.3,1.6,.5,1); }
+.candyBtn:hover { transform: translateY(-8px) rotate(-1.5deg); }
+.candyBtn:focus-visible { box-shadow: 0 0 0 4px #A7C3E8; }
+.candyIdle { cursor: default; }
+.candyIdle:hover { transform: none; }
+
+/* Laptop "type on the card" textarea */
+.cardText { flex: 1; min-height: 0; resize: none; margin: -6px; padding: 6px; background: transparent; border: 0; border-radius: 6px; outline: 1.5px dashed transparent; outline-offset: 2px; font-family: var(--f-title); line-height: 1.3; color: var(--ink); cursor: text; transition: outline-color .15s, background .15s; }
+.cardText:hover { outline-color: rgba(120,62,25,.45); background: rgba(255,253,246,.35); }
+.cardText:focus { outline: 2px solid #A7C3E8; background: rgba(255,253,246,.45); }
+
+/* Preview bar controls (laptop) */
+.pvLink { font: 600 14px/1 var(--f-ui); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; outline: none; padding: 6px 4px; border-radius: 3px; color: var(--cream); }
+.pvLink:hover { color: var(--butter); }
+.pvLink:focus-visible { box-shadow: 0 0 0 2px #A7C3E8; }
+.pvBack { height: 38px; display: flex; align-items: center; gap: 8px; padding: 0 18px; background: var(--butter); color: var(--ink); border: 1.5px solid var(--cream); border-radius: 999px; box-sizing: border-box; font-family: var(--f-title); font-style: italic; font-size: 18px; line-height: 1; cursor: pointer; outline: none; transition: background .12s, transform .12s; }
+.pvBack:hover { background: var(--butter-hover); transform: translateY(-1px); }
+.pvBack:focus-visible { box-shadow: 0 0 0 3px #A7C3E8; }
+.pPvLink { font: 600 13px/1 var(--f-ui); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; padding: 8px 4px; color: var(--cream); outline: none; }
+.pPvDone { height: 32px; display: flex; align-items: center; padding: 0 14px; background: var(--butter); color: var(--ink); border: 1.5px solid var(--cream); border-radius: 999px; box-sizing: border-box; font-family: var(--f-title); font-style: italic; font-size: 16px; line-height: 1; cursor: pointer; outline: none; }
+.pPvDone:active { transform: translateY(1px); }
+
+/* R4 wrapper pieces lift on hover (laptop) */
+.piece { width: 100%; height: 100%; filter: drop-shadow(4px 6px 0 rgba(31,42,68,.16)); transition: transform .25s cubic-bezier(.3,1.6,.5,1); }
+.piece:hover { transform: translateY(-8px) rotate(-4deg); }
+
+/* R1 cherry unwrap button */
+.unwrap { height: 66px; display: flex; align-items: center; justify-content: center; padding: 0 52px; background: #C8443F; color: #FFF9EC; border: 2px solid #783E19; box-sizing: border-box; border-radius: 999px; box-shadow: inset 0 0 0 3px #C8443F, inset 0 0 0 4.5px #F3E08A, 3px 4px 0 #783E19; font-family: var(--f-title); font-style: italic; font-size: 26px; line-height: 1; white-space: nowrap; cursor: pointer; outline: none; user-select: none; transition: transform .12s, box-shadow .12s, background .12s; }
+.unwrap.phone { height: 54px; padding: 0 34px; font-size: 22px; }
+.laptop.unwrap:hover { background: #D2564F; box-shadow: inset 0 0 0 3px #D2564F, inset 0 0 0 4.5px #F3E08A, 4px 6px 0 #783E19; transform: translate(-1px,-2px); }
+.unwrap:active, .laptop.unwrap:hover:active { transform: translate(2px,3px); box-shadow: inset 0 0 0 3px #C8443F, inset 0 0 0 4.5px #F3E08A, 1px 1px 0 #783E19; }
+.unwrap:focus-visible { box-shadow: inset 0 0 0 3px #C8443F, inset 0 0 0 4.5px #F3E08A, 3px 4px 0 #783E19, 0 0 0 5px #FBF0DA, 0 0 0 8px #A7C3E8, 0 0 0 9.5px #783E19; }
