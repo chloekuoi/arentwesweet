@@ -1,8 +1,9 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
+import { configuredSiteUrl } from '@/lib/site';
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000'),
+  metadataBase: new URL(configuredSiteUrl() || 'http://localhost:3000'),
   title: 'Sweet',
   description: 'Wrap a little something and send it as a link.',
   openGraph: { siteName: 'Sweet' },
