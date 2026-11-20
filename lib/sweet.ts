@@ -9,15 +9,29 @@ export type RibbonKey = (typeof RIBBON_KEYS)[number];
 export type StickerKey = (typeof STICKER_KEYS)[number];
 export type CardKey = (typeof CARD_KEYS)[number];
 
-export type Extra = { type: 'none' } | { type: 'link'; url: string } | { type: 'iou'; text: string };
+export type Extra =
+  | { type: 'none' }
+  | { type: 'link'; url: string }
+  | { type: 'iou'; text: string }
+  | { type: 'photo'; imageUrl: string; caption: string };
 
-export type SweetInput = {
+/** What the client sends for a photo extra; the server adds imageUrl after storing the upload. */
+export type ExtraInput = Exclude<Extra, { type: 'photo' }> | { type: 'photo'; caption: string };
+
+type SweetBase = {
   paper: PaperKey; ribbon: RibbonKey; sticker: StickerKey; card: CardKey;
-  to: string; from: string; note: string; extra: Extra;
+  to: string; from: string; note: string;
 };
-export type Sweet = SweetInput & { id: string; createdAt: string };
+/** A sweet as submitted by the sender (photo not yet stored). */
+export type SweetInput = SweetBase & { extra: ExtraInput };
+/** A stored sweet. */
+export type SweetData = SweetBase & { extra: Extra };
+export type Sweet = SweetData & { id: string; createdAt: string };
 
-export const LIMITS = { to: 40, from: 40, note: 280, iou: 80, url: 400 } as const;
+export const LIMITS = { to: 40, from: 40, note: 280, iou: 80, url: 400, caption: 24 } as const;
+
+/** Photo extra: accepted uploads (before resizing) and the stored size. */
+export const PHOTO = { maxBytes: 10 * 1024 * 1024, maxSide: 1600 } as const;
 export const DEFAULTS = { paper: 'cherry_print', ribbon: 'blue_stitch', sticker: 'butter_oval', card: 'card_2' } as const;
 
 /** A full link: scheme, a host with a dot, and something after it. */
@@ -43,7 +57,7 @@ export function parseSweetInput(body: unknown): { ok: true; value: SweetInput } 
     if (typeof b[k] !== 'string' || (b[k] as string).length > LIMITS[k]) return { ok: false, error: `${k} must be a string of at most ${LIMITS[k]} characters` };
   }
   const ex = (b.extra ?? { type: 'none' }) as Record<string, unknown>;
-  let extra: Extra;
+  let extra: ExtraInput;
   if (ex.type === 'link') {
     const url = str(ex.url, LIMITS.url).trim();
     if (!isFullUrl(url)) return { ok: false, error: "That's not a full link yet. Start it with https://" };
@@ -51,6 +65,9 @@ export function parseSweetInput(body: unknown): { ok: true; value: SweetInput } 
   } else if (ex.type === 'iou') {
     if (typeof ex.text !== 'string' || ex.text.length > LIMITS.iou) return { ok: false, error: `IOU must be at most ${LIMITS.iou} characters` };
     extra = { type: 'iou', text: ex.text };
+  } else if (ex.type === 'photo') {
+    if (typeof ex.caption !== 'string' || ex.caption.length > LIMITS.caption) return { ok: false, error: `Caption must be at most ${LIMITS.caption} characters` };
+    extra = { type: 'photo', caption: ex.caption };
   } else if (ex.type === 'none') extra = { type: 'none' };
   else return { ok: false, error: 'Unknown extra type' };
   return { ok: true, value: { paper, ribbon, sticker, card, to: b.to as string, from: b.from as string, note: b.note as string, extra } };

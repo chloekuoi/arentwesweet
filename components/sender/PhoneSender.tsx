@@ -6,6 +6,7 @@ import { CARDS, FABRICS, RIBBONS, STICKERS, cardPad } from '@/lib/art';
 import { PHONE_MOTION, type PhoneGeo } from '@/lib/layout';
 import { hostOf, isFullUrl, stickerName } from '@/lib/sweet';
 import { displayLink } from '@/lib/site';
+import { PhotoEditor, TapedPrint } from '@/components/photo';
 import type { Sender } from './useSender';
 
 type Tab = 'paper' | 'ribbon' | 'sticker';
@@ -17,7 +18,7 @@ const bottomBar: CSSProperties = { position: 'absolute', left: 22, right: 22, bo
 const card: CSSProperties = { position: 'absolute', left: 16, right: 16, bottom: 30, background: '#FBF0DA', border: '2px solid #783E19', borderRadius: 6, padding: 22, display: 'flex', flexDirection: 'column', gap: 12, boxShadow: '6px 6px 0 rgba(31,42,68,.22)' };
 
 export function PhoneSender({ L, sender, onPreview }: { L: PhoneGeo; sender: Sender; onPreview: () => void }) {
-  const { st, set, go, setText, wrap, copy } = sender;
+  const { st, set, go, setText, wrap, copy, choosePhoto, removePhoto } = sender;
   const [tab, setTab] = useState<Tab>('paper');
   const linkRef = useRef<HTMLDivElement>(null);
   const tName = stickerName(st.to);
@@ -162,12 +163,15 @@ export function PhoneSender({ L, sender, onPreview }: { L: PhoneGeo; sender: Sen
                 <IouCoupon text={st.iou} size="pStage" />
               </div>
             )}
+            {st.extra === 'photo' && (
+              <TapedPrint size="phoneStage" src={st.photo?.url ?? null} caption={st.caption} style={{ position: 'absolute', left: 280, top: 104, transform: 'rotate(7deg)' }} />
+            )}
           </div>
           <div style={sheet(L.sheet3, { overflow: 'hidden', padding: '20px 22px 0', gap: 12 })}>
             <h1 style={title(26)}>Add a little extra</h1>
             <div role="radiogroup" aria-label="Extra" style={{ display: 'flex', flexDirection: 'column', borderTop: '1.5px solid rgba(120,62,25,.3)', flex: 'none' }}>
-              {([['none', 'Nothing', 'Just the note'], ['link', 'Link', 'A playlist, a booking'], ['iou', 'IOU', 'A promise to keep']] as const).map(([k, l, hint]) => (
-                <button type="button" role="radio" aria-checked={k === st.extra} key={k} onClick={() => set({ extra: k, urlError: false })} className={cx(ui.reset, ui.pTypeRow)}>
+              {([['none', 'Nothing', 'Just the note'], ['link', 'Link', 'A playlist, a booking'], ['iou', 'IOU', 'A promise to keep'], ['photo', 'Photo', 'A snapshot to keep']] as const).map(([k, l, hint]) => (
+                <button type="button" role="radio" aria-checked={k === st.extra} key={k} onClick={() => set({ extra: k, urlError: false, photoError: null })} className={cx(ui.reset, ui.pTypeRow)}>
                   <MiniCandy fill={k === st.extra ? '#F3E08A' : '#FFF9EC'} w={34} h={18} sw={1.8} seams={false} />
                   <span style={{ fontFamily: "'IM Fell DW Pica',serif", fontStyle: k === st.extra ? 'italic' : 'normal', fontSize: 19, lineHeight: 1, flex: 1 }}>{l}</span>
                   <span style={{ font: "400 12px/1 'Work Sans',sans-serif" }}>{hint}</span>
@@ -186,6 +190,10 @@ export function PhoneSender({ L, sender, onPreview }: { L: PhoneGeo; sender: Sen
               <Field label="IOU" count={`${st.iou.length}/80`} gap={7}>
                 <div className={ui.pField}><input className={ui.pInput} value={st.iou} onChange={(e) => setText('iou', e.target.value)} maxLength={80} placeholder="One coffee date ☕" /></div>
               </Field>
+            )}
+            {st.extra === 'photo' && (
+              <PhotoEditor variant="phone" ph={L.tight ? 60 : 96} printW={L.tight ? 79 : 115} src={st.photo?.url ?? null} caption={st.caption} error={st.photoError}
+                onCaption={(v) => setText('caption', v)} onPick={choosePhoto} onRemove={removePhoto} />
             )}
             {st.wrapError && (
               <div role="alert" style={{ display: 'flex', gap: 10, alignItems: 'flex-start', padding: '11px 12px', background: '#FFF9EC', border: '2px solid #C8443F', borderRadius: 4, boxShadow: '0 0 0 2px rgba(200,68,63,.18)' }}>

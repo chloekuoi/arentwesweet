@@ -6,6 +6,7 @@ import { cardPad } from '@/lib/art';
 import { PHONE_MOTION, type PhoneGeo } from '@/lib/layout';
 import { hostOf, stickerName } from '@/lib/sweet';
 import type { PreviewCtl } from './LaptopReceiver';
+import { TapedPrint } from '@/components/photo';
 import type { Receiver } from './useReceiver';
 
 const errCard = (top: number): CSSProperties => ({ position: 'absolute', left: 20, right: 20, top, background: '#FBF0DA', border: '2px solid #783E19', borderRadius: 6, padding: '26px 22px 22px', display: 'flex', flexDirection: 'column', gap: 14, zIndex: 5, boxShadow: '6px 6px 0 rgba(31,42,68,.22)' });
@@ -143,14 +144,14 @@ function PhoneReveal({ L, rc, pv, muteTop, onSendBack }: { L: PhoneGeo; rc: Rece
   else { const p = cardPad(card, 346, 300), cpl = Math.max(10, Math.floor((346 - p[1] - p[3]) / 11.6)), lines = Math.max(2, Math.ceil(len / cpl)); r4H = Math.round(p[0] + p[2] + 25 + lines * 31 + 48 + (extra === 'link' ? 88 : 0)); }
   const r4Pad = cardPad(card, 346, r4H).map((v) => Math.round(v) + 'px').join(' ');
   let r4k = 1;
-  const avail = ch - 100 - r4Top, tot = (extra === 'iou' ? 128 : 0) + r4H + (extra === 'link' && heart ? 80 : 0);
+  const avail = ch - 100 - r4Top, tot = (extra === 'iou' ? 128 : extra === 'photo' ? 177 : 0) + r4H + (extra === 'link' && heart ? 80 : 0);
   if (tot > avail) r4k = +(avail / tot).toFixed(3);
 
   // Wrapper pieces below the card (and below the Open-your-gift button under a heart card); with little room, a single row, or peeking from the card's corners.
   const o = { fab: sweet.paper, rib: sweet.ribbon, sticker: sweet.sticker, name: tName };
   const part = (k: 'bowL' | 'bowR' | 'endL' | 'endR') => <CandyPiece {...o} only={k} />;
   const stk = <Sticker k={sweet.sticker} name={tName} />;
-  const cardTop = r4Top + (extra === 'iou' ? 128 : 0) * r4k, cardBottom = cardTop + r4H * r4k, bt = cardBottom + (extra === 'link' && heart ? 80 * r4k : 0) + 14, bh = ch - 100 - bt;
+  const cardTop = r4Top + (extra === 'iou' ? 128 : extra === 'photo' ? 177 : 0) * r4k, cardBottom = cardTop + r4H * r4k, bt = cardBottom + (extra === 'link' && heart ? 80 * r4k : 0) + 14, bh = ch - 100 - bt;
   const pieces: { key: string; el: ReactNode; left: number; top: number; w: number; rot: number; delay: string }[] = [];
   const P = (key: string, el: ReactNode, x: number, y: number, w: number, rot: number, d: number) => pieces.push({ key, el, left: Math.round(x), top: Math.round(y), w: Math.round(w), rot, delay: (0.2 + d).toFixed(2) });
   if (bh >= 240) { const f = Math.min(1, (bh - 120) / 135), y2 = bt + Math.min(126, bh - 122); P('bowL', part('bowL'), 8, bt, 124, -18, 0); P('endR', part('endR'), 252, bt + 6, 120, 14, 0.08); P('stk', stk, 140, bt + 60 * f, 108, 6, 0.3); P('endL', part('endL'), 2, y2, 116, -8, 0.14); P('bowR', part('bowR'), 262, y2 + 4, 112, 26, 0.2); }
@@ -174,6 +175,10 @@ function PhoneReveal({ L, rc, pv, muteTop, onSendBack }: { L: PhoneGeo; rc: Rece
           <div style={{ position: 'relative', margin: '10px 12px 0', transform: 'rotate(1.5deg)', filter: 'drop-shadow(0 3px 3px rgba(90,42,16,.28))' }}>
             <IouCoupon text={sweet.extra.text} from={from} size="pReveal" />
           </div>
+        )}
+        {sweet.extra.type === 'photo' && (
+          <TapedPrint size="phoneReveal" src={sweet.extra.imageUrl} caption={sweet.extra.caption}
+            style={{ zIndex: 2, alignSelf: 'flex-end', margin: '0 8px -40px 0', transform: 'rotate(6deg)' }} />
         )}
         <div style={{ position: 'relative', height: r4H, transform: 'rotate(-1.2deg)', filter: 'drop-shadow(6px 6px 0 rgba(31,42,68,.28))' }}>
           <div style={{ position: 'absolute', inset: 0 }}><NoteCard style={card} w={346} h={r4H} /></div>

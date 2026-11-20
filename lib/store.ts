@@ -4,7 +4,7 @@ import Database from 'better-sqlite3';
 import { randomBytes } from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
-import type { Sweet, SweetInput } from './sweet';
+import type { Sweet, SweetData } from './sweet';
 
 export const DATA_DIR = path.resolve(process.env.SWEET_DATA_DIR || './data');
 
@@ -36,9 +36,9 @@ export function newId(len = 12) {
 
 export const ID_RE = /^[A-Za-z0-9]{8,32}$/;
 
-export function createSweet(input: SweetInput): Sweet {
-  const sweet: Sweet = { id: newId(), createdAt: new Date().toISOString(), ...input };
-  const { id, createdAt, ...data } = sweet;
+export function createSweet(input: SweetData, id = newId()): Sweet {
+  const sweet: Sweet = { id, createdAt: new Date().toISOString(), ...input };
+  const { id: _id, createdAt, ...data } = sweet;
   conn().prepare('INSERT INTO sweets (id, data, created_at) VALUES (?, ?, ?)').run(id, JSON.stringify(data), createdAt);
   return sweet;
 }
@@ -48,5 +48,5 @@ export function getSweet(id: string): Sweet | null {
   const row = conn().prepare('SELECT id, data, created_at FROM sweets WHERE id = ?').get(id) as
     | { id: string; data: string; created_at: string } | undefined;
   if (!row) return null;
-  return { id: row.id, createdAt: row.created_at, ...(JSON.parse(row.data) as SweetInput) };
+  return { id: row.id, createdAt: row.created_at, ...(JSON.parse(row.data) as SweetData) };
 }
