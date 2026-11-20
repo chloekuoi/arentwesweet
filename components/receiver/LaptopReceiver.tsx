@@ -5,6 +5,7 @@ import { ArrivalPlaque, Sunburst, UnwrapButton, EyeIcon, IouCoupon, MuteButton, 
 import { cardPad } from '@/lib/art';
 import { LAPTOP_MOTION, type LaptopGeo } from '@/lib/layout';
 import { hostOf, stickerName } from '@/lib/sweet';
+import { TapedPrint } from '@/components/photo';
 import type { Receiver } from './useReceiver';
 
 export type PreviewCtl = { toName: string; onReplay: () => void; onExit: () => void } | null;
@@ -127,12 +128,12 @@ function Reveal({ g, rc, pv, onSendBack }: { g: LaptopGeo; rc: Receiver; pv: num
   if (heart) h = 540;
   else { const p = cardPad(card, w, 420), cpl = Math.max(12, Math.floor((w - p[1] - p[3]) / 15)), lines = Math.max(2, Math.ceil(len / cpl)); h = Math.max(360, Math.round(p[0] + p[2] + 30 + lines * 44 + 60 + (linkIn ? 96 : 0))); }
   const btnH = 56 + (linkOut ? 68 : 0), total = h + 44 + btnH, top = Math.max(40 + pv, Math.round((H - total + pv) / 2));
-  const left = extra === 'iou' ? Math.round((W - w - 300) / 2) : Math.round((W - w) / 2);
-  const r4 = { w, h, top, left, pad: cardPad(card, w, h).map((v) => Math.round(v) + 'px').join(' '), align: (heart ? 'center' : 'left') as CSSProperties['textAlign'], fromAlign: heart ? 'center' : 'flex-end', fs: heart ? 26 : len <= 120 ? 34 : 28, from: heart ? 28 : 36, btnTop: top + h + 44, iouLeft: left + w - 60, iouTop: top + 80 };
+  const left = extra === 'photo' ? Math.round((W - w - 290) / 2) : extra === 'iou' ? Math.round((W - w - 300) / 2) : Math.round((W - w) / 2);
+  const r4 = { w, h, top, left, pad: cardPad(card, w, h).map((v) => Math.round(v) + 'px').join(' '), align: (heart ? 'center' : 'left') as CSSProperties['textAlign'], fromAlign: heart ? 'center' : 'flex-end', fs: heart ? 26 : len <= 120 ? 34 : 28, from: heart ? 28 : 36, btnTop: top + h + 44, iouLeft: left + w - 60, iouTop: top + 80, photoTop: top - 20, photoLeft: left + w - 16 };
 
   // Pieces fill the gaps either side of the card.
   const k = Math.min(1.1, Math.max(0.72, W / 1440)), o = { fab: sweet.paper, rib: sweet.ribbon, sticker: sweet.sticker, name: tName };
-  const Lg = r4.left, Rs = extra === 'iou' ? r4.iouLeft + 350 : r4.left + r4.w + (extra === 'link' ? 50 : 0), Rg = W - Rs;
+  const Lg = r4.left, Rs = extra === 'photo' ? r4.photoLeft + 320 : extra === 'iou' ? r4.iouLeft + 350 : r4.left + r4.w + (extra === 'link' ? 50 : 0), Rg = W - Rs;
   const pieces: { key: string; el: ReactNode; w: number; h: number; left: number; top: number; rot: number; delay: string }[] = [];
   const fit = (gap: number, bw: number, bh: number) => { const pw = Math.min(bw * k, gap - 28); return pw < 96 ? null : { w: Math.round(pw), h: Math.round((bh * pw) / bw) }; };
   const place = (key: string, el: ReactNode, side: 0 | 1, bw: number, bh: number, ty: number, rot: number, d: number) => {
@@ -175,6 +176,10 @@ function Reveal({ g, rc, pv, onSendBack }: { g: LaptopGeo; rc: Receiver; pv: num
         <div style={{ position: 'absolute', left: r4.iouLeft, top: r4.iouTop, width: 340, transform: 'rotate(5deg)', filter: 'drop-shadow(0 6px 6px rgba(90,42,16,.28))', animation: 'sw-rise .6s .15s cubic-bezier(.2,.9,.3,1) both' }}>
           <IouCoupon text={sweet.extra.text} from={from} size="reveal" />
         </div>
+      )}
+      {sweet.extra.type === 'photo' && (
+        <TapedPrint size="laptopReveal" src={sweet.extra.imageUrl} caption={sweet.extra.caption}
+          style={{ position: 'absolute', left: r4.photoLeft, top: r4.photoTop, rotate: '5deg', animation: 'sw-rise .6s .15s cubic-bezier(.2,.9,.3,1) both' }} />
       )}
       <div style={{ position: 'absolute', left: Math.round((W - 320) / 2), top: r4.btnTop, width: 320, display: 'flex', flexDirection: 'column', gap: 12 }}>
         {linkOut && <PrimaryLink variant="laptop" href={url}>Open your gift →</PrimaryLink>}
