@@ -5,7 +5,7 @@
 > The build prompt is in `design_handoff_sweet/CLAUDE_CODE_PROMPT.md`. If the app is already built, use `design_handoff_sweet/CHANGES_PROMPT.md` for the latest updates: the S1 welcome card and the R1 arrival.
 
 ## Overview
-Sweet lets a **sender** wrap a virtual vintage candy (paper, ribbon, name sticker), tuck a note and an optional extra (link or IOU) inside, and send it as a link. The **receiver** opens the link, clicks or taps the candy to unwrap it (bows fly, confetti), and reads the note. There's no sign-in and no app install, just a web app on phone and laptop.
+Sweet lets a **sender** wrap a virtual vintage candy (paper, ribbon, name sticker), tuck a note and an optional extra (link, IOU or photo) inside, and send it as a link. The **receiver** opens the link, clicks or taps the candy to unwrap it (bows fly, confetti), and reads the note. There's no sign-in and no app install, just a web app on phone and laptop.
 
 ## About the design files
 Everything listed below is an **HTML design reference**: a working prototype that shows the intended look and behaviour. It is **not production code**. Recreate it in a real stack. If there's no existing codebase, use **Next.js (App Router) + React + TypeScript + CSS Modules or Tailwind**. That gives server-rendered link previews (OG images) and simple API routes.
@@ -102,9 +102,10 @@ Copy is final; it's in the prototypes. Sender **S1–S5**, receiver **R0–R5**.
 - **S3 Write your note:** 4 note-card tiles, TO and FROM fields (max 40), MESSAGE (max 280), and a live card preview on the stage.
   - Laptop also lets you click the card and type on it, with a dashed hover outline and a blue focus outline.
   - Phone: typing in the sheet only.
-- **S4 Add a little extra:** options Nothing / Link / IOU.
+- **S4 Add a little extra:** options Nothing / Link / IOU / Photo.
   - Link: a URL field with validation (must match `^https?://…`; error "That's not a full link yet. Start it with https://"). A baby-blue wax seal reading "OPEN ME" appears on the stage.
   - IOU: max 80 characters, shown as a butter coupon with a scalloped top and bottom and a gold paper clip.
+  - Photo: an instant print you tap to fill, with the caption written on its white strip. See "Update · Photo extra".
   - The main button reads **Wrap it up**.
 - **S5 Ready to send:** "Your sweet is ready", a summary line, the link in a dashed box, **Copy link** (the only share action; there's no Share button) and "Only people with this link can open it". Laptop also has "← Edit" and **"Preview as Mia sees it →"**.
 
@@ -119,6 +120,7 @@ Copy is final; it's in the prototypes. Sender **S1–S5**, receiver **R0–R5**.
   - The card rises into the centre. The 5 wrapper pieces (both bows, both ends, the sticker) land scattered around it (reveal option 5b).
   - The Link extra shows "Open your gift →" with the host name and the seal on the card's top-right corner.
   - The IOU shows the coupon beside the card (laptop) or above it (phone).
+  - The photo shows as a taped instant print beside the card (laptop) or overlapping its top (phone).
   - **Send a sweet back** returns to S1.
 - **R5 Not found:** the melted candy pose, "This sweet melted" and **Make a new sweet**.
 - **Load error:** "We couldn't reach your sweet" with **Try again**. This is a connection failure, which is different from R5 (bad link).
@@ -172,7 +174,7 @@ type Sweet = {
   to: string;  // ≤40
   from: string; // ≤40
   note: string; // ≤280
-  extra: { type: 'none' } | { type: 'link'; url: string } | { type: 'iou'; text: string /* ≤80 */ };
+  extra: { type: 'none' } | { type: 'link'; url: string } | { type: 'iou'; text: string /* ≤80 */ } | { type: 'photo'; imageUrl: string; caption: string /* ≤24 */ };
   createdAt: string;
 };
 ```
@@ -181,7 +183,7 @@ type Sweet = {
 - Copy link uses `navigator.clipboard.writeText`. On failure, select the link text and show "Your browser blocked copying… press ⌘C / Ctrl+C" (phone: "Press and hold the link to copy it"). Success shows "Copied ✓" for 1.6s.
 - Mute: `localStorage['sweet.muted'] = '1' | '0'`. Sound plays on receiver screens only; sender screens are silent.
 
-**Sender client state:** step, paper, ribbon, sticker, card, to, from, note, extra, url, iou, urlError, wrapping, wrapError, copied, copyFailed, preview.
+**Sender client state:** step, paper, ribbon, sticker, card, to, from, note, extra, url, iou, photo, caption, photoError, urlError, wrapping, wrapError, copied, copyFailed, preview.
 
 ---
 
@@ -191,7 +193,7 @@ type Sweet = {
 - `og:title`: "{from} sent you a sweet 🎀"
 - `og:description`: "Something's wrapped for {to}. Tap to unwrap it."
 - `og:site_name`: "Sweet"
-- **Never** put the note, link or IOU in the metadata.
+- **Never** put the note, link, IOU or photo in the metadata.
 - Note: `ImageResponse` (Satori) doesn't support SVG filters. Render the candy SVG to PNG with resvg (or headless Chromium) when the sweet is created, then serve that PNG.
 
 ---
@@ -213,3 +215,22 @@ type Sweet = {
 
 ## Update · Arrival (R1)
 The "sent you a sweet" pill is now a plaque: a cream pill (2px border, 7px inset) with a 1.5px dashed inner ring, "Hooray, {recipient}!" in cherry script above "{sender} sent you a sweet". A sunburst of butter (#F7E8A4) and cream rays (5° each) sits behind the sweet on arrival and unwrap, centred on the sweet and fading out with a radial mask. The unwrap button is now a cherry-red (#C8443F) pill with cream text and a butter inner ring, reading "Unwrap your sweet". It uses the same hover, pressed and focus behaviour as the primary button. See explorations/Arrival Celebration Options, 2c.
+
+## Update · Photo extra
+- **Extra option:** a 4th row, **Photo** — "A snapshot to keep", under Nothing / Link / IOU. Phone list rows are now 36px tall (was 40) so the editor fits.
+- **Editor (S4, "write on the print"):** an instant print on the left, rotated −2°. It's #FFF9EC with a 1.5px #783E19 border, 8px 8px 0 padding and a 0 3px 3px rgba(90,42,16,.2) shadow.
+  - Photo area: square, 96px on phone (60px on short phones like the SE) and 190px on laptop (150 when the window is under 860px tall).
+  - Empty: a 2px dashed rgba(120,62,25,.6) frame with a camera icon and "Tap to add" (phone) or "Choose or drop" (laptop), IM Fell italic.
+  - The whole photo area is the file picker (`accept="image/*"`). On phone it opens the camera or library. On laptop you can click it or drop a file on it.
+  - Caption: typed straight onto the white strip below the photo. La Belle Aurore, centred, no border, placeholder "write a caption…", max 24 characters. The strip is 30px tall on phone and 44px on laptop.
+  - Right column: a hint ("Tap the print to take a photo or choose one." / "Click the print to choose a photo, or drag one onto it."; once a photo is added: "Write a caption on the white strip, just like a real print."), "Caption n/24", and Replace / Remove text links. Remove is #C8443F.
+  - Validation: Wrap it up with no photo shows "Add a photo first, or pick Nothing." with the red ! dot.
+- **Stage preview (S4):** the same print, taped to the card's top-right corner with pink washi tape (rgba(245,205,211,.85), dashed brown ends, −6°), rotated 7°. It shows the photo with `object-fit: cover` and the caption in handwriting.
+- **Receiver (R4):** the print taped on and rotated 6°, rising with the card.
+  - Phone: 172px wide, 154px photo, 17px caption. It sits above the card, aligned right, and overlaps the card's top by 40px.
+  - Laptop: 300px wide, 270px photo, 26px caption, rotated 5°. It sits beside the card, overlapping the card's right edge by 16px. The card shifts left to make room, like the IOU.
+  - The scattered wrapper pieces avoid it.
+- **Data:** `extra: { type: 'photo'; imageUrl: string; caption: string /* ≤24 */ }`.
+  - Upload when the sweet is wrapped. Resize to max 1600px, strip EXIF/location, and store as JPEG or WebP. Accept JPG, PNG and HEIC up to 10 MB.
+  - Serve the photo only on the revealed card. Never put it in the link preview or OG metadata.
+- **Reference screens:** phone s4 with extra="photo" and r4d; laptop s4 / r4 with extra="photo". Both flow boards have the new frames.

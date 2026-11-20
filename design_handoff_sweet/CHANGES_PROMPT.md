@@ -1,6 +1,6 @@
 # Update prompt for Claude Code (paste this one if the app is already built)
 
-The Sweet design has two updates. The refreshed handoff is in ./design_handoff_sweet. Read the two "Update" notes in README.md, then compare against reference/SweetLaptop.dc.html and reference/SweetPhone.dc.html. Change only these two things; leave everything else as it is.
+The Sweet design has three updates. The refreshed handoff is in ./design_handoff_sweet. Read the three "Update" notes in README.md, then compare against reference/SweetLaptop.dc.html and reference/SweetPhone.dc.html. Change only these three things; leave everything else as it is.
 
 ## 1. S1 Welcome card → "shop label"
 - Outer card: cream #FBF0DA, 2px #783E19 border, radius 10, padding 8px (phone 6px), shadow 6px 6px 0 rgba(31,42,68,.22).
@@ -31,4 +31,23 @@ The Sweet design has two updates. The refreshed handoff is in ./design_handoff_s
   - Focus: the same focus ring as PrimaryButton.
   - It still triggers the same unwrap action as clicking the sweet.
 
-When done, open both prototypes at screen s1 and r1 and match spacing and colour.
+## 3. Photo extra (new)
+- **Extra option:** a 4th row, **Photo** — "A snapshot to keep", under Nothing / Link / IOU. Phone list rows are now 36px tall (was 40) so the editor fits.
+- **Editor (S4, "write on the print"):** an instant print on the left, rotated −2°. It's #FFF9EC with a 1.5px #783E19 border, 8px 8px 0 padding and a 0 3px 3px rgba(90,42,16,.2) shadow.
+  - Photo area: square, 96px on phone (60px on short phones like the SE) and 190px on laptop (150 when the window is under 860px tall).
+  - Empty: a 2px dashed rgba(120,62,25,.6) frame with a camera icon and "Tap to add" (phone) or "Choose or drop" (laptop), IM Fell italic.
+  - The whole photo area is the file picker (`accept="image/*"`). On phone it opens the camera or library. On laptop you can click it or drop a file on it.
+  - Caption: typed straight onto the white strip below the photo. La Belle Aurore, centred, no border, placeholder "write a caption…", max 24 characters. The strip is 30px tall on phone and 44px on laptop.
+  - Right column: a hint ("Tap the print to take a photo or choose one." / "Click the print to choose a photo, or drag one onto it."; once a photo is added: "Write a caption on the white strip, just like a real print."), "Caption n/24", and Replace / Remove text links. Remove is #C8443F.
+  - Validation: Wrap it up with no photo shows "Add a photo first, or pick Nothing." with the red ! dot.
+- **Stage preview (S4):** the same print, taped to the card's top-right corner with pink washi tape (rgba(245,205,211,.85), dashed brown ends, −6°), rotated 7°. It shows the photo with `object-fit: cover` and the caption in handwriting.
+- **Receiver (R4):** the print taped on and rotated 6°, rising with the card.
+  - Phone: 172px wide, 154px photo, 17px caption. It sits above the card, aligned right, and overlaps the card's top by 40px.
+  - Laptop: 300px wide, 270px photo, 26px caption, rotated 5°. It sits beside the card, overlapping the card's right edge by 16px. The card shifts left to make room, like the IOU.
+  - The scattered wrapper pieces avoid it.
+- **Data:** `extra: { type: 'photo'; imageUrl: string; caption: string /* ≤24 */ }`.
+  - Upload when the sweet is wrapped. Resize to max 1600px, strip EXIF/location, and store as JPEG or WebP. Accept JPG, PNG and HEIC up to 10 MB.
+  - Serve the photo only on the revealed card. Never put it in the link preview or OG metadata.
+- **Reference screens:** phone s4 with extra="photo" and r4d; laptop s4 / r4 with extra="photo". Both flow boards have the new frames.
+
+When done, open both prototypes at screen s1, r1, s4 (Photo) and r4d (phone) / r4 with Photo (laptop) and match spacing and colour.
