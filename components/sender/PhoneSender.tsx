@@ -181,7 +181,7 @@ export function PhoneSender({ L, sender, onPreview }: { L: PhoneGeo; sender: Sen
             {st.extra === 'link' && (
               <Field label="URL" gap={7}>
                 <div className={cx(ui.pField, st.urlError && ui.pFieldErr)}>
-                  <input className={ui.pInput} value={st.url} onChange={(e) => setText('url', e.target.value)} placeholder="https://" inputMode="url" autoCapitalize="off" autoCorrect="off" aria-invalid={st.urlError} style={{ fontSize: 14 }} />
+                  <input className={ui.pInput} value={st.url} onChange={(e) => setText('url', e.target.value)} placeholder="https://" inputMode="url" autoCapitalize="off" autoCorrect="off" aria-invalid={st.urlError} />
                 </div>
                 {st.urlError && <span style={{ display: 'flex', alignItems: 'center', gap: 7, font: "600 12px/1.3 'Work Sans',sans-serif", letterSpacing: 0, textTransform: 'none' }}><ErrorDot size={16} />That&apos;s not a full link yet. Start it with https://</span>}
               </Field>

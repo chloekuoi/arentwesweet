@@ -86,7 +86,7 @@ export function PhotoEditor({ variant, ph, printW, src, caption, error, onCaptio
           {fileInput(pickRef, has ? 'Replace photo' : 'Choose a photo')}
         </div>
         <input value={caption} onChange={(e) => onCaption(e.target.value)} maxLength={LIMITS.caption} placeholder="write a caption…" aria-label="Caption"
-          className={ui.caption} style={{ height: laptop ? 44 : 30, fontSize: laptop ? 20 : 15 }} />
+          className={ui.caption} style={{ height: laptop ? 44 : 30, fontSize: laptop ? 20 : 16 }} />
       </div>
       <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 10, paddingTop: 6 }}>
         <div style={{ font: `400 ${laptop ? 13 : 12}px/1.4 'Work Sans',sans-serif`, textWrap: 'pretty' } as CSSProperties}>{hint}</div>
