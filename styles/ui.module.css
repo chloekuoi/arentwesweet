@@ -65,8 +65,8 @@ a.primary:hover, a.primary:active { color: var(--ink); }
 .pField { height: 46px; display: flex; align-items: center; gap: 8px; padding: 0 12px; background: var(--cream-light); border: 2px solid var(--ink); border-radius: 4px; box-sizing: border-box; }
 .pField:focus-within { box-shadow: 0 0 0 3px #A7C3E8; }
 .pFieldErr { border-color: var(--cherry); box-shadow: 0 0 0 2px rgba(200,68,63,.25); }
-.pInput { flex: 1; min-width: 0; border: 0; outline: none; background: transparent; font: 500 15px/1 var(--f-ui); color: var(--ink); padding: 0; }
-.pTextarea { resize: none; box-sizing: border-box; padding: 10px 12px; background: var(--cream-light); border: 2px solid var(--ink); border-radius: 4px; outline: none; font: 500 14px/1.45 var(--f-ui); color: var(--ink); }
+.pInput { flex: 1; min-width: 0; border: 0; outline: none; background: transparent; font: 500 16px/1 var(--f-ui); color: var(--ink); padding: 0; } /* 16px+: iOS zooms the page into smaller text fields */
+.pTextarea { resize: none; box-sizing: border-box; padding: 10px 12px; background: var(--cream-light); border: 2px solid var(--ink); border-radius: 4px; outline: none; font: 500 16px/1.4 var(--f-ui); color: var(--ink); }
 .pTextarea:focus { box-shadow: 0 0 0 3px #A7C3E8; }
 
 /* S4 extra rows */
