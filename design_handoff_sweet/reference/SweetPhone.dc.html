@@ -101,10 +101,9 @@
 <div style="align-self:{{ fromAlign }};font-family:'La Belle Aurore',cursive;font-size:{{ fromBig }}px;line-height:1">from {{ fromName }}</div>
 </div>
 </div></div>
-<div style="position:absolute;left:-2px;right:-2px;top:{{ L.sheet3 }}px;bottom:0;overflow:hidden;background:#FBF0DA;border:2px solid #783E19;border-bottom:0;border-radius:22px 22px 0 0;padding:20px 22px 0;display:flex;flex-direction:column;gap:12px">
-<sc-if value="{{ isKb }}" hint-placeholder-val="{{ false }}"><div style="flex:none;height:0;margin-top:{{ L.kbShift }}px"></div></sc-if>
-<div style="font-family:'IM Fell DW Pica',serif;font-size:26px;line-height:1.1">Write your note</div>
-<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:8px 2px 0">
+<div style="position:absolute;left:-2px;right:-2px;top:{{ L.s3Top }}px;bottom:{{ L.s3Bot }}px;overflow:hidden;background:#FBF0DA;border:2px solid #783E19;border-bottom:0;border-radius:22px 22px 0 0;padding:20px 22px 0;display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;align-items:center;justify-content:space-between;gap:12px"><div style="font-family:'IM Fell DW Pica',serif;font-size:26px;line-height:1.1">Write your note</div><sc-if value="{{ isKb }}" hint-placeholder-val="{{ false }}"><div onClick="{{ goS3 }}" style="height:44px;display:flex;align-items:center;padding:0 4px;font-family:'IM Fell DW Pica',serif;font-style:italic;font-size:19px;line-height:1;cursor:pointer;user-select:none;text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1.5px">Done</div></sc-if></div>
+<sc-if value="{{ notKb }}" hint-placeholder-val="{{ true }}"><div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:8px 2px 0">
 <sc-for list="{{ cards }}" as="c" hint-placeholder-count="4"><div onClick="{{ c.pick }}" style="display:flex;flex-direction:column;align-items:center;gap:8px;cursor:pointer;transition:transform .1s" style-active="transform:scale(.93)">
 <div style="position:relative;width:100%;height:{{ L.cardTile }}px">
 <sc-if value="{{ c.sel }}" hint-placeholder-val="{{ false }}"><div style="position:absolute;inset:-7px;border-radius:11px;border:4px solid #A7C3E8;box-shadow:0 0 0 1.5px #783E19"></div></sc-if>
@@ -112,7 +111,7 @@
 </div>
 <div style="font:600 8.5px/1.25 'Work Sans',sans-serif;letter-spacing:.1em;text-align:center">{{ c.name }}</div>
 </div></sc-for>
-</div>
+</div></sc-if>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
 <div style="display:flex;flex-direction:column;gap:7px;min-width:0"><div style="font:600 10.5px/1 'Work Sans',sans-serif;letter-spacing:.16em;text-transform:uppercase">To</div><div style="height:46px;display:flex;align-items:center;gap:8px;padding:0 12px;background:#FFF9EC;border:2px solid #783E19;border-radius:4px;box-sizing:border-box"><input value="{{ toName }}" onChange="{{ onTo }}" style="flex:1;min-width:0;border:0;outline:none;background:transparent;font:500 15px/1 'Work Sans',sans-serif;color:#783E19;padding:0"><span style="font:500 11px/1 'Work Sans',sans-serif;color:#6B4A36;font-variant-numeric:tabular-nums">{{ toCount }}</span></div></div>
 <div style="display:flex;flex-direction:column;gap:7px;min-width:0"><div style="font:600 10.5px/1 'Work Sans',sans-serif;letter-spacing:.16em;text-transform:uppercase">From</div><div style="height:46px;display:flex;align-items:center;gap:8px;padding:0 12px;background:#FFF9EC;border:2px solid #783E19;border-radius:4px;box-sizing:border-box"><input value="{{ fromName }}" onChange="{{ onFrom }}" style="flex:1;min-width:0;border:0;outline:none;background:transparent;font:500 15px/1 'Work Sans',sans-serif;color:#783E19;padding:0"></div></div>
@@ -120,9 +119,9 @@
 <div style="display:flex;flex-direction:column;gap:7px">
 <div style="display:flex;justify-content:space-between;align-items:baseline"><div style="font:600 10.5px/1 'Work Sans',sans-serif;letter-spacing:.16em;text-transform:uppercase">Message</div><span style="font:500 11px/1 'Work Sans',sans-serif;color:#6B4A36;font-variant-numeric:tabular-nums">{{ noteCount }}</span></div>
 <sc-if value="{{ notKb }}" hint-placeholder-val="{{ true }}"><textarea value="{{ note }}" onChange="{{ onNote }}" style="height:{{ L.ta }}px;resize:none;box-sizing:border-box;padding:10px 12px;background:#FFF9EC;border:2px solid #783E19;border-radius:4px;outline:none;font:500 14px/1.45 'Work Sans',sans-serif;color:#783E19"></textarea></sc-if>
-<sc-if value="{{ isKb }}" hint-placeholder-val="{{ false }}"><textarea value="{{ note }}" onChange="{{ onNote }}" style="height:{{ L.ta }}px;resize:none;box-sizing:border-box;padding:10px 12px;background:#FFF9EC;border:2px solid #783E19;border-radius:4px;outline:none;font:500 14px/1.45 'Work Sans',sans-serif;color:#783E19;box-shadow:0 0 0 3px #A7C3E8"></textarea></sc-if>
+<sc-if value="{{ isKb }}" hint-placeholder-val="{{ false }}"><textarea value="{{ note }}" onChange="{{ onNote }}" style="height:{{ L.taK }}px;resize:none;box-sizing:border-box;padding:10px 12px;background:#FFF9EC;border:2px solid #783E19;border-radius:4px;outline:none;font:500 16px/1.45 'Work Sans',sans-serif;color:#783E19;box-shadow:0 0 0 3px #A7C3E8"></textarea></sc-if>
 </div>
-<div style="position:absolute;left:22px;right:22px;bottom:30px;display:grid;grid-template-columns:1fr 1.7fr;gap:12px"><div onClick="{{ goS2 }}" style="height:54px;display:flex;align-items:center;justify-content:center;background:#FFF9EC;color:#783E19;border:2px solid #783E19;box-sizing:border-box;border-radius:999px;box-shadow:inset 0 0 0 3px #FFF9EC,inset 0 0 0 4.2px rgba(120,62,25,.35);font-family:'IM Fell DW Pica',serif;font-style:italic;font-size:20px;line-height:1;cursor:pointer;user-select:none" style-active="transform:translate(1px,1px)">Back</div><div onClick="{{ goS4 }}" style="height:54px;display:flex;align-items:center;justify-content:center;background:#F3E08A;color:#783E19;border:2px solid #783E19;box-sizing:border-box;border-radius:999px;box-shadow:inset 0 0 0 3px #F3E08A,inset 0 0 0 4.5px #C9A44A,3px 4px 0 #783E19;font-family:'IM Fell DW Pica',serif;font-style:italic;font-size:21px;line-height:1;cursor:pointer;user-select:none" style-active="transform:translate(2px,3px);box-shadow:inset 0 0 0 3px #F3E08A,inset 0 0 0 4.5px #C9A44A,1px 1px 0 #783E19">Next</div></div>
+<sc-if value="{{ notKb }}" hint-placeholder-val="{{ true }}"><div style="position:absolute;left:22px;right:22px;bottom:30px;display:grid;grid-template-columns:1fr 1.7fr;gap:12px"><div onClick="{{ goS2 }}" style="height:54px;display:flex;align-items:center;justify-content:center;background:#FFF9EC;color:#783E19;border:2px solid #783E19;box-sizing:border-box;border-radius:999px;box-shadow:inset 0 0 0 3px #FFF9EC,inset 0 0 0 4.2px rgba(120,62,25,.35);font-family:'IM Fell DW Pica',serif;font-style:italic;font-size:20px;line-height:1;cursor:pointer;user-select:none" style-active="transform:translate(1px,1px)">Back</div><div onClick="{{ goS4 }}" style="height:54px;display:flex;align-items:center;justify-content:center;background:#F3E08A;color:#783E19;border:2px solid #783E19;box-sizing:border-box;border-radius:999px;box-shadow:inset 0 0 0 3px #F3E08A,inset 0 0 0 4.5px #C9A44A,3px 4px 0 #783E19;font-family:'IM Fell DW Pica',serif;font-style:italic;font-size:21px;line-height:1;cursor:pointer;user-select:none" style-active="transform:translate(2px,3px);box-shadow:inset 0 0 0 3px #F3E08A,inset 0 0 0 4.5px #C9A44A,1px 1px 0 #783E19">Next</div></div></sc-if>
 </div>
 </div>
 </sc-if>
@@ -372,7 +371,7 @@ class Component extends DCLogic {
     const r4Top = (tight ? 100 : 118) + pv;
     const L = { sheet2, sheet3, showNote: !tight, cardTile: tight ? 44 : 54, ta: tight ? 60 : 88,
       g1: dy < 0 ? fitG(130, 540, 60, 540 + dy) : { k: 1, y: 0 }, g2: fitG(100, 392, 100, sheet2), g3: fitG(110, 316, 104, sheet3 - 6), g4: fitG(100, 352, 100, sheet3 - 8), g5: dy < 0 ? fitG(140, 470, 60, 470 + dy) : { k: 1, y: 0 },
-      recvY: Math.round(dy * (scr === 'r5' || scr === 'loaderr' ? .25 : .5)), pillTop: 104 + pv, muteTop: 54 + pv, tapTop: 600 + Math.round(dy * .5), r4Top, r5Top: 112 + pv, loadTop: Math.round(ch * .34), bannerTop: 50 + ia, nudgeTop: 50 + pv + 10, kb: tight ? 266 : 314, ph: tight ? 60 : 96, printW: tight ? 79 : 115, kbShift: tight ? Math.min(-120, (ch - 266 - 8 - 295) - sheet3) : -234, r4k: 1 };
+      recvY: Math.round(dy * (scr === 'r5' || scr === 'loaderr' ? .25 : .5)), pillTop: 104 + pv, muteTop: 54 + pv, tapTop: 600 + Math.round(dy * .5), r4Top, r5Top: 112 + pv, loadTop: Math.round(ch * .34), bannerTop: 50 + ia, nudgeTop: 50 + pv + 10, kb: tight ? 266 : 314, ph: tight ? 60 : 96, printW: tight ? 79 : 115, s3Top: isKb ? (tight ? 26 : 54) : sheet3, s3Bot: isKb ? (tight ? 266 : 314) : 0, taK: Math.max(72, ch - (tight ? 266 : 314) - (tight ? 26 : 54) - 190), r4k: 1 };
     const loadR1 = () => { if (!proto) return; clearTimeout(this._u); this.setState({ screen: 'load' }); this._u = setTimeout(() => this.setState({ screen: failing && !this._loadFailed ? (this._loadFailed = true, 'loaderr') : 'r1' }), slow ? 2600 : 1000); };
     const exitPreview = () => { clearTimeout(this._u); this.setState({ screen: 's5', preview: false }); };
     const pose = scr === 'unwrap' ? 'anim' : scr === 'r2' ? 'r2' : scr === 'r3' ? 'r3' : isR4 ? 'flat' : scr === 'r5' ? 'melt' : '';
@@ -410,7 +409,7 @@ class Component extends DCLogic {
       wrapErr, wrapLabel: wrapping ? 'Wrapping…' : wrapErr ? 'Try again' : 'Wrap it up', copyFail, linkBg: copyFail ? '#F3E08A' : '#FFF9EC', linkRef: this._lr || (this._lr = React.createRef()),
       isS1: scr === 's1', isS2: scr === 's2', isS3, isKb, notKb: !isKb, isS4, isS5: scr === 's5',
       isR0: scr === 'r0', isRecv: recv, isR4, isR5: scr === 'r5',
-      hasSteps: !!stepN, tagHigh: !!stepN, tagLow: !stepN && scr !== 'r0',
+      hasSteps: !!stepN && !isKb, tagHigh: !!stepN, tagLow: !stepN && scr !== 'r0',
       showTop: ['r1', 'unwrap', 'r2', 'r3'].includes(scr), showTap: scr === 'r1', ticketName: tName, showMute: recv && scr !== 'r5' && scr !== 'loaderr',
       soundOn: !st.muted, muted: !!st.muted,
       steps: (n => ['Wrap', 'Note', 'Extra', 'Send'].map((l, i) => { const k = i + 1, on = k === n, done = k < n; return { n: k, label: l, on, off: !on, notFirst: i > 0, flex: i ? '1 1 0' : 'none', cw: on ? 46 : 34, ch: on ? 24 : 18, fill: on ? '#F3E08A' : done ? '#EBA3AE' : '#FBF0DA', labelFont: on ? "700 9.5px/1 'Work Sans',sans-serif" : "500 9px/1 'Work Sans',sans-serif" }; }))(stepN),
