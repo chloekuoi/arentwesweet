@@ -1,9 +1,9 @@
 'use client';
-import { useEffect, useRef, useState, type CSSProperties, type FocusEvent, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import { CandyInTray, FabricSwatch, NoteCard, RibbonSwatch, Sticker } from '@/components/art';
 import { ErrorDot, Field, IouCoupon, LabelWordmark, LockIcon, MiniCandy, PrimaryButton, SecondaryButton, StepBar, TextLink, WaxSeal, cx, ui } from '@/components/ui';
 import { CARDS, FABRICS, RIBBONS, STICKERS, cardPad } from '@/lib/art';
-import { PHONE_MOTION, type PhoneGeo } from '@/lib/layout';
+import { PHONE_MOTION, phoneS3, type PhoneGeo } from '@/lib/layout';
 import { hostOf, isFullUrl, stickerName } from '@/lib/sweet';
 import { displayLink } from '@/lib/site';
 import { PhotoEditor, TapedPrint } from '@/components/photo';
@@ -28,30 +28,39 @@ export function PhoneSender({ L, sender, onPreview }: { L: PhoneGeo; sender: Sen
   const fSel = FABRICS.find((f) => f.key === st.paper)!, rSel = RIBBONS.find((r) => r.key === st.ribbon)!, sSel = STICKERS.find((s) => s.key === st.sticker)!;
   const okUrl = isFullUrl(st.url);
 
-  // S3 typing mode: while a To / From / Message field has focus (keyboard open), the sheet takes
-  // over the visible area. focusout is debounced so moving To → From doesn't flicker.
+  // S3 typing mode (3a): while a To / From / Message field has focus, the stepper, card preview,
+  // picker and Back / Next are removed and the sheet covers the visible area above the keyboard.
+  // Native focusin / focusout on the S3 root; focusout is debounced so To → From doesn't flicker.
   const [typing, setTyping] = useState(false);
+  const s3Ref = useRef<HTMLDivElement>(null);
   const blurT = useRef<ReturnType<typeof setTimeout>>(undefined);
   const kb = typing && st.step === 's3';
   const vv = useVisualViewport(kb);
   const isField = (el: EventTarget | null) => el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement;
-  const onSheetFocus = (e: FocusEvent) => { if (isField(e.target)) { clearTimeout(blurT.current); setTyping(true); } };
-  const onSheetBlur = () => {
-    clearTimeout(blurT.current);
-    blurT.current = setTimeout(() => { if (!isField(document.activeElement)) setTyping(false); }, 100);
-  };
+  useEffect(() => {
+    const root = s3Ref.current;
+    if (!root) { setTyping(false); return; }
+    const onIn = (e: Event) => { if (isField(e.target)) { clearTimeout(blurT.current); setTyping(true); } };
+    const onOut = () => {
+      clearTimeout(blurT.current);
+      blurT.current = setTimeout(() => { const a = document.activeElement; if (!(isField(a) && root.contains(a))) setTyping(false); }, 100);
+    };
+    // A field can already have focus when S3 mounts (e.g. coming back from S4 with autofocus).
+    if (isField(document.activeElement) && root.contains(document.activeElement)) setTyping(true);
+    root.addEventListener('focusin', onIn);
+    root.addEventListener('focusout', onOut);
+    return () => { root.removeEventListener('focusin', onIn); root.removeEventListener('focusout', onOut); clearTimeout(blurT.current); setTyping(false); };
+  }, [st.step]);
   const done = () => { clearTimeout(blurT.current); (document.activeElement as HTMLElement | null)?.blur(); setTyping(false); };
-  useEffect(() => { if (st.step !== 's3') setTyping(false); }, [st.step]);
-  useEffect(() => () => clearTimeout(blurT.current), []);
-  // Sheet over the visual viewport, in design px (the canvas is scaled by L.ds): top = safe-area top + 8.
-  const kbTop = 'calc(env(safe-area-inset-top, 0px) / ' + L.ds + ' + 8px)';
-  const kbSheet: CSSProperties = kb
-    ? { top: kbTop, bottom: 'auto', height: `calc(${(vv?.h ?? L.ch * L.ds) / L.ds}px - ${kbTop})`, transform: `translateY(${(vv?.top ?? 0) / L.ds}px)`, overflow: 'hidden auto', overscrollBehavior: 'contain', padding: '20px 22px 12px', zIndex: 4 }
-    : {};
+  // Typing sheet: from the top of the visual viewport + 8px down to the top of the keyboard.
+  // The canvas is scaled by L.ds, so CSS px from visualViewport are divided by it.
+  const kbH = vv ? vv.h : L.ch * L.ds, kbTop = vv ? vv.top : 0;
+  const kbSheet: CSSProperties = { boxSizing: 'border-box', top: 0, bottom: 'auto', height: (kbH - 8) / L.ds, transform: `translateY(${(kbTop + 8) / L.ds}px)`, padding: '14px 20px 14px', gap: 12, zIndex: 4 };
 
   const heart = st.card === 'card_1';
   const padOf = (w: number, h: number) => cardPad(st.card, w, h).map((v) => Math.round(v) + 'px').join(' ');
-  const bigH = heart ? 212 : 186, midH = heart ? 186 : 170;
+  const midH = heart ? 186 : 170;
+  const G3 = phoneS3(L.ch, heart);
   const len = st.note.length, fsBig = (len <= 90 ? 15 : len <= 170 ? 12.5 : 10.5) * (heart ? 0.8 : 1);
   const align = (heart ? 'center' : 'left') as CSSProperties['textAlign'], fromAlign = heart ? 'center' : 'flex-end';
 
@@ -69,10 +78,10 @@ export function PhoneSender({ L, sender, onPreview }: { L: PhoneGeo; sender: Sen
     </div>
   );
 
-  const noteOnCard = (w: number, h: number, sz: 'big' | 'mid') => {
+  const noteOnCard = (w: number, h: number, sz: 'big' | 'mid', atOrigin = false) => {
     const big = sz === 'big';
     return (
-      <div style={{ position: 'absolute', left: big ? 58 : 70, top: 310 - h, width: w, height: h }}>
+      <div style={atOrigin ? { position: 'absolute', inset: 0 } : { position: 'absolute', left: 70, top: 310 - h, width: w, height: h }}>
         <div style={{ position: 'absolute', inset: 0 }}><NoteCard style={st.card} w={w} h={h} shadow /></div>
         <div style={{ position: 'absolute', inset: 0, boxSizing: 'border-box', padding: padOf(w, h), textAlign: align, display: 'flex', flexDirection: 'column', gap: big ? (heart ? 4 : 6) : (heart ? 3 : 5), overflow: 'hidden' }}>
           <div style={{ font: `700 ${big ? 9.5 : 8}px/1 'Work Sans',sans-serif`, letterSpacing: '.2em', textTransform: 'uppercase' }}>to {st.to}</div>
@@ -102,7 +111,7 @@ export function PhoneSender({ L, sender, onPreview }: { L: PhoneGeo; sender: Sen
       )}
 
       {stepN > 0 && (
-        <div className={ui.kbFade} aria-hidden={kb || undefined} style={{ position: 'absolute', top: 54, left: 20, right: 20, zIndex: 3, opacity: kb ? 0 : 1, pointerEvents: kb ? 'none' : undefined }}><StepBar variant="phone" step={stepN} /></div>
+        <div className={ui.kbIn} style={{ display: kb ? 'none' : 'block', position: 'absolute', top: 54, left: 20, right: 20, zIndex: 3 }}><StepBar variant="phone" step={stepN} /></div>
       )}
 
       {st.step === 's2' && (
@@ -131,44 +140,44 @@ export function PhoneSender({ L, sender, onPreview }: { L: PhoneGeo; sender: Sen
       )}
 
       {st.step === 's3' && (
-        <div style={{ position: 'absolute', inset: 0 }}>
-          <div className={ui.kbFade} style={{ position: 'absolute', inset: 0, opacity: kb ? 0 : 1 }}><div style={stage(L.g3.y, L.g3.k)}>{noteOnCard(274, bigH, 'big')}</div></div>
-          <div data-kb-sheet="" className={ui.kbSlide} onFocus={onSheetFocus} onBlur={onSheetBlur} style={sheet(L.sheet3, { overflow: 'hidden', padding: '20px 22px 0', gap: 12, ...kbSheet })}>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, flex: 'none' }}>
-              <h1 style={title(26)}>Write your note</h1>
+        <div ref={s3Ref} style={{ position: 'absolute', inset: 0 }}>
+          <div className={ui.kbIn} style={{ display: kb ? 'none' : 'block', position: 'absolute', left: 70, top: G3.cardTop, width: 250, height: G3.cardH, transform: `scale(${G3.k}) rotate(-1.5deg)`, transformOrigin: '50% 0' }}>
+            {noteOnCard(250, G3.cardH, 'big', true)}
+          </div>
+          <div data-kb-sheet="" className={ui.kbSlide} style={sheet(G3.sheetTop, { overflow: 'hidden', padding: '20px 22px 0', gap: G3.gap, ...(kb ? kbSheet : {}) })}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, flex: 'none', minHeight: kb ? 44 : undefined }}>
+              <h1 style={title(kb ? 24 : 26)}>Write your note</h1>
               {kb && <button type="button" className={cx(ui.reset, ui.kbDone)} onMouseDown={(e) => e.preventDefault()} onClick={done}>Done</button>}
             </div>
-            {!kb && <div role="radiogroup" aria-label="Note card" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12, padding: '8px 2px 0' }}>
+            <div role="radiogroup" aria-label="Note card" className={ui.kbIn} style={{ display: kb ? 'none' : 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12, padding: '4px 2px 0', flex: 'none' }}>
               {CARDS.map((c) => (
-                <button type="button" role="radio" aria-checked={c.key === st.card} key={c.key} onClick={() => set({ card: c.key as never })} className={cx(ui.reset, ui.pTile)}>
-                  <div style={{ position: 'relative', width: '100%', height: L.cardTile }}>
+                <button type="button" role="radio" aria-checked={c.key === st.card} key={c.key} onClick={() => set({ card: c.key as never })} className={cx(ui.reset, ui.pTile)} style={{ gap: 7 }}>
+                  <div style={{ position: 'relative', width: '100%', height: G3.tile }}>
                     {c.key === st.card && <div className={ui.ring} />}
                     <div style={{ position: 'absolute', inset: 0, border: '2px solid #783E19', borderRadius: 6, background: '#FFF9EC', overflow: 'hidden' }}><NoteCard style={c.key} w={56} h={38} sw={1.3} center /></div>
                   </div>
                   <div style={{ ...tileName, textTransform: 'none' }}>{c.name}</div>
                 </button>
               ))}
-            </div>}
+            </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, flex: 'none' }}>
-              <Field label="To" gap={7}>
-                <div className={ui.pField}>
-                  <input className={ui.pInput} value={st.to} onChange={(e) => setText('to', e.target.value)} maxLength={40} placeholder="Their name" />
+              <Field label="To" gap={6}>
+                <div className={ui.pField} style={{ height: 44 }}>
+                  <input className={ui.pInput} value={st.to} onChange={(e) => setText('to', e.target.value)} maxLength={40} placeholder="Their name" enterKeyHint="next" />
                   <span style={{ font: "500 11px/1 'Work Sans',sans-serif", color: '#6B4A36', fontVariantNumeric: 'tabular-nums' }}>{st.to.length}/40</span>
                 </div>
               </Field>
-              <Field label="From" gap={7}>
-                <div className={ui.pField}><input className={ui.pInput} value={st.from} onChange={(e) => setText('from', e.target.value)} maxLength={40} placeholder="Your name" /></div>
+              <Field label="From" gap={6}>
+                <div className={ui.pField} style={{ height: 44 }}><input className={ui.pInput} value={st.from} onChange={(e) => setText('from', e.target.value)} maxLength={40} placeholder="Your name" enterKeyHint="next" /></div>
               </Field>
             </div>
-            <Field label="Message" count={`${st.note.length}/280`} gap={7} style={kb ? { flex: 1, minHeight: 0 } : undefined}>
-              <textarea className={ui.pTextarea} value={st.note} onChange={(e) => setText('note', e.target.value)} maxLength={280} placeholder="Write something sweet…" style={kb ? { flex: 1, minHeight: 72, overflowY: 'auto' } : { height: L.ta }} />
+            <Field label="Message" count={`${st.note.length}/280`} gap={6} style={kb ? { flex: 1, minHeight: 0 } : { flex: 'none' }}>
+              <textarea className={ui.pTextarea} value={st.note} onChange={(e) => setText('note', e.target.value)} maxLength={280} placeholder="Write something sweet…" style={kb ? { flex: 1, minHeight: 72, overflowY: 'auto', overscrollBehavior: 'contain' } : { height: G3.msg }} />
             </Field>
-            {!kb && (
-              <div style={{ ...bottomBar, display: 'grid', gridTemplateColumns: '1fr 1.7fr', gap: 12 }}>
-                <SecondaryButton variant="phone" onClick={() => go('s2')}>Back</SecondaryButton>
-                <PrimaryButton variant="phone" onClick={() => go('s4')}>Next</PrimaryButton>
-              </div>
-            )}
+            <div className={ui.kbIn} style={{ ...bottomBar, bottom: G3.bottom, display: kb ? 'none' : 'grid', gridTemplateColumns: '1fr 1.7fr', gap: 12 }}>
+              <SecondaryButton variant="phone" onClick={() => go('s2')}>Back</SecondaryButton>
+              <PrimaryButton variant="phone" onClick={() => go('s4')}>Next</PrimaryButton>
+            </div>
           </div>
         </div>
       )}
