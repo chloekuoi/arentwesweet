@@ -6,6 +6,7 @@ import { CARDS, FABRICS, RIBBONS, STICKERS, cardPad } from '@/lib/art';
 import { LAPTOP_MOTION, type LaptopGeo } from '@/lib/layout';
 import { hostOf, isFullUrl, stickerName } from '@/lib/sweet';
 import { displayLink } from '@/lib/site';
+import { PhotoEditor, TapedPrint } from '@/components/photo';
 import type { Sender, Step } from './useSender';
 
 const TITLES: Record<Step, string> = { s1: '', s2: 'Wrap your sweet', s3: 'Write your note', s4: 'Add a little extra', s5: 'Your sweet is ready' };
@@ -13,7 +14,7 @@ const hair = '1.5px solid rgba(120,62,25,.3)';
 const label: CSSProperties = { font: "600 10.5px/1 'Work Sans',sans-serif", letterSpacing: '.16em' };
 
 export function LaptopSender({ g, sender, onPreview }: { g: LaptopGeo; sender: Sender; onPreview: () => void }) {
-  const { st, set, go, setText, wrap, copy } = sender;
+  const { st, set, go, setText, wrap, copy, choosePhoto, removePhoto } = sender;
   const linkRef = useRef<HTMLDivElement>(null);
   const [cardFocus, setCardFocus] = useState(false);
   const { pn, gs, g1, H } = g;
@@ -28,7 +29,7 @@ export function LaptopSender({ g, sender, onPreview }: { g: LaptopGeo; sender: S
   const sH = heart ? 420 : 350;
   const sPad = cardPad(st.card, 520, sH).map((v) => Math.round(v) + 'px').join(' ');
   const len = st.note.length;
-  const scTop = (isS4 ? (st.extra === 'iou' ? 300 : 240) : 275) - (heart ? 40 : 0);
+  const scTop = (isS4 ? (st.extra === 'iou' || st.extra === 'photo' ? 300 : 240) : 275) - (heart ? 40 : 0);
   const sc = {
     left: isS4 ? 150 : 170, top: scTop, pad: sPad, align: (heart ? 'center' : 'left') as CSSProperties['textAlign'],
     fromAlign: heart ? 'center' : 'flex-end', fs: Math.round((len <= 90 ? 27 : len <= 170 ? 22 : 18) * (heart ? 0.78 : 1)),
@@ -104,6 +105,9 @@ export function LaptopSender({ g, sender, onPreview }: { g: LaptopGeo; sender: S
               <IouCoupon text={st.iou} size="stage" />
             </div>
           )}
+          {isS4 && st.extra === 'photo' && (
+            <TapedPrint size="laptopStage" src={st.photo?.url ?? null} caption={st.caption} style={{ position: 'absolute', left: 556, top: 110, transform: 'rotate(7deg)' }} />
+          )}
         </div>
       )}
 
@@ -168,8 +172,8 @@ export function LaptopSender({ g, sender, onPreview }: { g: LaptopGeo; sender: S
           {isS4 && (
             <>
               <div role="radiogroup" aria-label="Extra" style={{ display: 'flex', flexDirection: 'column', borderTop: hair }}>
-                {([['none', 'Nothing', 'Just the note'], ['link', 'Link', 'A playlist, a booking'], ['iou', 'IOU', 'A promise to keep']] as const).map(([k, l, hint]) => (
-                  <button type="button" role="radio" aria-checked={k === st.extra} key={k} data-btn="1" onClick={() => set({ extra: k, urlError: false })} className={cx(ui.reset, ui.typeRow)}>
+                {([['none', 'Nothing', 'Just the note'], ['link', 'Link', 'A playlist, a booking'], ['iou', 'IOU', 'A promise to keep'], ['photo', 'Photo', 'A snapshot to keep']] as const).map(([k, l, hint]) => (
+                  <button type="button" role="radio" aria-checked={k === st.extra} key={k} data-btn="1" onClick={() => set({ extra: k, urlError: false, photoError: null })} className={cx(ui.reset, ui.typeRow)}>
                     <MiniCandy fill={k === st.extra ? '#F3E08A' : '#FFF9EC'} w={42} h={22} sw={1.8} seams={false} />
                     <span style={{ fontFamily: "'IM Fell DW Pica',serif", fontStyle: k === st.extra ? 'italic' : 'normal', fontSize: 22, lineHeight: 1, flex: 1 }}>{l}</span>
                     <span style={{ font: "400 13px/1 'Work Sans',sans-serif" }}>{hint}</span>
@@ -187,6 +191,10 @@ export function LaptopSender({ g, sender, onPreview }: { g: LaptopGeo; sender: S
                 <Field label="IOU" count={`${st.iou.length}/80`} countSize={10.5}>
                   <input className={ui.input} value={st.iou} onChange={(e) => setText('iou', e.target.value)} maxLength={80} placeholder="One coffee date" />
                 </Field>
+              )}
+              {st.extra === 'photo' && (
+                <PhotoEditor variant="laptop" ph={g.tight ? 150 : 190} printW={g.tight ? 169 : 209} src={st.photo?.url ?? null} caption={st.caption} error={st.photoError}
+                  onCaption={(v) => setText('caption', v)} onPick={choosePhoto} onRemove={removePhoto} />
               )}
             </>
           )}
