@@ -93,7 +93,7 @@
 <sc-if value="{{ isS3 }}" hint-placeholder-val="{{ false }}">
 <div style="position:absolute;inset:0">
 
-<div style="position:absolute;left:0;top:0;width:390px;height:844px;transform:translateY({{ L.g3.y }}px) scale({{ L.g3.k }});transform-origin:50% 0"><div style="position:absolute;left:58px;top:{{ bigTop }}px;width:274px;height:{{ bigH }}px">
+<div style="position:absolute;left:0;top:0;width:390px;height:844px;transform:translateY({{ L.g3.y }}px) scale({{ L.g3.k }});transform-origin:50% 0"><div style="position:absolute;left:70px;top:{{ bigTop }}px;width:250px;height:{{ bigH }}px">
 <div style="position:absolute;inset:0">{{ cardBig }}</div>
 <div style="position:absolute;inset:0;box-sizing:border-box;padding:{{ padBig }};text-align:{{ cardAlign }};display:flex;flex-direction:column;gap:{{ gapBig }}px;overflow:hidden">
 <div style="font:700 9.5px/1 'Work Sans',sans-serif;letter-spacing:.2em;text-transform:uppercase">to {{ toName }}</div>
@@ -389,7 +389,7 @@ class Component extends DCLogic {
     const tagHost = okUrl ? urlHost : '';
     const heart = card === 'card_1';
     const padOf = (w, h) => { const p = C ? C.cardPad(card, w, h) : [16, 20, 16, 20]; return p.map(v => Math.round(v) + 'px').join(' '); };
-    const bigH = heart ? 212 : 186, midH = heart ? 186 : 170;
+    const bigH = heart ? 194 : 170, midH = heart ? 186 : 170;
     const len = note.length, fsBig = (len <= 90 ? 15 : len <= 170 ? 12.5 : 10.5) * (heart ? .8 : 1);
     let r4H = 300, r4Pad = '24px 24px';
     if (isR4 && C) { if (heart) { const lines = Math.max(2, Math.ceil(len / 22)); r4H = Math.min(380, Math.max(310, Math.round((25 + 40 + lines * 23) / .46))); } else { const p = C.cardPad(card, 346, 300), cpl = Math.max(10, Math.floor((346 - p[1] - p[3]) / 11.6)), lines = Math.max(2, Math.ceil(len / cpl)); r4H = Math.round(p[0] + p[2] + 25 + lines * 31 + 48 + (extra === 'link' ? 88 : 0)); } r4Pad = padOf(346, r4H); }
@@ -414,8 +414,8 @@ class Component extends DCLogic {
       soundOn: !st.muted, muted: !!st.muted,
       steps: (n => ['Wrap', 'Note', 'Extra', 'Send'].map((l, i) => { const k = i + 1, on = k === n, done = k < n; return { n: k, label: l, on, off: !on, notFirst: i > 0, flex: i ? '1 1 0' : 'none', cw: on ? 46 : 34, ch: on ? 24 : 18, fill: on ? '#F3E08A' : done ? '#EBA3AE' : '#FBF0DA', labelFont: on ? "700 9.5px/1 'Work Sans',sans-serif" : "500 9px/1 'Work Sans',sans-serif" }; }))(stepN),
       candy, ogCandy, confetti, trayBack: window.SweetBox && !isS3 && !isS4 && !isR4 ? this.svg('trayB', () => window.SweetBox.box('stripe', 'back', { wall: '#FBF0DA', rim: '#FFF9EC' })) : null, trayFront: window.SweetBox && !isS3 && !isS4 && !isR4 ? this.svg('trayF', () => window.SweetBox.box('stripe', 'front', { wall: '#FBF0DA', rim: '#FFF9EC' })) : null,
-      cardBig: C && isS3 ? this.svg('cb' + card, () => C.noteCard({ style: card, w: 274, h: bigH, shadow: true })) : null,
-      padBig: padOf(274, bigH), fsBig, bigH, bigTop: 310 - bigH,
+      cardBig: C && isS3 ? this.svg('cb' + card, () => C.noteCard({ style: card, w: 250, h: bigH, shadow: true })) : null,
+      padBig: padOf(250, bigH), fsBig, bigH, bigTop: 310 - bigH,
       cardMid: C && isS4 ? this.svg('cm' + card, () => C.noteCard({ style: card, w: 250, h: midH, shadow: true })) : null,
       padMid: padOf(250, midH), midH, midTop: 310 - midH,
       cardAlign: heart ? 'center' : 'left', fromAlign: heart ? 'center' : 'flex-end', gapBig: heart ? 4 : 6, gapMid: heart ? 3 : 5, fromBig: heart ? 14 : 18, fromMid: heart ? 12 : 15,
