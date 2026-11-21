@@ -151,9 +151,9 @@ export function IouCoupon({ text, from, size }: { text: string; from?: string; s
   );
 }
 
-export function Field({ label, count, children, gap = 8, countSize = 11 }: { label: string; count?: string; children: ReactNode; gap?: number; countSize?: number }) {
+export function Field({ label, count, children, gap = 8, countSize = 11, style }: { label: string; count?: string; children: ReactNode; gap?: number; countSize?: number; style?: CSSProperties }) {
   return (
-    <label style={{ display: 'flex', flexDirection: 'column', gap, position: 'relative', minWidth: 0 }}>
+    <label style={{ display: 'flex', flexDirection: 'column', gap, position: 'relative', minWidth: 0, ...style }}>
       <span style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', font: "600 10.5px/1 'Work Sans',sans-serif", letterSpacing: '.16em', textTransform: 'uppercase' }}>
         <span>{label}</span>
         {count && <span style={{ fontWeight: 500, letterSpacing: 0, color: '#6B4A36', fontSize: countSize, fontVariantNumeric: 'tabular-nums' }}>{count}</span>}

@@ -33,8 +33,11 @@ export function useViewport() {
       // field being typed in into view.
       const active = document.activeElement;
       if (prev && prev.vw === next.vw && next.vh < prev.vh && editable(active)) {
-        scrolled = active;
-        requestAnimationFrame(() => active.scrollIntoView({ block: 'center' }));
+        // A keyboard sheet sizes itself to the visual viewport, so its fields are already in view.
+        if (!active.closest('[data-kb-sheet]')) {
+          scrolled = active;
+          requestAnimationFrame(() => active.scrollIntoView({ block: 'center' }));
+        }
         return prev;
       }
       if (scrolled && (!prev || next.vh >= prev.vh)) { unscroll(scrolled); scrolled = null; }
@@ -53,4 +56,26 @@ export function useViewport() {
     return () => { window.removeEventListener('resize', fit); document.removeEventListener('focusout', blur); };
   }, []);
   return vp;
+}
+
+/**
+ * The visible part of the page (above the on-screen keyboard), in CSS px, while `on`.
+ * Tracks window.visualViewport so a sheet can sit exactly over it instead of relying on 100vh.
+ */
+export function useVisualViewport(on: boolean) {
+  const [vv, setVv] = useState<{ h: number; top: number } | null>(null);
+  useEffect(() => {
+    if (!on) { setVv(null); return; }
+    const v = window.visualViewport;
+    const read = () => setVv((prev) => {
+      const next = v ? { h: v.height, top: Math.max(0, v.offsetTop) } : { h: window.innerHeight, top: 0 };
+      return prev && prev.h === next.h && prev.top === next.top ? prev : next;
+    });
+    read();
+    v?.addEventListener('resize', read);
+    v?.addEventListener('scroll', read);
+    window.addEventListener('resize', read);
+    return () => { v?.removeEventListener('resize', read); v?.removeEventListener('scroll', read); window.removeEventListener('resize', read); };
+  }, [on]);
+  return vv;
 }
