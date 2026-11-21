@@ -44,3 +44,37 @@ export function phoneGeo(vw: number, vh: number) {
   };
 }
 export type PhoneGeo = ReturnType<typeof phoneGeo>;
+
+/**
+ * S3 "Write your note" resting layout (option 4a), in design px for a canvas `ch` tall.
+ * Top to bottom: step bar, card preview (250 wide, rotated), then a sheet that runs to the bottom
+ * with Back / Next pinned near it. On short screens the card shrinks first, then the picker tiles,
+ * then the gaps and the message box, so Back / Next always stay in view.
+ */
+export function phoneS3(ch: number, heart: boolean) {
+  const cardH = heart ? 194 : 170, stepBottom = 94;
+  // [gap under step bar, gap card→sheet, tile, sheet gap, message, gap above buttons, buttons from bottom]
+  const steps = [
+    [22, 34, 46, 12, 72, 16, 26],
+    [12, 26, 46, 12, 72, 16, 26],
+    [10, 24, 44, 12, 72, 14, 24],
+    [10, 20, 44, 10, 64, 12, 22],
+    [8, 16, 44, 8, 56, 10, 18],
+  ];
+  const BTN = 54;
+  const fit = (s: number[]) => {
+    const [gTop, gSheet, tile, gap, msg, gBtn, bottom] = s;
+    // padding 20 + title 29 + picker (4 + tile + 7 + 11) + To/From 61 + message label 17 + message, plus three gaps.
+    const content = 20 + 29 + (22 + tile) + 61 + (17 + msg) + 3 * gap;
+    const need = content + gBtn + BTN + bottom;
+    const cardTop = stepBottom + gTop;
+    const k = Math.min(1, (ch - need - gSheet - cardTop) / cardH);
+    return { gTop, gSheet, tile, gap, msg, bottom, cardTop, k };
+  };
+  let g = fit(steps[0]);
+  for (const s of steps) { g = fit(s); if (g.k >= 0.6) break; }
+  const k = +Math.max(0.4, g.k).toFixed(3);
+  const sheetTop = Math.round(g.cardTop + cardH * k + g.gSheet);
+  return { cardH, cardTop: g.cardTop, k, sheetTop, tile: g.tile, gap: g.gap, msg: g.msg, bottom: g.bottom };
+}
+export type PhoneS3 = ReturnType<typeof phoneS3>;

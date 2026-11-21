@@ -69,11 +69,13 @@ a.primary:hover, a.primary:active { color: var(--ink); }
 .pTextarea { resize: none; box-sizing: border-box; padding: 10px 12px; background: var(--cream-light); border: 2px solid var(--ink); border-radius: 4px; outline: none; font: 500 16px/1.4 var(--f-ui); color: var(--ink); }
 .pTextarea:focus { box-shadow: 0 0 0 3px #A7C3E8; }
 
-/* S3 typing mode (phone keyboard open): stepper + preview fade, sheet slides up */
-.kbFade { transition: opacity .15s; }
-.kbSlide { transition: top .22s ease-out; }
-.kbDone { height: 44px; display: flex; align-items: center; padding: 0 4px; margin: -9px -4px -9px 0; font-family: var(--f-title); font-style: italic; font-size: 19px; line-height: 1; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1.5px; cursor: pointer; user-select: none; }
-@media (prefers-reduced-motion: reduce) { .kbFade, .kbSlide { transition: none; } }
+/* S3 typing mode (phone keyboard open). Hidden parts are display:none; when they come back
+   they fade in over 150ms. The sheet moves to the visual viewport over 220ms. */
+@keyframes kbIn { from { opacity: 0; } to { opacity: 1; } }
+.kbIn { animation: kbIn .15s ease-out; }
+.kbSlide { transition: top .22s ease-out, transform .22s ease-out; }
+.kbDone { flex: none; height: 44px; display: flex; align-items: center; padding: 0 4px; margin: -9px -4px -9px 0; font-family: var(--f-title); font-style: italic; font-size: 19px; line-height: 1; text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1.5px; cursor: pointer; user-select: none; }
+@media (prefers-reduced-motion: reduce) { .kbIn { animation: none; } .kbSlide { transition: none; } }
 
 /* S4 extra rows */
 .typeRow { display: flex; align-items: center; gap: 14px; height: 52px; padding: 0 10px; margin: 0 -10px; border-bottom: 1.5px solid var(--hairline); cursor: pointer; outline: none; border-radius: 4px; transition: background .12s; width: calc(100% + 20px); box-sizing: border-box; }
