@@ -19,7 +19,7 @@ const PAPER_NOISE = `url('data:image/svg+xml,<svg xmlns=%22http://www.w3.org/200
 /** Phone: the 390-wide design scaled to the device width (larger phones scale up evenly). */
 export function PhoneFrame({ L, children }: { L: PhoneGeo; children: ReactNode }) {
   return (
-    <div style={{ position: 'fixed', inset: 0, overflow: 'hidden', background: `${PAPER_NOISE},radial-gradient(circle,#F5CDD3 0 7px,rgba(245,205,211,0) 7.8px) 0 0/48px 48px,radial-gradient(circle,#F5CDD3 0 7px,rgba(245,205,211,0) 7.8px) 24px 24px/48px 48px,#FCF7EF`, color: '#783E19' }}>
+    <div style={{ position: 'fixed', inset: 0, height: '100dvh', overflow: 'hidden', overscrollBehavior: 'none', background: `${PAPER_NOISE},radial-gradient(circle,#F5CDD3 0 7px,rgba(245,205,211,0) 7.8px) 0 0/48px 48px,radial-gradient(circle,#F5CDD3 0 7px,rgba(245,205,211,0) 7.8px) 24px 24px/48px 48px,#FCF7EF`, color: '#783E19' }}>
       <SealWobbleDefs />
       <main style={{ position: 'absolute', left: 0, top: 0, width: 390, height: L.ch, transform: `scale(${L.ds})`, transformOrigin: '0 0' }}>
         {children}

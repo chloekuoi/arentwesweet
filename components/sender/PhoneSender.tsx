@@ -1,5 +1,5 @@
 'use client';
-import { useRef, useState, type CSSProperties, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type CSSProperties, type FocusEvent, type ReactNode } from 'react';
 import { CandyInTray, FabricSwatch, NoteCard, RibbonSwatch, Sticker } from '@/components/art';
 import { ErrorDot, Field, IouCoupon, LabelWordmark, LockIcon, MiniCandy, PrimaryButton, SecondaryButton, StepBar, TextLink, WaxSeal, cx, ui } from '@/components/ui';
 import { CARDS, FABRICS, RIBBONS, STICKERS, cardPad } from '@/lib/art';
@@ -7,6 +7,7 @@ import { PHONE_MOTION, type PhoneGeo } from '@/lib/layout';
 import { hostOf, isFullUrl, stickerName } from '@/lib/sweet';
 import { displayLink } from '@/lib/site';
 import { PhotoEditor, TapedPrint } from '@/components/photo';
+import { useVisualViewport } from '@/components/useViewport';
 import type { Sender } from './useSender';
 
 type Tab = 'paper' | 'ribbon' | 'sticker';
@@ -26,6 +27,27 @@ export function PhoneSender({ L, sender, onPreview }: { L: PhoneGeo; sender: Sen
   const stepN = { s1: 0, s2: 1, s3: 2, s4: 3, s5: 4 }[st.step];
   const fSel = FABRICS.find((f) => f.key === st.paper)!, rSel = RIBBONS.find((r) => r.key === st.ribbon)!, sSel = STICKERS.find((s) => s.key === st.sticker)!;
   const okUrl = isFullUrl(st.url);
+
+  // S3 typing mode: while a To / From / Message field has focus (keyboard open), the sheet takes
+  // over the visible area. focusout is debounced so moving To → From doesn't flicker.
+  const [typing, setTyping] = useState(false);
+  const blurT = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const kb = typing && st.step === 's3';
+  const vv = useVisualViewport(kb);
+  const isField = (el: EventTarget | null) => el instanceof HTMLInputElement || el instanceof HTMLTextAreaElement;
+  const onSheetFocus = (e: FocusEvent) => { if (isField(e.target)) { clearTimeout(blurT.current); setTyping(true); } };
+  const onSheetBlur = () => {
+    clearTimeout(blurT.current);
+    blurT.current = setTimeout(() => { if (!isField(document.activeElement)) setTyping(false); }, 100);
+  };
+  const done = () => { clearTimeout(blurT.current); (document.activeElement as HTMLElement | null)?.blur(); setTyping(false); };
+  useEffect(() => { if (st.step !== 's3') setTyping(false); }, [st.step]);
+  useEffect(() => () => clearTimeout(blurT.current), []);
+  // Sheet over the visual viewport, in design px (the canvas is scaled by L.ds): top = safe-area top + 8.
+  const kbTop = 'calc(env(safe-area-inset-top, 0px) / ' + L.ds + ' + 8px)';
+  const kbSheet: CSSProperties = kb
+    ? { top: kbTop, bottom: 'auto', height: `calc(${(vv?.h ?? L.ch * L.ds) / L.ds}px - ${kbTop})`, transform: `translateY(${(vv?.top ?? 0) / L.ds}px)`, overflow: 'hidden auto', overscrollBehavior: 'contain', padding: '20px 22px 12px', zIndex: 4 }
+    : {};
 
   const heart = st.card === 'card_1';
   const padOf = (w: number, h: number) => cardPad(st.card, w, h).map((v) => Math.round(v) + 'px').join(' ');
@@ -80,7 +102,7 @@ export function PhoneSender({ L, sender, onPreview }: { L: PhoneGeo; sender: Sen
       )}
 
       {stepN > 0 && (
-        <div style={{ position: 'absolute', top: 54, left: 20, right: 20, zIndex: 3 }}><StepBar variant="phone" step={stepN} /></div>
+        <div className={ui.kbFade} aria-hidden={kb || undefined} style={{ position: 'absolute', top: 54, left: 20, right: 20, zIndex: 3, opacity: kb ? 0 : 1, pointerEvents: kb ? 'none' : undefined }}><StepBar variant="phone" step={stepN} /></div>
       )}
 
       {st.step === 's2' && (
@@ -110,10 +132,13 @@ export function PhoneSender({ L, sender, onPreview }: { L: PhoneGeo; sender: Sen
 
       {st.step === 's3' && (
         <div style={{ position: 'absolute', inset: 0 }}>
-          <div style={stage(L.g3.y, L.g3.k)}>{noteOnCard(274, bigH, 'big')}</div>
-          <div style={sheet(L.sheet3, { overflow: 'hidden', padding: '20px 22px 0', gap: 12 })}>
-            <h1 style={title(26)}>Write your note</h1>
-            <div role="radiogroup" aria-label="Note card" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12, padding: '8px 2px 0' }}>
+          <div className={ui.kbFade} style={{ position: 'absolute', inset: 0, opacity: kb ? 0 : 1 }}><div style={stage(L.g3.y, L.g3.k)}>{noteOnCard(274, bigH, 'big')}</div></div>
+          <div data-kb-sheet="" className={ui.kbSlide} onFocus={onSheetFocus} onBlur={onSheetBlur} style={sheet(L.sheet3, { overflow: 'hidden', padding: '20px 22px 0', gap: 12, ...kbSheet })}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, flex: 'none' }}>
+              <h1 style={title(26)}>Write your note</h1>
+              {kb && <button type="button" className={cx(ui.reset, ui.kbDone)} onMouseDown={(e) => e.preventDefault()} onClick={done}>Done</button>}
+            </div>
+            {!kb && <div role="radiogroup" aria-label="Note card" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: 12, padding: '8px 2px 0' }}>
               {CARDS.map((c) => (
                 <button type="button" role="radio" aria-checked={c.key === st.card} key={c.key} onClick={() => set({ card: c.key as never })} className={cx(ui.reset, ui.pTile)}>
                   <div style={{ position: 'relative', width: '100%', height: L.cardTile }}>
@@ -123,8 +148,8 @@ export function PhoneSender({ L, sender, onPreview }: { L: PhoneGeo; sender: Sen
                   <div style={{ ...tileName, textTransform: 'none' }}>{c.name}</div>
                 </button>
               ))}
-            </div>
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12 }}>
+            </div>}
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, flex: 'none' }}>
               <Field label="To" gap={7}>
                 <div className={ui.pField}>
                   <input className={ui.pInput} value={st.to} onChange={(e) => setText('to', e.target.value)} maxLength={40} placeholder="Their name" />
@@ -135,13 +160,15 @@ export function PhoneSender({ L, sender, onPreview }: { L: PhoneGeo; sender: Sen
                 <div className={ui.pField}><input className={ui.pInput} value={st.from} onChange={(e) => setText('from', e.target.value)} maxLength={40} placeholder="Your name" /></div>
               </Field>
             </div>
-            <Field label="Message" count={`${st.note.length}/280`} gap={7}>
-              <textarea className={ui.pTextarea} value={st.note} onChange={(e) => setText('note', e.target.value)} maxLength={280} placeholder="Write something sweet…" style={{ height: L.ta }} />
+            <Field label="Message" count={`${st.note.length}/280`} gap={7} style={kb ? { flex: 1, minHeight: 0 } : undefined}>
+              <textarea className={ui.pTextarea} value={st.note} onChange={(e) => setText('note', e.target.value)} maxLength={280} placeholder="Write something sweet…" style={kb ? { flex: 1, minHeight: 72, overflowY: 'auto' } : { height: L.ta }} />
             </Field>
-            <div style={{ ...bottomBar, display: 'grid', gridTemplateColumns: '1fr 1.7fr', gap: 12 }}>
-              <SecondaryButton variant="phone" onClick={() => go('s2')}>Back</SecondaryButton>
-              <PrimaryButton variant="phone" onClick={() => go('s4')}>Next</PrimaryButton>
-            </div>
+            {!kb && (
+              <div style={{ ...bottomBar, display: 'grid', gridTemplateColumns: '1fr 1.7fr', gap: 12 }}>
+                <SecondaryButton variant="phone" onClick={() => go('s2')}>Back</SecondaryButton>
+                <PrimaryButton variant="phone" onClick={() => go('s4')}>Next</PrimaryButton>
+              </div>
+            )}
           </div>
         </div>
       )}
