@@ -23,8 +23,7 @@ export function laptopGeo(vw: number, vh: number, preview = false) {
   const rk = Math.min(1.2, W / 1440, H / 900), rvTop = Math.round((H - 900 * rk) / 2);
   const pv = preview ? 56 : 0;
   const rv = { k: rk, left: Math.round((W - 1440 * rk) / 2), top: rvTop + pv / 2, pill: Math.max(28, Math.round(rvTop + 96 * rk)) + pv, tap: Math.round(rvTop + 740 * rk) + pv / 2 };
-  const k1 = Math.min(1.15, W / 1440, (H - 300) / 600), g1Top = Math.max(0, Math.round((H - 632 * k1 - 276) / 2) - 14);
-  const g1 = { k: k1, left: Math.round((W - 1440 * k1) / 2), top: g1Top, cardTop: Math.min(Math.round(g1Top + 572 * k1), H - 300) };
+  const g1 = { k: Math.min(1.15, W / 1440, (H - 300) / 600) };
   const r5w = P >= 500 ? 480 : 420;
   const r5 = { w: r5w, left: SW + Math.max(0, Math.round((P - r5w) / 2)) - 30, top: Math.round((H - 400) / 2) };
   return { scale, W, H, P, tight, pn, SW, gs, rv, g1, r5, pv, wrapGap: H < 760 ? '14px 0 16px' : '16px 0 20px', showNotes: H >= 760 };
