@@ -51,11 +51,15 @@ export function LaptopSender({ g, sender, onPreview }: { g: LaptopGeo; sender: S
   return (
     <>
       {st.step === 's1' && (
-        <>
-          <div style={{ position: 'absolute', left: g1.left, top: g1.top, width: 1440, height: 900, transform: `scale(${g1.k})`, transformOrigin: '0 0', pointerEvents: 'none' }}>
-            <CandyInTray trayLeft={361.4} trayTop={-58.3} trayScale={1.8391} candyLeft={400} candyTop={247} candyWidth={640} candy={candyOpts} />
+        // Candy-in-tray + title card, centred as one group. The tray art is visible from
+        // design y≈344 and the card sits on its rim at y=572, so the art box is 228 tall.
+        <div style={{ position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', pointerEvents: 'none' }}>
+          <div style={{ position: 'relative', flex: 'none', width: 1440 * g1.k, height: 228 * g1.k }}>
+            <div style={{ position: 'absolute', left: 0, top: -344 * g1.k, width: 1440, height: 900, transform: `scale(${g1.k})`, transformOrigin: '0 0' }}>
+              <CandyInTray trayLeft={361.4} trayTop={-58.3} trayScale={1.8391} candyLeft={400} candyTop={247} candyWidth={640} candy={candyOpts} />
+            </div>
           </div>
-          <div style={{ position: 'absolute', left: '50%', top: g1.cardTop, width: 600, marginLeft: -300, boxSizing: 'border-box', background: '#FBF0DA', border: '2px solid #783E19', borderRadius: 10, padding: 8, boxShadow: '6px 6px 0 rgba(31,42,68,.22)' }}>
+          <div style={{ position: 'relative', flex: 'none', width: 600, boxSizing: 'border-box', background: '#FBF0DA', border: '2px solid #783E19', borderRadius: 10, padding: 8, boxShadow: '6px 6px 0 rgba(31,42,68,.22)', pointerEvents: 'auto' }}>
             <div style={{ border: '1.5px solid #783E19', borderRadius: 5, padding: '24px 40px 28px', display: 'flex', flexDirection: 'column', gap: 12, textAlign: 'center' }}>
               <LabelWordmark variant="laptop" />
               <h1 style={{ margin: 0, fontWeight: 400, fontFamily: "'IM Fell DW Pica',serif", fontSize: 44, lineHeight: 1.05 }}>Wrap a little something</h1>
@@ -63,7 +67,7 @@ export function LaptopSender({ g, sender, onPreview }: { g: LaptopGeo; sender: S
               <PrimaryButton variant="laptop" onClick={() => go('s2')} style={{ marginTop: 6 }}>Start wrapping</PrimaryButton>
             </div>
           </div>
-        </>
+        </div>
       )}
 
       {(isS2 || isS5) && (
